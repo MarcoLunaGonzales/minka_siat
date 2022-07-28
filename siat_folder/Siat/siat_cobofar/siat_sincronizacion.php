@@ -74,9 +74,7 @@ class SyncTest
 			$sync = new ServicioFacturacionSincronizacion($resCuis->RespuestaCuis->codigo, null, $config->tokenDelegado);
 			$sync->setConfig((array)$config);
 			$res = call_user_func([$sync, $action]);			
-			
 			require dirname(__DIR__). SB_DS ."../../conexionmysqli2.inc";
-
 			switch ($action) {
 				case 'sincronizarActividades':			
 					$lista=$res->RespuestaListaActividades->listaActividades;

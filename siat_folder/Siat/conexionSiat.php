@@ -1,27 +1,27 @@
 <?php
 
-if(isset($_COOKIE['globalIdEntidad'])){
-	$globalEntidad=$_COOKIE['globalIdEntidad'];
-	switch ($globalEntidad) {
-		case 2://Entidad prueba
+// if(isset($_COOKIE['globalIdEntidad'])){
+// 	$globalEntidad=$_COOKIE['globalIdEntidad'];
+// 	switch ($globalEntidad) {
+// 		case 2://Entidad prueba
 			$siat_nombreSistema='TuAdmin';
 			$siat_codigoSistema='71E742C6AB21890588DC46E';
 			$siat_tipo='PROPIO';
 			$siat_nit=3760252015;
 			$siat_razonSocial='NAVIA CASTILLO ROLANDO EDUARDO';
 			$siat_tokenDelegado='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJOYXZpYTAxNSIsImNvZGlnb1Npc3RlbWEiOiI3MUU3NDJDNkFCMjE4OTA1ODhEQzQ2RSIsIm5pdCI6Ikg0c0lBQUFBQUFBQUFETTJOek13TWpVeU1EUUZBSVdFQ3c4S0FBQUEiLCJpZCI6MzA5NjczLCJleHAiOjE2ODAwNDgwMDAsImlhdCI6MTY0ODU4OTYzMiwibml0RGVsZWdhZG8iOjM3NjAyNTIwMTUsInN1YnNpc3RlbWEiOiJTRkUifQ.gpawQf5FFR67RVoXd8YknoEcWBf25M4r06O_q0j9kuloP8e9vk5ba86BEFLstnZcKGz1Er9bqsxSWPG3hgFlTQ';
-		break;
-		default:
-			$siat_nombreSistema='';
-			$siat_codigoSistema='';
-			$siat_tipo='';
-			$siat_nit=0;
-			$siat_razonSocial='';
-			$siat_tokenDelegado='';
-		break;
+// 		break;
+// 		default:
+// 			$siat_nombreSistema='';
+// 			$siat_codigoSistema='';
+// 			$siat_tipo='';
+// 			$siat_nit=0;
+// 			$siat_razonSocial='';
+// 			$siat_tokenDelegado='';
+// 		break;
 
-	}
-}
+// 	}
+// }
 
 
 // $siat_nombreSistema='TuAdmin';
