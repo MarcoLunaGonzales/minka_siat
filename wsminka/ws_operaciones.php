@@ -137,7 +137,7 @@ function verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon){
 function verificarComunicacion($idEmpresa,$nitEmpresa){
     // error_reporting(E_ALL);
     // ini_set('display_errors', '1');  
-  // require_once '../siat_folder/funciones_siat.php';
+  require_once '../siat_folder/funciones_siat.php';
   $DatosConexion=verificarConexion();
   // if($DatosConexion[0]==1){
   //   return array(2,'Conexion Establecida');

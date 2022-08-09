@@ -57,13 +57,19 @@ $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
   //           "accion"=>"sincronizarParametricaTipoMetodoPago", //
   //           "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
   //           "nitEmpresa"=>'10916889016' //nit  de empresa
-  //         );  
-  //Lista de Tipos documento
+  //         );
+
+
+
+  // //Lista de Tipos documento
     $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
             "accion"=>"sincronizarParametricaTipoDocumentoIdentidad", //
             "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
             "nitEmpresa"=>'10916889016' //nit  de empresa
           );  
+
+
+    
 
     $datos=json_encode($parametros);
     // abrimos la sesión cURL
