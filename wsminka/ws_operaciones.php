@@ -36,13 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     }else{
                         $resultado=array(
                         "estado"=>4,
-                        "mensaje"=>"ERROR. Variables incompletos");
+                        "mensaje"=>"ERROR. Variables incompletas");
                     }
-                // }catch(Exception $e){
-                //    $resultado=array(
-                //     "estado"=>5,
-                //     "mensaje"=>"Hubo un error al momento de consultar BD");
-                // }
             }elseif($accion=="sincronizarParametricaTipoMetodoPago"){
                 require_once '../conexionmysqli2.inc';
                 if(isset($datos['nitEmpresa']) && isset($datos['nitEmpresa'])){                    
@@ -65,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                 }else{
                     $resultado=array(
                     "estado"=>4,
-                    "mensaje"=>"ERROR. Variables incompletos");
+                    "mensaje"=>"ERROR. Variables incompletas");
                 }
 
             }elseif($accion=="sincronizarParametricaTipoDocumentoIdentidad"){
@@ -90,10 +85,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                 }else{
                     $resultado=array(
                     "estado"=>4,
-                    "mensaje"=>"ERROR. Variables incompletos");
+                    "mensaje"=>"ERROR. Variables incompletas");
                 }
-
-            }else{
+            }elseif($accion=="verificarCUFDEmpresa"){
+                require_once '../conexionmysqli2.inc';
+                if( isset($datos['idEmpresa']) && isset($datos['nitEmpresa']) && isset($datos['codSucursal']) ){                    
+                    $idEmpresa=$datos['idEmpresa'];//
+                    $nitEmpresa=$datos['nitEmpresa'];//
+                    $codSucursal=$datos['codSucursal'];//
+                    $banderaCUFD=verificarCUFDEmpresa($idEmpresa,$nitEmpresa,$codSucursal,$enlaceCon);
+                    if($banderaCUFD==1){
+                        $resultado=array(
+                            "estado"=>1,
+                            "mensaje"=>"Correcto. CUFD Valido para la sucursal.");
+                    }
+                    if($banderaCUFD==0){
+                        $resultado=array(
+                            "estado"=>2,
+                            "mensaje"=>"No existe el CUFD Actual para la Empresa solicitada.");
+                    }
+                }else{
+                    $resultado=array(
+                    "estado"=>4,
+                    "mensaje"=>"ERROR. Variables incompletas");
+                }
+            }
+            else{
                 $resultado=array(
                     "estado"=>4,
                     "mensaje"=>"ERROR. No existe la Accion Solicitada.", 
@@ -122,6 +139,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
 }
 
 
+function verificarCUFDEmpresa($idEmpresa,$nitEmpresa,$codSucursal,$enlaceCon){
+    require_once '../conexionmysqli2.inc';  
+    $fechaActual=date("Y-m-d");
+    $cons = "SELECT count(*) from siat_cufd sc, siat_puntoventa sp, datos_empresa de where de.cod_empresa=sp.cod_entidad and sc.cod_ciudad=sp.cod_ciudad and sp.cod_ciudad='$codSucursal' and sc.fecha='$fechaActual' and sc.estado=1 and de.nit='$nitEmpresa' and de.cod_empresa='$idEmpresa';";
+    $respCons = mysqli_query($enlaceCon,$cons);
+    $value=0;
+    $value=mysqli_result($respCons,0,0);
+    
+    return $value;
+}
 
 function verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon){  
   require_once '../conexionmysqli2.inc';  

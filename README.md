@@ -1,1 +1,0 @@
-# minka_siat
