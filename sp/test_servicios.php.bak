@@ -44,16 +44,19 @@ $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
 	
 	$obj=json_decode($jsons);//decodificando json
 	$detalle=$obj->estado;
-	$obj=json_decode($jsons);
 	
-	$detalle=$obj->datosPersonal;	
+	echo $detalle;
+	
+	//$obj=json_decode($jsons);
+	
+	/*$detalle=$obj->datosPersonal;	
 	foreach ($detalle as $objDet){
 		$estadoJ = $objDet->codigo;
 		$mensajeJ = $objDet->descripcion;
 		
 		echo "estado: ".$estadoJ." mensaje: ".$mensajeJ;
 	
-	}
+	}*/
 
 
       
