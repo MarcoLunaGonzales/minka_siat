@@ -13,115 +13,96 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
             $mensaje="";
             if($accion=="verificarComunicacion"){//obtenemos las ciudades del cliente
                 // try{
-                    require_once '../conexionmysqli2.inc';
+                    require_once '../conexionmysqli2.php';
                     if(isset($datos['idEmpresa'])){
                         $idEmpresa=$datos['idEmpresa'];//
                         $nitEmpresa=$datos['nitEmpresa'];//
                         if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
                             $DatosConexion=verificarComunicacion($idEmpresa,$nitEmpresa);//
                             if($DatosConexion[0]==1){
-                                $resultado=array(
-                                    "estado"=>1,
+                                $resultado=array("estado"=>1,
                                     "mensaje"=>"Conexion Establecida");
                             }else{
-                                $resultado=array(
-                                    "estado"=>2,
+                                $resultado=array("estado"=>2,
                                     "mensaje"=>"ERROR en servicio SIAT : ".$DatosConexion[1]);
                             }
                         }else{
-                            $resultado=array(
-                            "estado"=>4,
+                            $resultado=array("estado"=>4,
                             "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
                         }
                     }else{
-                        $resultado=array(
-                        "estado"=>4,
+                        $resultado=array("estado"=>4,
                         "mensaje"=>"ERROR. Variables incompletas");
                     }
             }elseif($accion=="sincronizarParametricaTipoMetodoPago"){
-                require_once '../conexionmysqli2.inc';
+                require_once '../conexionmysqli2.php';
                 if(isset($datos['nitEmpresa']) && isset($datos['nitEmpresa'])){                    
                     $idEmpresa=$datos['idEmpresa'];//
                     $nitEmpresa=$datos['nitEmpresa'];//
                     if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
                         $listAccion=sincronizarParametros($accion,$idEmpresa,$enlaceCon);//
                         $totalComponentes=count($listAccion);
-                        $resultado=array(
-                            "estado"=>true,
+                        $resultado=array("estado"=>true,
                             "mensaje"=>"Tipos de pago obtenido correctamente", 
-                            "datosPersonal"=>$listAccion, 
+                            "lista"=>$listAccion, 
                             "totalComponentes"=>$totalComponentes
                             );
                     }else{
-                        $resultado=array(
-                        "estado"=>4,
+                        $resultado=array("estado"=>4,
                         "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
                     }
                 }else{
-                    $resultado=array(
-                    "estado"=>4,
+                    $resultado=array("estado"=>4,
                     "mensaje"=>"ERROR. Variables incompletas");
                 }
 
             }elseif($accion=="sincronizarParametricaTipoDocumentoIdentidad"){
-                require_once '../conexionmysqli2.inc';
+                require_once '../conexionmysqli2.php';
                 if(isset($datos['nitEmpresa']) && isset($datos['nitEmpresa'])){                    
                     $idEmpresa=$datos['idEmpresa'];//
                     $nitEmpresa=$datos['nitEmpresa'];//
                     if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
                         $listAccion=sincronizarParametros($accion,$idEmpresa,$enlaceCon);//
                         $totalComponentes=count($listAccion);
-                        $resultado=array(
-                            "estado"=>true,
-                            "mensaje"=>"Tipos de pago obtenido correctamente", 
-                            "datosPersonal"=>$listAccion, 
+                        $resultado=array("estado"=>true,
+                            "mensaje"=>"Tipos de documento obtenido correctamente", 
+                            "lista"=>$listAccion, 
                             "totalComponentes"=>$totalComponentes
                             );
                     }else{
-                        $resultado=array(
-                        "estado"=>4,
+                        $resultado=array("estado"=>4,
                         "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
                     }
                 }else{
-                    $resultado=array(
-                    "estado"=>4,
+                    $resultado=array("estado"=>4,
                     "mensaje"=>"ERROR. Variables incompletas");
                 }
             }elseif($accion=="verificarCUFDEmpresa"){
-                require_once '../conexionmysqli2.inc';
+                require_once '../conexionmysqli2.php';
                 if( isset($datos['idEmpresa']) && isset($datos['nitEmpresa']) && isset($datos['codSucursal']) ){                    
                     $idEmpresa=$datos['idEmpresa'];//
                     $nitEmpresa=$datos['nitEmpresa'];//
                     $codSucursal=$datos['codSucursal'];//
                     $banderaCUFD=verificarCUFDEmpresa($idEmpresa,$nitEmpresa,$codSucursal,$enlaceCon);
                     if($banderaCUFD==1){
-                        $resultado=array(
-                            "estado"=>1,
+                        $resultado=array("estado"=>1,
                             "mensaje"=>"Correcto. CUFD Valido para la sucursal.");
                     }
                     if($banderaCUFD==0){
-                        $resultado=array(
-                            "estado"=>2,
+                        $resultado=array("estado"=>2,
                             "mensaje"=>"No existe el CUFD Actual para la Empresa solicitada.");
                     }
                 }else{
-                    $resultado=array(
-                    "estado"=>4,
+                    $resultado=array("estado"=>4,
                     "mensaje"=>"ERROR. Variables incompletas");
                 }
             }
             else{
-                $resultado=array(
-                    "estado"=>4,
-                    "mensaje"=>"ERROR. No existe la Accion Solicitada.", 
-                    "lstPlanillasRetroactivo"=>null, 
-                    "totalComponentes"=>0
-                    );
+                $resultado=array("estado"=>4,
+                    "mensaje"=>"ERROR. No existe la Accion Solicitada.");
             }
         }else{
-            $resultado=array(
-                "estado"=>3,
-                "mensaje"=>"ACCESO DENEGADO!. Credenciales Incorrectos.");
+            $resultado=array("estado"=>3,"mensaje"=>"ACCESO DENEGADO!. Credenciales Incorrectos.");
         }
     }else{
         $resultado=array(
@@ -140,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
 
 
 function verificarCUFDEmpresa($idEmpresa,$nitEmpresa,$codSucursal,$enlaceCon){
-    require_once '../conexionmysqli2.inc';  
+    require_once '../conexionmysqli2.php';  
     $fechaActual=date("Y-m-d");
     $cons = "SELECT count(*) from siat_cufd sc, siat_puntoventa sp, datos_empresa de where de.cod_empresa=sp.cod_entidad and sc.cod_ciudad=sp.cod_ciudad and sp.cod_ciudad='$codSucursal' and sc.fecha='$fechaActual' and sc.estado=1 and de.nit='$nitEmpresa' and de.cod_empresa='$idEmpresa';";
     $respCons = mysqli_query($enlaceCon,$cons);
@@ -151,7 +132,7 @@ function verificarCUFDEmpresa($idEmpresa,$nitEmpresa,$codSucursal,$enlaceCon){
 }
 
 function verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon){  
-  require_once '../conexionmysqli2.inc';  
+  require_once '../conexionmysqli2.php';  
   $cons = "SELECT cod_empresa from datos_empresa where nit='$nitEmpresa' and cod_empresa='$idEmpresa'";
   $respCons = mysqli_query($enlaceCon,$cons);
   $value=false;
@@ -213,8 +194,6 @@ function sincronizarParametros($act,$cod_entidad,$enlaceCon){
         break;
         case 'sincronizarParametricaTipoDocumentoIdentidad':
              $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipodocumentoidentidad where cod_entidad=$cod_entidad order by codigo;";
-                
-             
         break;
         case 'sincronizarParametricaTipoDocumentoSector':
             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipodocumentosector where cod_entidad=$cod_entidad order by codigo;";
@@ -228,8 +207,6 @@ function sincronizarParametros($act,$cod_entidad,$enlaceCon){
         break;
         case 'sincronizarParametricaTipoMetodoPago':
              $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipometodopago where cod_entidad=$cod_entidad order by codigo;";
-                
-             
         break;
         case 'sincronizarParametricaTipoMoneda':
              $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipomoneda where cod_entidad=$cod_entidad order by codigo;";
