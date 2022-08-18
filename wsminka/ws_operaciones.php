@@ -96,6 +96,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     $resultado=array("estado"=>4,
                     "mensaje"=>"ERROR. Variables incompletas");
                 }
+            }elseif($accion=="obtenerCufdMinka"){
+                require_once '../conexionmysqli2.php';
+                if( isset($datos['idEmpresa']) && isset($datos['nitEmpresa']) && isset($datos['codSucursal']) ){                    
+                    $idEmpresa=$datos['idEmpresa'];//
+                    $nitEmpresa=$datos['nitEmpresa'];//
+                    $codSucursal=$datos['codSucursal'];//
+                    $banderaCUFD=generarCufd_minka($idEmpresa,$nitEmpresa,$codSucursal,$enlaceCon);
+                    if($banderaCUFD==1){
+                        $resultado=array("estado"=>1,
+                            "mensaje"=>"Correcto. CUFD Valido para la sucursal.");
+                    }
+                    if($banderaCUFD==0){
+                        $resultado=array("estado"=>2,
+                            "mensaje"=>"No existe el CUFD Actual para la sucursal solicitada.");
+                    }
+                }else{
+                    $resultado=array("estado"=>4,
+                    "mensaje"=>"ERROR. Variables incompletas");
+                }
+
             }
             else{
                 $resultado=array("estado"=>4,
@@ -121,14 +141,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
 
 
 function verificarCUFDEmpresa($idEmpresa,$nitEmpresa,$codSucursal,$enlaceCon){
-    require_once '../conexionmysqli2.php';  
+    // require_once '../conexionmysqli2.php';  
     $fechaActual=date("Y-m-d");
     $cons = "SELECT count(*) from siat_cufd sc, siat_puntoventa sp, datos_empresa de where de.cod_empresa=sp.cod_entidad and sc.cod_ciudad=sp.cod_ciudad and sp.cod_ciudad='$codSucursal' and sc.fecha='$fechaActual' and sc.estado=1 and de.nit='$nitEmpresa' and de.cod_empresa='$idEmpresa';";
-    $respCons = mysqli_query($enlaceCon,$cons);
-    $value=0;
-    $value=mysqli_result($respCons,0,0);
-    
-    return $value;
+    $respCons = mysqli_query($enlaceCon,$cons);    
+    $valor=0;
+    while ($datCons = mysqli_fetch_array($respCons)) {
+        $valor=$datCons[0];        
+    }
+
+    return $valor;
 }
 
 function verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon){  
@@ -231,4 +253,30 @@ function sincronizarParametros($act,$cod_entidad,$enlaceCon){
 
 
 
-
+function generarCufd_minka($cod_entidad,$nitEmpresa,$codSucursal,$enlaceCon){
+    $codigoSucursal=0;    
+    $codigoPuntoVenta=0;
+    $cons= "select c.cod_impuestos,(select sp.codigoPuntoVenta from siat_puntoventa sp where sp.cod_entidad=c.cod_entidad and sp.cod_ciudad=c.cod_ciudad limit 1) as codigoPuntoVenta from ciudades c where c.cod_entidad=$cod_entidad and c.cod_ciudad=$codSucursal";
+    // echo $cons;
+    $respCons = mysqli_query($enlaceCon,$cons);    
+    while ($datCons = mysqli_fetch_array($respCons)) {
+        $codigoSucursal=$datCons[0];
+        $codigoPuntoVenta=$datCons[1];
+    }
+    // error_reporting(E_ALL);
+    // ini_set('display_errors', '1');  
+  require_once '../siat_folder/funciones_siat.php';
+    $cuis=obtenerCuis_vigente_BD($codSucursal,$cod_entidad);
+    deshabilitarCufd($codSucursal,$cuis,date('Y-m-d'),$cod_entidad);
+    generarCufd($codSucursal,$codigoSucursal,$codigoPuntoVenta,$cod_entidad);
+    $banderaCUFD=verificarCUFDEmpresa($cod_entidad,$nitEmpresa,$codSucursal,$enlaceCon);
+    // $resultado="";    
+    // if($banderaCUFD>=1){
+    //     $resultado=array("estado"=>1,
+    //         "mensaje"=>"Correcto. CUFD Valido para la sucursal.");
+    // }elseif($banderaCUFD==0){
+    //     $resultado=array("estado"=>2,
+    //         "mensaje"=>"No existe el CUFD Actual para la sucursal solicitada.");
+    // }
+  return $banderaCUFD;
+}
