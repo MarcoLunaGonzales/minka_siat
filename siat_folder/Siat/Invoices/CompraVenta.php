@@ -9,8 +9,8 @@ class CompraVenta extends SiatInvoice
 	public function __construct()
 	{
 		parent::__construct();
-		$this->classAlias 				= 'facturaComputarizadaCompraVenta';
-		$this->cabecera->codigoDocumentoSector 	= DocumentTypes::FACTURA_COMPRA_VENTA;
+		$this->classAlias 				= 'facturaComputarizadaSectorEducativo';
+		$this->cabecera->codigoDocumentoSector 	= 11;
 		// $this->endpoint					= 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
 		$this->endpoint=conexionSiatUrl::wsdlCompraVenta;
 	}

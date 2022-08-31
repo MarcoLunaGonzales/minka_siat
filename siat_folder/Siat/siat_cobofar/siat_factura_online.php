@@ -58,14 +58,13 @@ class FacturaOnline
 		
 		$codigoSalida=$dataFact['cod_salida_almacenes'];
 		$descuentoVenta=$dataFact['descuento'];
-		require dirname(__DIR__). SB_DS ."../../conexionmysqli2.inc";
-		$sqlDetalle="select m.codigo_material, sum(s.`cantidad_unitaria`), m.`descripcion_material`, s.`precio_unitario`, 
-        sum(s.`descuento_unitario`), sum(s.`monto_unitario`) from `salida_detalle_almacenes` s, `material_apoyo` m where 
-        m.`codigo_material`=s.`cod_material` and s.`cod_salida_almacen`=$codigoSalida 
+		require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";
+		$sqlDetalle="SELECT m.codigo_material, sum(s.cantidad_unitaria), m.descripcion_material, s.precio_unitario, 
+        sum(s.descuento_unitario), sum(s.monto_unitario),s.observaciones
+        from salida_detalle_almacenes s, material_apoyo m 
+        where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoSalida 
         group by s.cod_material
         order by s.orden_detalle";
-
-        // y
         //print_r($enlaceCon);
 		$respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 		$montoTotal=0;$descuentoVentaProd=0;$filaIndice=0;
@@ -73,10 +72,15 @@ class FacturaOnline
 		while($datDetalle=mysqli_fetch_array($respDetalle)){
 		    $codInterno=$datDetalle[0];
 		    $cantUnit=$datDetalle[1];
-		    $nombreMat=str_replace("&","&amp;",$datDetalle[2]);
-		    $nombreMat=$datDetalle[2];
+		    $observaciones="";
+		    if($datDetalle['observaciones']==null){
+		    	$observaciones="";
+		    }
+		    $nombreMat=$datDetalle[2].$observaciones;
+		    $nombreMat=str_replace("&","&amp;",$nombreMat);		    
 		    $precioUnit=$datDetalle[3];
 		    $descUnit=$datDetalle[4];
+		    
 		    //$montoUnit=$datDetalle[5];
 		    $montoUnit=($cantUnit*$precioUnit)-$descUnit;
 		    
@@ -109,12 +113,10 @@ class FacturaOnline
 		    $montoTotal=$montoTotal+$montoUnitProd; 
 		}
 
-
 		$descuentoVenta=number_format($descuentoVenta,2,'.','');
 		$montoFinal=$montoTotal-$descuentoVenta;//-$descuentoVentaProd;
 		$montoTotal=number_format($montoTotal,2,'.','');
 		$montoFinal=number_format($montoFinal,2,'.','');
-
 
 		//DATOS QUE SE CARGAN CON LOS PARAMETROS POR DEFECTO
 		$factura->cabecera->razonSocialEmisor	= ''; // NO ES NECESARIO DECLARAR
@@ -132,6 +134,9 @@ class FacturaOnline
 		$factura->cabecera->codigoTipoDocumentoIdentidad	= $dataFact['siat_codigotipodocumentoidentidad']; //CI - CEDULA DE IDENTIDAD
 		$factura->cabecera->numeroDocumento		= $dataFact['nit'];
 		$factura->cabecera->codigoCliente		= $dataFact['cod_cliente'];
+		$factura->cabecera->nombreEstudiante	= $dataFact['siat_nombreEstudiante'];
+		$factura->cabecera->periodoFacturado	= $dataFact['siat_periodoFacturado'];
+
 		$factura->cabecera->codigoMetodoPago	= $dataFact['codigoMetodoPago'];
 
 
@@ -147,11 +152,10 @@ class FacturaOnline
 			$factura->cabecera->numeroTarjeta=$dataFact['nro_tarjeta'];	
 		}
 		$factura->cabecera->descuentoAdicional	= $descuentoVenta; //VERIFICAR
-
 		$factura->cabecera->codigoMoneda		= 1; //BOLIVIANO
 		$factura->cabecera->tipoCambio			= 1;
 		$factura->cabecera->usuario				= $dataFact['usuario'];
-		$factura->cabecera->codigoDocumentoSector= 1;//
+		$factura->cabecera->codigoDocumentoSector= 11;//
 		// $solicitud->codigoDocumentoSector 	= DocumentTypes::FACTURA_COMPRA_VENTA; //instanciar
 		//print_r($factura);
 		return $factura;
@@ -159,12 +163,10 @@ class FacturaOnline
 
 	public function testRecepcionFacturaElectronica($codSalidaFactura,$tipoEmision=1,$ex=false,$online_siat=1,$nuevo_cuf=0)
 	{
-
 		try
 		{
-			
 			//datosCompletosFactura
-			require dirname(__DIR__). SB_DS ."../../conexionmysqli2.inc";
+			require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";
 			//(SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad) as codigoPuntoVenta,
 			//(SELECT codigo_control from siat_cufd where cod_ciudad=c.cod_ciudad and fecha=s.fecha and estado=1)codigoControl,
 			//(SELECT cufd from siat_cufd where cod_ciudad=c.cod_ciudad and fecha=s.fecha and estado=1)cufd,
@@ -189,8 +191,7 @@ class FacturaOnline
 			s.monto_total as monto_referencial,
 			s.descuento,
 			(select  CONCAT(SUBSTRING_INDEX(nombres,' ', 1),' ',SUBSTR(paterno, 1,1),'.') FROM funcionarios where codigo_funcionario=s.cod_chofer)as usuario,s.siat_fechaemision,s.siat_complemento,s.siat_codigoRecepcion,s.siat_cuf,(select nro_tarjeta from tarjetas_salidas where cod_salida_almacen=s.cod_salida_almacenes limit 1)as nro_tarjeta,(select descripcionLeyenda from siat_sincronizarlistaleyendasfactura where codigo=s.siat_cod_leyenda) as leyenda,
-			(select siat_cafc from dosificaciones d where d.cod_dosificacion=s.cod_dosificacion and d.tipo_dosificacion=2 and d.tipo_descargo=2)as cafc,c.siat_codigoActividad,c.siat_codigoProducto
-
+			(select siat_cafc from dosificaciones d where d.cod_dosificacion=s.cod_dosificacion and d.tipo_dosificacion=2 and d.tipo_descargo=2)as cafc,c.siat_codigoActividad,c.siat_codigoProducto,s.siat_nombreEstudiante,s.siat_periodoFacturado
 			 from salida_almacenes s join almacenes a on a.cod_almacen=s.cod_almacen
 			join ciudades c on c.cod_ciudad=a.cod_ciudad
 			where s.cod_salida_almacenes=$codSalidaFactura;";
@@ -199,8 +200,6 @@ class FacturaOnline
 			$dataFact = $respFactura->fetch_array(MYSQLI_ASSOC);
 			//echo $consulta;
 			//print_r($dataFact);
-			// $privCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . 'privatekey.pem';
-			// $pubCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . 'CORPORACION_BOLIVIANA_DE_FARMACIAS_SA_CER.pem';		
 			$config = self::buildConfig();
 			$config->validate();
 
@@ -209,14 +208,6 @@ class FacturaOnline
 			$serviceCodigos = new ServicioFacturacionCodigos(null, null, $config->tokenDelegado);
 			$serviceCodigos->setConfig((array)$config);
 			$serviceCodigos->cuis = $dataFact['cuis'];
-
-
-			//ALEATORIAMENTE SON DOS PORQUE AL PRIMER RAND SIEMPRE RETORNA EL MISMO
-			// $sqlConf="SELECT descripcionLeyenda FROM siat_sincronizarlistaleyendasfactura where codigoActividad=475100 ORDER BY rand() LIMIT 1;";
-			// $respConf=mysqli_query($enlaceCon,$sqlConf);
-			// $sqlConf="SELECT descripcionLeyenda FROM siat_sincronizarlistaleyendasfactura where codigoActividad=475100 ORDER BY rand() LIMIT 1;";
-			// $respConf=mysqli_query($enlaceCon,$sqlConf);
-			// $leyenda=mysqli_result($respConf,0,0);
 
 			if($tipoEmision==2){//tipo emision OFFLINE
 				$tipoFactura=SiatInvoice::FACTURA_DERECHO_CREDITO_FISCAL;
@@ -232,7 +223,6 @@ class FacturaOnline
 				$factura->cabecera->codigoExcepcion=$dataFact['siat_excepcion'];
 				// $factura->cabecera->leyenda=$leyenda;
 				$factura->cabecera->leyenda=$dataFact['leyenda'];
-
 				$factura->cabecera->cuf=$dataFact['siat_cuf'];
 				
 				if($nuevo_cuf==1){
@@ -308,8 +298,7 @@ class FacturaOnline
 					$factura = self::buildInvoice($codigoPuntoVenta, $codigoSucursal, $config->modalidad,$dataFact,$fechaemision);
 				}
 
-				$factura->cabecera->codigoExcepcion=$dataFact['siat_excepcion'];				
-
+				$factura->cabecera->codigoExcepcion=$dataFact['siat_excepcion'];
 				// $factura->cabecera->leyenda=$leyenda;
 				$factura->cabecera->leyenda=$dataFact['leyenda'];
 
@@ -325,7 +314,7 @@ class FacturaOnline
 					$res = $service->recepcionFactura($factura);				
 				}
 				
-				//print_r($factura);
+				// print_r($res);
 				return $res;
 			}
 		}
@@ -387,7 +376,7 @@ class FacturaOnline
 		try
 		{
 			//datosCompletosFactura
-			require dirname(__DIR__). SB_DS ."../../conexionmysqli2.inc";			
+			require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";			
 			$global_agencia=$_COOKIE["global_agencia"];
 			$consulta="SELECT s.cuis,c.cod_impuestos from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1";		
 			$resp = mysqli_query($enlaceCon,$consulta);	
@@ -416,7 +405,7 @@ class FacturaOnline
 	public static function verificarEstadoFactura($codVenta)
 	{				
 		
-		require dirname(__DIR__). SB_DS ."../../conexionmysqli2.inc";			
+		require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";			
 		$global_agencia=$_COOKIE["global_agencia"];
 		$fechaActual=date("Y-m-d");
 		$consulta="SELECT s.cuis,c.cod_impuestos,(SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad limit 1) as punto_venta,(SELECT cufd from siat_cufd where fecha='$fechaActual' and cod_ciudad=c.cod_ciudad and s.cuis=cuis   and estado=1 order by fecha limit 1)as siat_cufd from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1";		
@@ -464,12 +453,13 @@ class FacturaOnline
 			$res = call_user_func([$sync, $action]);
 			$codigo=$res->return->mensajesList->codigo;
 			$mensaje=$res->return->mensajesList->descripcion;
+			// echo "<br>*";print_r($res);echo "<br>*";
 			if($codigo==926){
 				return array('1',$mensaje);
 			}else{//error
 				return array('2',$mensaje);
 			}
-			// print_r($res);
+			
 			
 		}
 		catch(\Exception $e)

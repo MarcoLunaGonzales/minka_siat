@@ -80,6 +80,13 @@ include("datosUsuario.php");
 						<li><a href="siat_folder/siat_cuis_cufd/index.php" target="contenedorPrincipal">Generación CUIS y CUFD</a></li>
 					</ul>	
 				</li>
+
+				<li><span>Salidas</span>
+				<ul>
+					<li><a href="navegadorVentas.php" target="contenedorPrincipal">Listado de Ventas</a></li>
+					<!-- <li><a href="registrar_salidaventas_manuales.php" target="_blank">Factura Manual de Contigencia</a></li> -->
+				</ul>	
+			</li>
 			</ul>
 		</div>			
 	</nav>

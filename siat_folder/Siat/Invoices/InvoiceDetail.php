@@ -14,9 +14,10 @@ class InvoiceDetail extends Message
 	public	$precioUnitario;
 	public	$montoDescuento;
 	public	$subTotal;
-	public	$numeroSerie;
-	public	$numeroImei;
 	
+	// public	$numeroSerie;//se quito esto para educacion
+	// public	$numeroImei;//se quito esto para educacion
+
 	public function __construct()
 	{
 		$this->unidadMedida	= 57;
