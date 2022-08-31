@@ -52,7 +52,7 @@ class ServicioFacturacion extends ServicioSiat
 			$solicitud->codigoModalidad			= $this->modalidad;
 			$solicitud->codigoAmbiente 			= $this->ambiente;
 			$solicitud->codigoPuntoVenta 		= $factura->cabecera->codigoPuntoVenta;// PARA COMPLETAR CON LA FACTURACION TIPO VENTA 1 COBOFAR SA		
-			$solicitud->codigoDocumentoSector 	= $factura->cabecera->codigoDocumentoSector; //DocumentTypes::FACTURA_COMPRA_VENTA; //ERROR: no acepta 1
+			$solicitud->codigoDocumentoSector 	= 11; 
 			$solicitud->tipoFacturaDocumento	= self::TIPO_FACTURA_CREDITO_FISCAL;
 			$solicitud->codigoEmision			= self::TIPO_EMISION_ONLINE;
 			$solicitud->fechaEnvio				= date("Y-m-d\TH:i:s.v");//$factura->cabecera->fechaEmision;//
@@ -138,7 +138,7 @@ class ServicioFacturacion extends ServicioSiat
 				$invoiceFiles[$conta] = $filename;
 			$solicitud->codigoPuntoVenta 		= $factura->cabecera->codigoPuntoVenta;// PARA COMPLETAR CON LA 
 
-			$solicitud->codigoDocumentoSector 	= $factura->cabecera->codigoDocumentoSector; //DocumentTypes::FACTURA_COMPRA_VENTA; //ERROR: no acepta 1
+			$solicitud->codigoDocumentoSector 	= 11; //DocumentTypes::FACTURA_COMPRA_VENTA; //ERROR: no acepta 1
 			// $this->wsdl = $factura->getEndpoint($this->modalidad, $this->ambiente);
 			$conta++;
 			}
@@ -151,7 +151,7 @@ class ServicioFacturacion extends ServicioSiat
 
 			$solicitud->codigoPuntoVenta 		= 1;// PARA COMPLETAR CON LA 
 
-			$solicitud->codigoDocumentoSector 	= 1; //
+			$solicitud->codigoDocumentoSector 	= 11; //
 			
 			$solicitud->cantidadFacturas		= count($facturas);
 			$solicitud->cufd 					= $this->cufd;
@@ -225,7 +225,7 @@ class ServicioFacturacion extends ServicioSiat
 			$solicitud->nit						= $this->nit;
 			$solicitud->codigoModalidad			= $this->modalidad;
 			$solicitud->codigoAmbiente 			= $this->ambiente;
-			$solicitud->codigoDocumentoSector 	= DocumentTypes::FACTURA_COMPRA_VENTA; //ERROR: no acepta 1
+			$solicitud->codigoDocumentoSector 	= 11; //ERROR: no acepta 1
 			$solicitud->tipoFacturaDocumento	= $tipoFactura;
 			// $solicitud->fechaEnvio				= date("Y-m-d\TH:i:s.m0");
 			$solicitud->fechaEnvio				= $this->fechaEnvio;
@@ -257,7 +257,7 @@ class ServicioFacturacion extends ServicioSiat
 			$solicitud = new SolicitudServicioValidacionRecepcionPaquete();
 			
 			$solicitud->codigoAmbiente			= $this->ambiente;
-			$solicitud->codigoDocumentoSector	= DocumentTypes::FACTURA_COMPRA_VENTA; //ERROR: no acepta 1
+			$solicitud->codigoDocumentoSector	= 11; //ERROR: no acepta 1
 			$solicitud->codigoEmision			= $tipoEmision;
 			$solicitud->codigoModalidad 		= $this->modalidad;
 			$solicitud->codigoSistema			= $this->codigoSistema;
@@ -293,7 +293,7 @@ class ServicioFacturacion extends ServicioSiat
 			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
 			$solicitud->codigoPuntoVenta 		= 1;// PARA COMPLETAR CON LA 
 
-			$solicitud->codigoDocumentoSector 	= 1; //
+			$solicitud->codigoDocumentoSector 	= 11; //
 			
 			$solicitud->codigoRecepcion		= $codigoRecepcion;
 			$solicitud->cufd 					= $this->cufd;
@@ -334,7 +334,7 @@ class ServicioFacturacion extends ServicioSiat
 
 			$solicitud->codigoPuntoVenta 		= $codigoPuntoVenta;// PARA COMPLETAR CON LA
 			 $solicitud->codigoSucursal			=$codigoSucursal;
-			$solicitud->codigoDocumentoSector 	= 1; //
+			$solicitud->codigoDocumentoSector 	= 11; //
 			// $solicitud->codigoDocumentoSector 	= DocumentTypes::FACTURA_COMPRA_VENTA; //instanciar
 			$solicitud->cuf						= $cuf;
 			$solicitud->codigoMotivo			= 1;//motivo anulacion por defecto 1 //FACTURA MAL EMITIDA
@@ -378,7 +378,7 @@ class ServicioFacturacion extends ServicioSiat
 					'cuis'				 => $this->cuis,
 					'nit'				 => $this->nit,					
 					'tipoFacturaDocumento'=>self::TIPO_FACTURA_CREDITO_FISCAL,
-					'codigoDocumentoSector'=>1,
+					'codigoDocumentoSector'=>11,
 					'codigoEmision'=>self::TIPO_EMISION_ONLINE,
 					'cufd'=>$cufd,
 					'cuf'=>$cuf

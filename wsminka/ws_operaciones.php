@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
                         $listAccion=sincronizarParametros($accion,$idEmpresa,$enlaceCon);//
                         $totalComponentes=count($listAccion);
-                        $resultado=array("estado"=>true,
+                        $resultado=array("estado"=>1,
                             "mensaje"=>"Tipos de pago obtenido correctamente", 
                             "lista"=>$listAccion, 
                             "totalComponentes"=>$totalComponentes
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
                         $listAccion=sincronizarParametros($accion,$idEmpresa,$enlaceCon);//
                         $totalComponentes=count($listAccion);
-                        $resultado=array("estado"=>true,
+                        $resultado=array("estado"=>1,
                             "mensaje"=>"Tipos de documento obtenido correctamente", 
                             "lista"=>$listAccion, 
                             "totalComponentes"=>$totalComponentes

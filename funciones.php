@@ -14,7 +14,7 @@ return $remote_server_output;
 
 function obtenerValorConfiguracion($enlaceCon,$id){
 	$estilosVenta=1;
-	//require("conexionmysqli2.inc");
+	//require("conexionmysqli2.php");
 	$sql = "SELECT valor_configuracion from configuraciones c where id_configuracion=$id";
 	$resp=mysqli_query($enlaceCon,$sql);
 	$codigo=0;
@@ -24,11 +24,11 @@ function obtenerValorConfiguracion($enlaceCon,$id){
 	return($codigo);
 }
 
-function numeroCorrelativoCUFD($enlaceCon,$tipoDoc){
-	//require("conexionmysqli2.inc");
-	$globalCiudad=$_COOKIE['global_agencia'];
-	//echo "GlobalCiudad".$globalCiudad;
-	$globalAlmacen=$_COOKIE['global_almacen'];	 
+function numeroCorrelativoCUFD($enlaceCon,$tipoDoc,$globalCiudad,$globalAlmacen){
+	//require("conexionmysqli2.php");
+	// $globalCiudad=$_COOKIE['global_agencia'];
+	// //echo "GlobalCiudad".$globalCiudad;
+	// $globalAlmacen=$_COOKIE['global_almacen'];	 
 	//echo "GlobalAlmacen".$globalAlmacen;
   $fechaActual=date("Y-m-d");
   $sqlCufd="select cufd FROM siat_cufd where cod_ciudad='$globalCiudad' and estado=1 and fecha='$fechaActual'";
@@ -61,7 +61,7 @@ function numeroCorrelativoCUFD($enlaceCon,$tipoDoc){
 }
 
 function numeroCorrelativoCUFD2($tipoDoc){
-	require("conexionmysqli2.inc");
+	require("conexionmysqli2.php");
 	$globalCiudad=$_COOKIE['global_agencia'];
 	$globalAlmacen=$_COOKIE['global_almacen'];	 
 
@@ -93,7 +93,7 @@ function numeroCorrelativoCUFD2($tipoDoc){
 }
 
 function obtenerCorreosListaCliente($id_proveedor){	
-  	require("conexionmysqli2.inc");
+  	require("conexionmysqli2.php");
   	$sql_detalle="SELECT DISTINCT email_cliente FROM `clientes` where cod_cliente='$id_proveedor'";
   	$correosProveedor="";  
   	$resp=mysqli_query($enlaceCon,$sql_detalle);  
@@ -113,7 +113,7 @@ function obtenerCorreosListaCliente($id_proveedor){
 function cargarDocumentosPDF($codigoVenta){
 	$home=1;
 	ob_start();
-	require "conexionmysqli2.inc";
+	require "conexionmysqli2.php";
 	include "dFacturaElectronicaAllPdf.php";
 	$html = ob_get_clean();
 	//error_reporting(E_ALL);
@@ -134,7 +134,7 @@ function cargarDocumentosPDF($codigoVenta){
 }
 function cargarDocumentosXML($codSalida){
 	// $codSalida=$_GET['codVenta'];
-	require "conexionmysqli2.inc";
+	require "conexionmysqli2.php";
 	require_once "siat_folder/funciones_siat.php";  
 	$facturaImpuestos=generarXMLFacturaVentaImpuestos($codSalida);
 
@@ -532,7 +532,7 @@ function montoVentaDocumento($enlaceCon,$codVenta){
 
 function obtenerEstadoSalida($codSalida){
   	$estilosVenta=1;
-  	require("conexionmysqli2.inc");
+  	require("conexionmysqli2.php");
   	$sql_detalle="SELECT salida_anulada FROM salida_almacenes where cod_salida_almacenes='$codSalida'";
   	$estado=0;	
   	$resp=mysqli_query($enlaceCon,$sql_detalle);

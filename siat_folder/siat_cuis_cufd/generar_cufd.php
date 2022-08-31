@@ -13,7 +13,7 @@ $cod_impuestos=$dat[0];
 $codigoPuntoVenta=$dat[1];
 $cuis=obtenerCuis_vigente_BD($ciudad,$cod_entidad);
 deshabilitarCufd($ciudad,$cuis,date('Y-m-d'),$cod_entidad);
-generarCufd($ciudad,$cod_impuestos,$codigoPuntoVent,$cod_entidad);
+generarCufd($ciudad,$cod_impuestos,$codigoPuntoVenta,$cod_entidad);
 if(isset($_GET['l'])){
 	?><script type="text/javascript">window.location.href='../../registrar_salidaventas.php';</script><?php	
 }else{

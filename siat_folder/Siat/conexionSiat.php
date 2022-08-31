@@ -4,12 +4,12 @@
 // 	$globalEntidad=$_COOKIE['globalIdEntidad'];
 // 	switch ($globalEntidad) {
 // 		case 2://Entidad prueba
-			$siat_nombreSistema='TuAdmin';
-			$siat_codigoSistema='71E742C6AB21890588DC46E';
+			$siat_nombreSistema='uniloyola v1';
+			$siat_codigoSistema='721CFFC51FA7DC9C67E0DA6';
 			$siat_tipo='PROPIO';
-			$siat_nit=3760252015;
-			$siat_razonSocial='NAVIA CASTILLO ROLANDO EDUARDO';
-			$siat_tokenDelegado='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJOYXZpYTAxNSIsImNvZGlnb1Npc3RlbWEiOiI3MUU3NDJDNkFCMjE4OTA1ODhEQzQ2RSIsIm5pdCI6Ikg0c0lBQUFBQUFBQUFETTJOek13TWpVeU1EUUZBSVdFQ3c4S0FBQUEiLCJpZCI6MzA5NjczLCJleHAiOjE2ODAwNDgwMDAsImlhdCI6MTY0ODU4OTYzMiwibml0RGVsZWdhZG8iOjM3NjAyNTIwMTUsInN1YnNpc3RlbWEiOiJTRkUifQ.gpawQf5FFR67RVoXd8YknoEcWBf25M4r06O_q0j9kuloP8e9vk5ba86BEFLstnZcKGz1Er9bqsxSWPG3hgFlTQ';
+			$siat_nit=315910027;
+			$siat_razonSocial='UNIVERSIDAD LOYOLA DE BOLIVIA SOCIEDAD ANONIMA';
+			$siat_tokenDelegado='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb3lvbGFTQTIwMTYiLCJjb2RpZ29TaXN0ZW1hIjoiNzIxQ0ZGQzUxRkE3REM5QzY3RTBEQTYiLCJuaXQiOiJINHNJQUFBQUFBQUFBRE0yTkxVME5EQXdNZ2NBc3hvd2ZBa0FBQUE9IiwiaWQiOjY2ODE1NSwiZXhwIjoxNjkyODM1MjAwLCJpYXQiOjE2NjEzOTUyMzgsIm5pdERlbGVnYWRvIjozMTU5MTAwMjcsInN1YnNpc3RlbWEiOiJTRkUifQ.qwvgqc-zTu_tOzos9_VG2-3s2mg1GwQYr1fX1Wokypuus5N4o_age-Sdpvtl2FPun-hbygZD7sfC5PqvxPLIlQ';
 // 		break;
 // 		default:
 // 			$siat_nombreSistema='';
