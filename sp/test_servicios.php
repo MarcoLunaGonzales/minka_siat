@@ -39,25 +39,20 @@ $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
     //    );  
 
     
-	$url="http://localhost:8080/minka_siat/wsminka/ws_operaciones.php";
-	$jsons=callService($parametros, $url);
-	//print_r($jsons);
+	$url="http://localhost:8090/minka_siat/wsminka/ws_operaciones.php";
+	$parametros=json_encode($parametros);
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL,$url);
+  curl_setopt($ch, CURLOPT_POST, TRUE);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $parametros);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $remote_server_output = curl_exec ($ch);
+  curl_close ($ch);
 	
-	// $obj=json_decode($jsons);//decodificando json
-	// $detalle=$obj->estado;
-	// $obj=json_decode($jsons);
+  //print_r($jsons);
 	
-//	$detalle=$obj->datosPersonal;	
-	// foreach ($detalle as $objDet){
-	// 	$estadoJ = $objDet->codigo;
-	// 	$mensajeJ = $objDet->descripcion;
-		
-	// 	echo "estado: ".$estadoJ." mensaje: ".$mensajeJ;
 	
-	// }  
-$obj=json_decode($jsons);//decodificando json
-// header('Content-type: application/json');  
-// print_r($jsons); 
+$obj=json_decode($remote_server_output);//decodificando json
 
 if(isset($obj->estado))
   $estadoX=$obj->estado;
