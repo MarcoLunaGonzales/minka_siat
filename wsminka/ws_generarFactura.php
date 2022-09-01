@@ -361,7 +361,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 }
                 if($errorFacturaXml==0){
                     $estado_facturado=0;
-                    $mensaje="transacción Existosa :)"; 
+                    $mensaje="Transacción Exitosa :)"; 
                     $url="location.href='formatoFacturaOnLine.php?codVenta=$codigo';";
                 }else{ //ESTO ES CUANDO HAY ERROR FACTURA
                     $estado_facturado=1;

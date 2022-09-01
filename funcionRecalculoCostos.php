@@ -1,5 +1,4 @@
 <?php
-echo "aqui";
 require('function_formatofecha.php');
 require('function_comparafechas.php');
 
@@ -83,8 +82,8 @@ function recalculaCostos($enlaceCon,$codigoItem,$rpt_almacen){
 		while($ii<=$i and $jj<=$j)
 		{	$fecha_ingresos=$vector_fechas_ingresos[$ii];
 			$fecha_salidas=$vector_fechas_salidas[$jj];
-			echo "resultado".$fecha_ingresos."-".$fecha_salidas;
-			echo "resultado de comparaFechas".compara_fechas($fecha_ingresos,$fecha_salidas);
+			//echo "resultado".$fecha_ingresos."-".$fecha_salidas;
+			//echo "resultado de comparaFechas".compara_fechas($fecha_ingresos,$fecha_salidas);
 			if(compara_fechas($fecha_ingresos,$fecha_salidas)<0)
 			{	$vector_final_fechas[$zz]=$fecha_ingresos;
 				$ii++;
