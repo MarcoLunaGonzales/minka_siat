@@ -1,19 +1,19 @@
 <?php 
-// error_reporting(E_ALL);
-    // ini_set('display_errors', '1');  
+ error_reporting(E_ALL);
+ini_set('display_errors', '1');  
 
-$sucursal="0";
+$sucursal="1";
 $tipoTabla="3";
-$idRecibo="28626";
-$fecha="2022-08-26";
+$idRecibo="28622";
+$fecha="2022-08-31";
 $idPersona="-28626";
 // $monto="550";
 $gestion="2022";
 $usuario="Alison Ala";
-$nitCliente="123456";
-$nombreFactura="Lopes ";
-$NombreEstudiante="juan calle";
-$Concepto="inscripcion taller motos taller motos";
+$nitCliente="4868422";
+$nombreFactura="LUNA";
+$NombreEstudiante="MARCO ANTONIO LUNA GONZALES";
+$Concepto="INFORMATICA 111";
 $tipoPago="1";
 $nroTarjeta=0;
 $tipoDocumento="1";
@@ -55,7 +55,7 @@ $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
            "periodoFacturado"=>$periodoFacturado//***
        );  
     
-	$url="http://localhost:8080/minka_siat/wsminka/ws_generarFactura.php";
+	$url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
 	$jsons=callService($parametros, $url);
 	//print_r($jsons);
   

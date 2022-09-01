@@ -81,7 +81,7 @@ include("datosUsuario.php");
 					</ul>	
 				</li>
 
-				<li><span>Salidas</span>
+				<li><span>Facturas SIAT</span>
 				<ul>
 					<li><a href="navegadorVentas.php" target="contenedorPrincipal">Listado de Ventas</a></li>
 					<!-- <li><a href="registrar_salidaventas_manuales.php" target="_blank">Factura Manual de Contigencia</a></li> -->
