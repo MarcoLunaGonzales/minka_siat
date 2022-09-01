@@ -22,21 +22,21 @@ $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
   //           "nitEmpresa"=>'10916889016' //nit  de empresa
   //         );
 
-  //Lista de Tipos documento
-	$parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
-           "accion"=>"sincronizarParametricaTipoDocumentoIdentidad", //
-           "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
-           "nitEmpresa"=>'10916889016' //nit  de empresa
-       );  
+ //  //Lista de Tipos documento
+	// $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
+ //           "accion"=>"sincronizarParametricaTipoDocumentoIdentidad", //
+ //           "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
+ //           "nitEmpresa"=>'10916889016' //nit  de empresa
+ //       );  
 
 
   //VERIFICACION CUFD
-//  $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
-  //        "accion"=>"verificarCUFDEmpresa", //
-   //       "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
-    //      "nitEmpresa"=>'10916889016', //nit  de empresa
-    //      "codSucursal"=>'1' //COD SUCURSAL
-    //    );  
+ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
+         "accion"=>"verificarCUFDEmpresa", //
+         "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
+         "nitEmpresa"=>'10916889016', //nit  de empresa
+         "codSucursal"=>'1' //COD SUCURSAL
+       );  
 
     
 	$url="http://localhost:8090/minka_siat/wsminka/ws_operaciones.php";
@@ -49,10 +49,10 @@ $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
   $remote_server_output = curl_exec ($ch);
   curl_close ($ch);
 	
-  //print_r($jsons);
+  print_r($remote_server_output);
 	
 	
-$obj=json_decode($remote_server_output);//decodificando json
+/*$obj=json_decode($remote_server_output);//decodificando json
 
 if(isset($obj->estado))
   $estadoX=$obj->estado;
@@ -72,7 +72,7 @@ if($estadoX){
     echo "codigo: ".$codigoX." Cod Clasificador: ".$codigoClasificadorX." Descr:".$descripcionX."<br>";
   }  
 }
-
+*/
 
 
       

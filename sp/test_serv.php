@@ -38,12 +38,16 @@ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey,
             "codSucursal"=>'1' //codigo de agencia
           );
     
-	$url="http://localhost:8080/minka_siat/wsminka/ws_operaciones.php";
+	$url="http://localhost:8090/minka_siat/wsminka/ws_operaciones.php";
 	$jsons=callService($parametros, $url);
   $obj=json_decode($jsons);//decodificando json
   header('Content-type: application/json');  
   print_r($jsons); 
-  if(isset($obj->estado))
+  
+
+
+
+  /*if(isset($obj->estado))
     $estadoX=$obj->estado;
   else $estadoX=0;
   if(isset($obj->mensaje))
@@ -59,7 +63,7 @@ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey,
       $descripcionX=$listaX->descripcion;
       echo "codigo: ".$codigoX." Cod Clasificador: ".$codigoClasificadorX." Descr:".$descripcionX."<br>";
     }  
-  }
+  }*/
 
 
 
