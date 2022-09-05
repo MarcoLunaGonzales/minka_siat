@@ -314,7 +314,7 @@ class FacturaOnline
 					$res = $service->recepcionFactura($factura);				
 				}
 				
-				// print_r($res);
+				// print_r($factura);
 				return $res;
 			}
 		}

@@ -14,10 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
             if($accion=="generarFacturaMinka"){//obtenemos las ciudades del cliente
                     require_once '../conexionmysqli2.php';
                     require_once '../siat_folder/funciones_servicios.php';
-                    if(isset($datos['idEmpresa'])){
-                        $idEmpresa=$datos['idEmpresa'];//
-                        $nitEmpresa=$datos['nitEmpresa'];//
-                        if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
+                    // if(isset($datos['idEmpresa'])){
+                        // $idEmpresa=$datos['idEmpresa'];//
+                        // $nitEmpresa=$datos['nitEmpresa'];//
+                        // if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
                             if(isset($datos['sucursal']) && isset($datos['tipoTabla']) && isset($datos['idRecibo']) && isset($datos['fecha']) && isset($datos['idPersona']) && isset($datos['monto_total']) && isset($datos['descuento']) && isset($datos['monto_final']) && isset($datos['id_usuario']) && isset($datos['nitCliente']) && isset($datos['nombreFactura']) && isset($datos['NombreEstudiante']) && isset($datos['Concepto']) && isset($datos['tipoPago']) && isset($datos['nroTarjeta']) && isset($datos['tipoDocumento']) && isset($datos['complementoDocumento']) && isset($datos['periodoFacturado'])){
                                 $sucursal=$datos['sucursal'];
                                 $tipoTabla=$datos['tipoTabla'];
@@ -68,14 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                                 "mensaje"=>"ERROR. Variables incompletas");
                             }
                                                         
-                        }else{
-                            $resultado=array("estado"=>4,
-                            "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
-                        }
-                    }else{
-                        $resultado=array("estado"=>4,
-                        "mensaje"=>"ERROR. Variables incompletas");
-                    }
+                        // }else{
+                        //     $resultado=array("estado"=>4,
+                        //     "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
+                        // }
+                    // }else{
+                    //     $resultado=array("estado"=>4,
+                    //     "mensaje"=>"ERROR. Variables incompletas");
+                    // }
             }else{
                 $resultado=array("estado"=>4,
                     "mensaje"=>"ERROR. No existe la Accion Solicitada.");
@@ -287,7 +287,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
 
        if($nroTarjeta!=0&&$nroTarjeta!=""){//&&$tipoVenta==2 
            $nro_tarjeta=$nroTarjeta;
-           $monto_tarjeta=$monto_final;
+           $monto_tarjeta=$totalFinal;
            $banco_tarjeta=0;
            $nro_tarjeta=str_replace("*","0",$nro_tarjeta);
            $sql_tarjeta="INSERT INTO tarjetas_salidas (nro_tarjeta,monto,cod_banco,cod_salida_almacen,estado) VALUES('$nro_tarjeta','$monto_tarjeta','$banco_tarjeta','$codigo',1)";
@@ -314,7 +314,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 // $precioUnitario=$_POST["precio_unitario$i"];
                 // $descuentoProducto=$_POST["descuentoProducto$i"];
                 $cantidadUnitaria=1;
-                $precioUnitario=$monto_final;
+                $precioUnitario=$totalVenta;
                 $descuentoProducto=0;
 
                 //SE DEBE CALCULAR EL MONTO DEL MATERIAL POR CADA UNO PRECIO*CANTIDAD - EL DESCUENTO ES UN DATO ADICIONAL
