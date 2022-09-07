@@ -213,7 +213,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     $created_by=$usuarioVendedor;
     $contador = 0;
     do {
-        echo "1<br>";
+        // echo "1<br>";
         $anio=date("Y");
         $created_at=date("Y-m-d H:i:s");
         $sql="SELECT IFNULL(max(cod_salida_almacenes)+1,1) FROM salida_almacenes";
@@ -221,22 +221,22 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         // $codigo=mysqli_result($resp,0,0);
         $datCodSalida=mysqli_fetch_array($resp);
         $codigo=$datCodSalida[0];
-        echo "2*".$codigo."<br>";
+        // echo "2*".$codigo."<br>";
         //PARA CUANDO ES FACTURA Y ACTIVAMOS PROCESOS SIAT
         // if($tipoDoc==1 || $tipoDoc==4){      
             $sqlCuis="select cuis FROM siat_cuis where cod_ciudad='$globalSucursal' and estado=1 and cod_gestion='$anio' LIMIT 1";
-            echo $sqlCuis;
+            // echo $sqlCuis;
             $respCuis=mysqli_query($enlaceCon,$sqlCuis);
             // $cuis=mysqli_result($respCuis,0,0);
             $datConf=mysqli_fetch_array($respCuis);
             $cuis=$datConf[0];    
-            echo "3*".$cuis."<br>";
+            // echo "3*".$cuis."<br>";
             $sqlPV="SELECT codigoPuntoVenta FROM siat_puntoventa where cod_ciudad='$globalSucursal' LIMIT 1";
             $respPV=mysqli_query($enlaceCon,$sqlPV);
             // $codigoPuntoVenta=mysqli_result($respPV,0,0);
             $datPV=mysqli_fetch_array($respPV);
             $codigoPuntoVenta=$datPV[0];
-            echo "4*".$codigoPuntoVenta."<br>";
+            // echo "4*".$codigoPuntoVenta."<br>";
             $sqlCufd="SELECT codigo,cufd,codigo_control FROM siat_cufd where cod_ciudad='$globalSucursal' and estado=1 and fecha='$fecha' and cuis='$cuis' LIMIT 1";        
             // echo $sqlCufd;
             $respCufd=mysqli_query($enlaceCon,$sqlCufd);
