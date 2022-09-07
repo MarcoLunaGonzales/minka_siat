@@ -313,8 +313,12 @@ class FacturaOnline
 				}else{
 					$res = $service->recepcionFactura($factura);				
 				}
-				
-				// print_r($factura);
+				echo "<br><br><br>";
+				print_r($factura);
+				echo "<br><br><br>";
+				print_r($res);
+				echo "<br><br><br>";
+
 				return $res;
 			}
 		}
