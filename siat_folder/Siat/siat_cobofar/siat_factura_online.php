@@ -64,7 +64,7 @@ class FacturaOnline
         from salida_detalle_almacenes s, material_apoyo m 
         where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoSalida 
         group by s.cod_material
-        order by s.orden_detalle";
+        ";//order by s.orden_detalle
         //print_r($enlaceCon);
 		$respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 		$montoTotal=0;$descuentoVentaProd=0;$filaIndice=0;
@@ -205,10 +205,12 @@ class FacturaOnline
 
 			$codigoPuntoVenta = $dataFact['codigoPuntoVenta'];
 			$codigoSucursal = $dataFact['cod_impuestos'];
+
 			$serviceCodigos = new ServicioFacturacionCodigos(null, null, $config->tokenDelegado);
 			$serviceCodigos->setConfig((array)$config);
 			$serviceCodigos->cuis = $dataFact['cuis'];
-
+			echo "<br><br>";
+			// print_r($serviceCodigos);echo "<br><br>";
 			if($tipoEmision==2){//tipo emision OFFLINE
 				$tipoFactura=SiatInvoice::FACTURA_DERECHO_CREDITO_FISCAL;
 				$tipoEmision = SiatInvoice::TIPO_EMISION_OFFLINE;
@@ -307,14 +309,19 @@ class FacturaOnline
 				// }else{
 				// 	$factura->cabecera->codigoExcepcion=0;
 				// }
-
+				echo "<br><br>";
+				print_r($factura);echo "<br><br>";
 				if($online_siat==2){
 					$res = $service->recepcionFactura($factura,$online_siat);	
 				}else{
 					$res = $service->recepcionFactura($factura);				
 				}
-				
-				// print_r($factura);
+				echo "<br><br><br>";
+				print_r($factura);
+				echo "<br><br><br>";
+				print_r($res);
+				echo "<br><br><br>";
+
 				return $res;
 			}
 		}
