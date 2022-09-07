@@ -112,8 +112,9 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     
     // $globalSucursal=1;//cod ciudad //encontrar dato
     // $almacenOrigen=1000;//cod almacen
+    // $globalSucursal=$sucursal;//cod ciudad //encontrar dato    
 
-    $globalSucursal=$sucursal;//cod ciudad //encontrar dato    
+    $globalSucursal=1;//cod ciudad //encontrar dato    
     $datosCiudad=obtenerAlmacen($globalSucursal,$enlaceCon);
     $almacenOrigen=$datosCiudad[0];
     $cod_impuestos=$datosCiudad[1];
