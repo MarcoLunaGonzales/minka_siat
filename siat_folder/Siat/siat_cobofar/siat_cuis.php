@@ -50,10 +50,14 @@ class CuisTest
 
 			//echo "DATOS:".$codigoPuntoVenta."_".$codigoSucursal;
 			$resCuis = $servCodigos->cuis($codigoPuntoVenta, $codigoSucursal);			
-			//print_r($resCuis);
+
+			if(isset($resCuis->RespuestaCuis->mensajesList->descripcion)){
+				// echo $resCuis->RespuestaCuis->descripcion;
+				print_r($resCuis->RespuestaCuis->mensajesList->descripcion);
+			}
+
 			$cuis=$resCuis->RespuestaCuis->codigo;
 
-			//
 			require dirname(__DIR__). SB_DS ."../../conexionmysqli2.inc";
 			$yearActual=date("Y");
 			$sql="select cuis from siat_cuis where cod_ciudad='$ciudad' and cod_entidad='$cod_entidad' and cod_gestion='$yearActual' and estado=1";
@@ -61,7 +65,7 @@ class CuisTest
 			$dat=mysqli_fetch_array($resp);
 			$cuisAnt=$dat[0];
 			//echo $cuisAnt." - ".$cuis;
-			if($cuisAnt==""||$cuisAnt!=$cuis){
+			if(($cuisAnt=="" || $cuisAnt!=$cuis) && $cuis<>"" && $cuis<>null){
 				//echo "ENTRO!!!";
 				if($cuisAnt!=$cuis){
 					$sqlUpdate="UPDATE siat_cuis SET estado=0 where cod_ciudad='$ciudad' and cod_gestion='$yearActual' and estado=1 and cod_entidad='$cod_entidad';";

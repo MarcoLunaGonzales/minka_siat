@@ -109,8 +109,15 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     require_once "../siat_folder/funciones_siat.php";
 
     $usuarioVendedor=$id_usuario;//codigo usuario
-    $globalSucursal=1;//cod ciudad //encontrar dato
-    $almacenOrigen=1000;//cod almacen
+    
+    // $globalSucursal=1;//cod ciudad //encontrar dato
+    // $almacenOrigen=1000;//cod almacen
+
+    $globalSucursal=$sucursal;//cod ciudad //encontrar dato    
+    $datosCiudad=obtenerAlmacen($globalSucursal,$enlaceCon);
+    $almacenOrigen=$datosCiudad[0];
+    $cod_impuestos=$datosCiudad[1];
+    $cod_entidad=$datosCiudad[2];;
 
     $errorProducto="";
     $totalFacturaMonto=0;
@@ -140,9 +147,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
 
     $tipoVenta=$tipoPago;
     $observaciones="";
-
     $cuf="";
-
     $totalVenta=$monto_total;
     $descuentoVenta=$descuento;
     $totalFinal=$monto_final;
@@ -204,7 +209,6 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     }
 
     $created_by=$usuarioVendedor;
-
     $contador = 0;
     do {
         $anio=date("Y");
@@ -222,7 +226,14 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
             $respCuis=mysqli_query($enlaceCon,$sqlCuis);
             // $cuis=mysqli_result($respCuis,0,0);
             $datConf=mysqli_fetch_array($respCuis);
-            $cuis=$datConf[0];      
+            $cuis=$datConf[0];    
+
+            $sqlPV="SELECT codigoPuntoVenta FROM siat_puntoventa where cod_ciudad='$globalSucursal' LIMIT 1";
+            $respPV=mysqli_query($enlaceCon,$sqlPV);
+            // $codigoPuntoVenta=mysqli_result($respPV,0,0);
+            $datPV=mysqli_fetch_array($respPV);
+            $codigoPuntoVenta=$datPV[0];
+
             $sqlCufd="SELECT codigo,cufd,codigo_control FROM siat_cufd where cod_ciudad='$globalSucursal' and estado=1 and fecha='$fecha' and cuis='$cuis' LIMIT 1";        
             // echo $sqlCufd;
             $respCufd=mysqli_query($enlaceCon,$sqlCufd);
@@ -230,12 +241,16 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
             $codigoCufd=$datCufd[0];
             $cufd=$datCufd[1];
             $controlCodigo=$datCufd[2];
-
-            $sqlPV="SELECT codigoPuntoVenta FROM siat_puntoventa where cod_ciudad='$globalSucursal' LIMIT 1";   
-            $respPV=mysqli_query($enlaceCon,$sqlPV);
-            // $codigoPuntoVenta=mysqli_result($respPV,0,0);
-            $datPV=mysqli_fetch_array($respPV);
-            $codigoPuntoVenta=$datPV[0];
+            if($codigoCufd==null || $codigoCufd==""){                
+                generarCufd($globalSucursal,$cod_impuestos,$codigoPuntoVenta,$cod_entidad);
+                $sqlCufd="SELECT codigo,cufd,codigo_control FROM siat_cufd where cod_ciudad='$globalSucursal' and estado=1 and fecha='$fecha' and cuis='$cuis' LIMIT 1";        
+                // echo $sqlCufd;
+                $respCufd=mysqli_query($enlaceCon,$sqlCufd);
+                $datCufd=mysqli_fetch_array($respCufd);
+                $codigoCufd=$datCufd[0];
+                $cufd=$datCufd[1];
+                $controlCodigo=$datCufd[2];
+            }
             
             $vectorNroCorrelativo=numeroCorrelativoCUFD($enlaceCon,$tipoDoc,$globalSucursal,$almacenOrigen);
             $nro_correlativo=$vectorNroCorrelativo[0];      
@@ -436,4 +451,22 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         $estado_facturado=2;//error
         return array($estado_facturado,$mensaje,$codigo,$nro_correlativo);
     }   
+}
+
+
+function obtenerAlmacen($cod_ciudad,$enlaceCon){
+    //require("conexionmysqli2.php");
+    $sql="SELECT a.cod_almacen,c.cod_impuestos,c.cod_entidad
+        from ciudades c join almacenes a on c.cod_ciudad=a.cod_ciudad
+        where c.cod_ciudad=$cod_ciudad";
+    $resp=mysqli_query($enlaceCon,$sql);
+    $cod_almacen=0;
+    $cod_impuestos=0;
+    $cod_entidad=0;
+    while ($dat = mysqli_fetch_array($resp)) {
+      $cod_almacen=$dat['cod_almacen'];
+      $cod_impuestos=$dat['cod_impuestos'];
+      $cod_entidad=$dat['cod_entidad'];
+    }
+    return array($cod_almacen,$cod_impuestos,$cod_entidad);
 }
