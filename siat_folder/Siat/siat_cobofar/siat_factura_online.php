@@ -195,7 +195,7 @@ class FacturaOnline
 			 from salida_almacenes s join almacenes a on a.cod_almacen=s.cod_almacen
 			join ciudades c on c.cod_ciudad=a.cod_ciudad
 			where s.cod_salida_almacenes=$codSalidaFactura;";
-			 echo $consulta;
+			 // echo $consulta;
 			$respFactura = mysqli_query($enlaceCon,$consulta);	
 			$dataFact = $respFactura->fetch_array(MYSQLI_ASSOC);
 			//echo $consulta;
@@ -205,12 +205,10 @@ class FacturaOnline
 
 			$codigoPuntoVenta = $dataFact['codigoPuntoVenta'];
 			$codigoSucursal = $dataFact['cod_impuestos'];
-
 			$serviceCodigos = new ServicioFacturacionCodigos(null, null, $config->tokenDelegado);
 			$serviceCodigos->setConfig((array)$config);
 			$serviceCodigos->cuis = $dataFact['cuis'];
-			echo "<br><br>";
-			print_r($serviceCodigos);echo "<br><br>";
+
 			if($tipoEmision==2){//tipo emision OFFLINE
 				$tipoFactura=SiatInvoice::FACTURA_DERECHO_CREDITO_FISCAL;
 				$tipoEmision = SiatInvoice::TIPO_EMISION_OFFLINE;
@@ -309,19 +307,14 @@ class FacturaOnline
 				// }else{
 				// 	$factura->cabecera->codigoExcepcion=0;
 				// }
-				echo "<br><br>";
-				print_r($factura);echo "<br><br>";
+
 				if($online_siat==2){
 					$res = $service->recepcionFactura($factura,$online_siat);	
 				}else{
 					$res = $service->recepcionFactura($factura);				
 				}
-				echo "<br><br><br>";
-				print_r($factura);
-				echo "<br><br><br>";
-				print_r($res);
-				echo "<br><br><br>";
-
+				
+				// print_r($factura);
 				return $res;
 			}
 		}
