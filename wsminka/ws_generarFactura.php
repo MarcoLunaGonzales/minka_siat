@@ -223,7 +223,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         //PARA CUANDO ES FACTURA Y ACTIVAMOS PROCESOS SIAT
         // if($tipoDoc==1 || $tipoDoc==4){      
             $sqlCuis="select cuis FROM siat_cuis where cod_ciudad='$globalSucursal' and estado=1 and cod_gestion='$anio' LIMIT 1";
-            // echo $sqlCuis;
+            echo $sqlCuis;
             $respCuis=mysqli_query($enlaceCon,$sqlCuis);
             // $cuis=mysqli_result($respCuis,0,0);
             $datConf=mysqli_fetch_array($respCuis);
