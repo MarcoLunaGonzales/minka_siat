@@ -114,11 +114,12 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     // $almacenOrigen=1000;//cod almacen
     // $globalSucursal=$sucursal;//cod ciudad //encontrar dato    
 
-    $globalSucursal=1;//cod ciudad //encontrar dato    
-    $datosCiudad=obtenerAlmacen($globalSucursal,$enlaceCon);
-    $almacenOrigen=$datosCiudad[0];
-    $cod_impuestos=$datosCiudad[1];
-    $cod_entidad=$datosCiudad[2];;
+    
+    $datosCiudad=obtenerAlmacen($sucursal,$enlaceCon);
+    $globalSucursal=$datosCiudad[0];
+    $almacenOrigen=$datosCiudad[1];
+    $cod_impuestos=$datosCiudad[2];
+    $cod_entidad=$datosCiudad[3];
 
     $errorProducto="";
     $totalFacturaMonto=0;
@@ -456,19 +457,21 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
 }
 
 
-function obtenerAlmacen($cod_ciudad,$enlaceCon){
+function obtenerAlmacen($cod_ciudad_externo,$enlaceCon){
     //require("conexionmysqli2.php");
-    $sql="SELECT a.cod_almacen,c.cod_impuestos,c.cod_entidad
+    $sql="SELECT c.cod_ciudad,a.cod_almacen,c.cod_impuestos,c.cod_entidad
         from ciudades c join almacenes a on c.cod_ciudad=a.cod_ciudad
-        where c.cod_ciudad=$cod_ciudad";
+        where c.cod_externo=$cod_ciudad_externo";
     $resp=mysqli_query($enlaceCon,$sql);
+    $cod_ciudad=0;
     $cod_almacen=0;
     $cod_impuestos=0;
     $cod_entidad=0;
     while ($dat = mysqli_fetch_array($resp)) {
-      $cod_almacen=$dat['cod_almacen'];
-      $cod_impuestos=$dat['cod_impuestos'];
-      $cod_entidad=$dat['cod_entidad'];
+        $cod_ciudad=$dat['cod_ciudad'];
+        $cod_almacen=$dat['cod_almacen'];
+        $cod_impuestos=$dat['cod_impuestos'];
+        $cod_entidad=$dat['cod_entidad'];
     }
-    return array($cod_almacen,$cod_impuestos,$cod_entidad);
+    return array($cod_ciudad,$cod_almacen,$cod_impuestos,$cod_entidad);
 }
