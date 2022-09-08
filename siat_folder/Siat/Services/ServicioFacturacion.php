@@ -22,7 +22,7 @@ class ServicioFacturacion extends ServicioSiat
 	}
 	public function recepcionFactura(SiatInvoice $factura, $tipoEmision = SiatInvoice::TIPO_EMISION_ONLINE, $tipoFactura = SiatInvoice::FACTURA_DERECHO_CREDITO_FISCAL)
 	{
-		//echo "jajaja";
+		echo "jajaja";
 		$factura->cabecera->razonSocialEmisor	= $this->razonSocial;
 		$factura->cabecera->nitEmisor 	= $this->nit;
 		$factura->cabecera->cufd		= $this->cufd;
