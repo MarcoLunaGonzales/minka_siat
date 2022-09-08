@@ -36,11 +36,11 @@ class ServicioFacturacion extends ServicioSiat
 		$factura->validate();
 
 		$facturaXml = $this->buildInvoiceXml($factura);		
-		//print_r($facturaXml);
+		print_r($facturaXml);
 		$this->debug($facturaXml, 1);
-		//print_r($factura);
-		// file_put_contents('factura.xml', $facturaXml);
-		// file_put_contents('siat_folder/Siat/temp/Facturas-XML/'.$factura->cabecera->cuf.".xml", $facturaXml);
+		print_r($factura);
+		file_put_contents('factura.xml', $facturaXml);
+		file_put_contents('siat_folder/Siat/temp/Facturas-XML/'.$factura->cabecera->cuf.".xml", $facturaXml);
 		// var_dump($facturaXml);die;
 		
 		if($tipoEmision!=2){
