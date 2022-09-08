@@ -1,6 +1,5 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+echo "aqui";
 namespace SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services;
 
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\DocumentTypes;
