@@ -33,6 +33,7 @@ class ServicioFacturacion extends ServicioSiat
 		$factura->buildCuf((int)$factura->cabecera->codigoSucursal, $this->modalidad, $tipoEmision, $tipoFactura, $this->codigoControl);
 
 		//die($factura->cuf);
+		print_r($factura);
 		$factura->validate();
 
 		$facturaXml = $this->buildInvoiceXml($factura);		
