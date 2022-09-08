@@ -89,7 +89,6 @@ class FacturaOnline
 		    $nombreMat=str_replace("&","&amp;",$nombreMat);		    
 		    $precioUnit=$datDetalle['monto_unitario'];
 		    $descUnit=$datDetalle['descuento_unitario'];
-		    
 		    //$montoUnit=$datDetalle[5];
 		    $montoUnit=($cantUnit*$precioUnit)-$descUnit;
 		    
@@ -218,7 +217,6 @@ class FacturaOnline
 			$serviceCodigos = new ServicioFacturacionCodigos(null, null, $config->tokenDelegado);
 			$serviceCodigos->setConfig((array)$config);
 			$serviceCodigos->cuis = $dataFact['cuis'];
-			echo "<br><br>";
 			// print_r($serviceCodigos);echo "<br><br>";
 			if($tipoEmision==2){//tipo emision OFFLINE
 				$tipoFactura=SiatInvoice::FACTURA_DERECHO_CREDITO_FISCAL;
@@ -318,16 +316,16 @@ class FacturaOnline
 				// }else{
 				// 	$factura->cabecera->codigoExcepcion=0;
 				// }
-				echo "<br><br>";
-				print_r($factura);echo "<br><br>";
+				echo "<br>FACTURA1:<br>";
+				print_r($factura);
 				if($online_siat==2){
 					$res = $service->recepcionFactura($factura,$online_siat);	
 				}else{
 					$res = $service->recepcionFactura($factura);				
 				}
-				echo "<br><br><br>";
+				echo "<br>FACTURA2<br><br>";
 				print_r($factura);
-				echo "<br><br><br>";
+				echo "<br>Respuetsa:<br><br>";
 				print_r($res);
 				echo "<br><br><br>";
 
