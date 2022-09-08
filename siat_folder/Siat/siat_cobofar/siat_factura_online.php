@@ -316,24 +316,20 @@ class FacturaOnline
 				// }else{
 				// 	$factura->cabecera->codigoExcepcion=0;
 				// }
-				error_reporting(E_ALL);
-					ini_set('display_errors', '1');
-				echo "<br>FACTURA1:<br>";
+				// echo "<br>FACTURA1:<br>";
 				// print_r($factura);
 				if($online_siat==2){
-					echo "aqui1";
 					$res = $service->recepcionFactura($factura,$online_siat);	
 				}else{
-					echo "aqui2";
 					$res = $service->recepcionFactura($factura);				
 				}
 				// echo "<br>FACTURA2<br><br>";
 				// print_r($factura);
-				echo "<br>Respuetsa:<br><br>";
-				print_r($res);
+				// echo "<br>Respuetsa:<br><br>";
+				// print_r($res);
 				// echo "<br><br><br>";
 
-				// return $res;
+				return $res;
 			}
 		}
 		catch(Exception $e)
