@@ -61,8 +61,8 @@ class ServicioFacturacion extends ServicioSiat
 			// se deben setear los parametros
 			$solicitud->codigoSucursal=(int)$factura->cabecera->codigoSucursal;
 
-
-			//print_r($solicitud);
+			echo "solicitud";
+			print_r($solicitud);
 			//die($solicitud->fechaEnvio);
 			/*
 			$zh = gzopen('factura.xml.zip', 'w9');
@@ -81,10 +81,11 @@ class ServicioFacturacion extends ServicioSiat
 				//$this->debug($solicitud->toArray(), 0);
 				// $this->wsdl = $factura->getEndpoint($this->modalidad, $this->ambiente);
 				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-				// echo "<br><br>";
-				// var_dump($data);
+				echo "<br>data:<br>";
+				var_dump($data);
 				$res = $this->callAction('recepcionFactura', $data);			
-				//print_r($res);
+				echo "respues:"
+				print_r($res);
 				return array($res,$factura->cabecera->fechaEmision,$factura->cabecera->cuf,$facturaXml,$solicitud);
 			}
 			catch(\SoapFault $e)
