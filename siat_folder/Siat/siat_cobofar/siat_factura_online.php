@@ -59,28 +59,36 @@ class FacturaOnline
 		$codigoSalida=$dataFact['cod_salida_almacenes'];
 		$descuentoVenta=$dataFact['descuento'];
 		require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";
-		$sqlDetalle="SELECT m.codigo_material, s.orden_detalle, sum(s.cantidad_unitaria),
-        sum(s.descuento_unitario), sum(s.monto_unitario)
+		// $sqlDetalle="SELECT m.codigo_material, sum(s.cantidad_unitaria), m.descripcion_material, s.precio_unitario, 
+  //       sum(s.descuento_unitario), sum(s.monto_unitario),s.observaciones
+  //       from salida_detalle_almacenes s, material_apoyo m 
+  //       where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoSalida 
+  //       group by s.cod_material
+  //       order by s.orden_detalle
+  //       ";
+
+        $sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,sum(s.cantidad_unitaria) as cantidad_unitario,
+        sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
         from salida_detalle_almacenes s, material_apoyo m 
         where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoSalida
-        group by m.codigo_material, s.orden_detalle
-        order by s.orden_detalle;
-        ";//order by s.orden_detalle
+        group by m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones
+        order by s.orden_detalle;";
+
         //print_r($enlaceCon);
 		$respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 		$montoTotal=0;$descuentoVentaProd=0;$filaIndice=0;
 
 		while($datDetalle=mysqli_fetch_array($respDetalle)){
-		    $codInterno=$datDetalle[0];
-		    $cantUnit=$datDetalle[1];
+		    $codInterno=$datDetalle['codigo_material'];
+		    $cantUnit=$datDetalle['cantidad_unitario'];
 		    $observaciones="";
 		    if($datDetalle['observaciones']==null){
 		    	$observaciones="";
 		    }
-		    $nombreMat=$datDetalle[2].$observaciones;
+		    $nombreMat=$datDetalle['descripcion_material'].$observaciones;
 		    $nombreMat=str_replace("&","&amp;",$nombreMat);		    
-		    $precioUnit=$datDetalle[3];
-		    $descUnit=$datDetalle[4];
+		    $precioUnit=$datDetalle['monto_unitario'];
+		    $descUnit=$datDetalle['descuento_unitario'];
 		    
 		    //$montoUnit=$datDetalle[5];
 		    $montoUnit=($cantUnit*$precioUnit)-$descUnit;
