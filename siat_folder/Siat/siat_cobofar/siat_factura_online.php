@@ -62,7 +62,7 @@ class FacturaOnline
 		$sqlDetalle="SELECT m.codigo_material, s.orden_detalle, sum(s.cantidad_unitaria),
         sum(s.descuento_unitario), sum(s.monto_unitario)
         from salida_detalle_almacenes s, material_apoyo m 
-        where m.codigo_material=s.cod_material and s.cod_salida_almacen=12 
+        where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoSalida
         group by m.codigo_material, s.orden_detalle
         order by s.orden_detalle;
         ";//order by s.orden_detalle
