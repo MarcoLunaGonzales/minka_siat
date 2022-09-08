@@ -1,12 +1,102 @@
 <?php
+namespace SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services;
 
-class ServicioFacturacion 
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\DocumentTypes;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudServicioRecepcionFactura;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioSiat;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\SiatInvoice;
+use Exception;
+use SoapFault;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudServicioRecepcionMasiva;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudServicioRecepcionPaquete;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudServicioValidacionRecepcionPaquete;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudServicioAnulacionFactura;
+
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\conexionSiatUrl;
+
+class ServicioFacturacion extends ServicioSiat
 {
-	
+	public function buildInvoiceXml(SiatInvoice $invoice)
+	{
+		return $invoice->toXml(null, true)->asXML();
+	}
 	public function recepcionFactura(SiatInvoice $factura, $tipoEmision = SiatInvoice::TIPO_EMISION_ONLINE, $tipoFactura = SiatInvoice::FACTURA_DERECHO_CREDITO_FISCAL)
 	{
-		echo "jajaja";
+		//echo "jajaja";
+		$factura->cabecera->razonSocialEmisor	= $this->razonSocial;
+		$factura->cabecera->nitEmisor 	= $this->nit;
+		$factura->cabecera->cufd		= $this->cufd;
+
+		//$sucursalNro, $modalidad, $tipoEmision, $tipoFactura, $codigoControl
+		//print_r($factura);
+		//echo "<br>CODE:".(int)$factura->cabecera->codigoSucursal." ".$this->modalidad." ".$tipoEmision." ".$tipoFactura." ".$this->codigoControl;
+		$factura->buildCuf((int)$factura->cabecera->codigoSucursal, $this->modalidad, $tipoEmision, $tipoFactura, $this->codigoControl);
+
+		//die($factura->cuf);
+		$factura->validate();
+
+		$facturaXml = $this->buildInvoiceXml($factura);		
+		//print_r($facturaXml);
+		$this->debug($facturaXml, 1);
+		//print_r($factura);
+		// file_put_contents('factura.xml', $facturaXml);
+		// file_put_contents('siat_folder/Siat/temp/Facturas-XML/'.$factura->cabecera->cuf.".xml", $facturaXml);
+		// var_dump($facturaXml);die;
 		
+		if($tipoEmision!=2){
+			$solicitud = new SolicitudServicioRecepcionFactura();
+			$solicitud->cufd 					= $this->cufd;
+			$solicitud->cuis					= $this->cuis;
+			$solicitud->codigoSistema			= $this->codigoSistema;
+			$solicitud->nit						= $this->nit;
+			$solicitud->codigoModalidad			= $this->modalidad;
+			$solicitud->codigoAmbiente 			= $this->ambiente;
+			$solicitud->codigoPuntoVenta 		= $factura->cabecera->codigoPuntoVenta;// PARA COMPLETAR CON LA FACTURACION TIPO VENTA 1 COBOFAR SA		
+			$solicitud->codigoDocumentoSector 	= 11; 
+			$solicitud->tipoFacturaDocumento	= self::TIPO_FACTURA_CREDITO_FISCAL;
+			$solicitud->codigoEmision			= self::TIPO_EMISION_ONLINE;
+			$solicitud->fechaEnvio				= date("Y-m-d\TH:i:s.v");//$factura->cabecera->fechaEmision;//
+
+
+			// se deben setear los parametros
+			$solicitud->codigoSucursal=(int)$factura->cabecera->codigoSucursal;
+
+
+			//print_r($solicitud);
+			//die($solicitud->fechaEnvio);
+			/*
+			$zh = gzopen('factura.xml.zip', 'w9');
+			gzwrite($zh, $facturaXml);
+			gzclose($zh);
+			*/
+			$solicitud->setBuffer($facturaXml, true);
+			$solicitud->validate();
+			
+			try
+			{
+				$data = [
+					$solicitud->toArray()
+				];
+				//$this->debug($factura->toArray(), 0);
+				//$this->debug($solicitud->toArray(), 0);
+				// $this->wsdl = $factura->getEndpoint($this->modalidad, $this->ambiente);
+				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+				// echo "<br><br>";
+				// var_dump($data);
+				$res = $this->callAction('recepcionFactura', $data);			
+				//print_r($res);
+				return array($res,$factura->cabecera->fechaEmision,$factura->cabecera->cuf,$facturaXml,$solicitud);
+			}
+			catch(\SoapFault $e)
+			{	
+				//echo "askdjaslkdjasl";
+				return array(null,$factura->cabecera->fechaEmision,$factura->cabecera->cuf,$facturaXml);
+				//print_r($e->getMessage());
+				//throw new Exception($e->getMessage());
+			}			
+		}else{ // cuando esta en offline no guardar envio
+			return array(null,$factura->cabecera->fechaEmision,$factura->cabecera->cuf,$facturaXml);
+		}
 	}
 	/**
 	 * 

@@ -316,7 +316,7 @@ class FacturaOnline
 				// }else{
 				// 	$factura->cabecera->codigoExcepcion=0;
 				// }
-				// echo "<br>FACTURA1:<br>";
+				echo "<br>FACTURA1:<br>";
 				// print_r($factura);
 				if($online_siat==2){
 					$res = $service->recepcionFactura($factura,$online_siat);	
@@ -334,7 +334,8 @@ class FacturaOnline
 		}
 		catch(Exception $e)
 		{
-			return $e->getMessage();
+			// return $e->getMessage();
+			print_r($e->getMessage());
 			//echo "\033[0;31m", $e->getMessage(), "\033[0m", "\n\n";
 			// print $e->getTraceAsString();
 		}
