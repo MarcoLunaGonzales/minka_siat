@@ -1,9 +1,11 @@
 <?php
 echo "aqui";
 namespace SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services;
-
+echo "aqui2";
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\DocumentTypes;
+echo "aqui3";
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudServicioRecepcionFactura;
+echo "aqui4";
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioSiat;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\SiatInvoice;
 use Exception;
