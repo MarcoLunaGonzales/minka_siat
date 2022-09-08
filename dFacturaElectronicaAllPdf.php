@@ -418,22 +418,33 @@ footer p {
                     </thead>
                     <tbody>
 <?php
-$sqlDetalle="select m.codigo_material, sum(s.`cantidad_unitaria`), m.`descripcion_material`, s.`precio_unitario`, 
-        sum(s.`descuento_unitario`), sum(s.`monto_unitario`) from `salida_detalle_almacenes` s, `material_apoyo` m where 
-        m.`codigo_material`=s.`cod_material` and s.`cod_salida_almacen`=$codigoVenta 
-        group by s.cod_material
-        order by s.orden_detalle";
+// $sqlDetalle="select m.codigo_material, sum(s.`cantidad_unitaria`), m.`descripcion_material`, s.`precio_unitario`, 
+//         sum(s.`descuento_unitario`), sum(s.`monto_unitario`) from `salida_detalle_almacenes` s, `material_apoyo` m where 
+//         m.`codigo_material`=s.`cod_material` and s.`cod_salida_almacen`=$codigoVenta 
+//         group by s.cod_material
+//         order by s.orden_detalle";
+
+$sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
+        sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
+        from salida_detalle_almacenes s, material_apoyo m 
+        where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoVenta
+        group by m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario
+        order by s.orden_detalle;";
 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 
 $yyy=65;
 
 $montoTotal=0;$descuentoVentaProd=0;
 while($datDetalle=mysqli_fetch_array($respDetalle)){
-    $codInterno=$datDetalle[0];
-    $cantUnit=$datDetalle[1];
-    $nombreMat=$datDetalle[2];
-    $precioUnit=$datDetalle[3];
-    $descUnit=$datDetalle[4];
+    $observaciones=$datDetalle['observaciones'];
+    if($datDetalle['observaciones']==null){
+        $observaciones="";
+    }
+    $codInterno=$datDetalle['codigo_material'];
+    $cantUnit=$datDetalle['cantidad_unitario'];
+    $nombreMat=$datDetalle['descripcion_material']." ".$observaciones;;
+    $precioUnit=$datDetalle['precio_unitario'];
+    $descUnit=$datDetalle['descuento_unitario'];
     //$montoUnit=$datDetalle[5];
     $montoUnit=($cantUnit*$precioUnit)-$descUnit;
     

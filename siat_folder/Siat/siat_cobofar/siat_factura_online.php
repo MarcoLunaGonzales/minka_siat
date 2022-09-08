@@ -67,12 +67,13 @@ class FacturaOnline
   //       order by s.orden_detalle
   //       ";
 
-        $sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,sum(s.cantidad_unitaria) as cantidad_unitario,
+        $sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
         sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
         from salida_detalle_almacenes s, material_apoyo m 
         where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoSalida
-        group by m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones
+        group by m.codigo_material, s.orden_detalle,m.descripcion_material,s.observaciones,s.precio_unitario
         order by s.orden_detalle;";
+
 
         //print_r($enlaceCon);
 		$respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
@@ -81,13 +82,13 @@ class FacturaOnline
 		while($datDetalle=mysqli_fetch_array($respDetalle)){
 		    $codInterno=$datDetalle['codigo_material'];
 		    $cantUnit=$datDetalle['cantidad_unitario'];
-		    $observaciones="";
+		    $observaciones=$datDetalle['observaciones'];
 		    if($datDetalle['observaciones']==null){
 		    	$observaciones="";
 		    }
-		    $nombreMat=$datDetalle['descripcion_material'].$observaciones;
+		    $nombreMat=$datDetalle['descripcion_material']." ".$observaciones;
 		    $nombreMat=str_replace("&","&amp;",$nombreMat);		    
-		    $precioUnit=$datDetalle['monto_unitario'];
+		    $precioUnit=$datDetalle['precio_unitario'];
 		    $descUnit=$datDetalle['descuento_unitario'];
 		    //$montoUnit=$datDetalle[5];
 		    $montoUnit=($cantUnit*$precioUnit)-$descUnit;
