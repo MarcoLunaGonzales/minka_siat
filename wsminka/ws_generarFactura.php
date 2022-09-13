@@ -14,10 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
             if($accion=="generarFacturaMinka"){//obtenemos las ciudades del cliente
                     require_once '../conexionmysqli2.php';
                     require_once '../siat_folder/funciones_servicios.php';
-                    if(isset($datos['idEmpresa'])){
-                        $idEmpresa=$datos['idEmpresa'];//
-                        $nitEmpresa=$datos['nitEmpresa'];//
-                        if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
+                    // if(isset($datos['idEmpresa'])){
+                        // $idEmpresa=$datos['idEmpresa'];//
+                        // $nitEmpresa=$datos['nitEmpresa'];//
+                        // if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
                             if(isset($datos['sucursal']) && isset($datos['tipoTabla']) && isset($datos['idRecibo']) && isset($datos['fecha']) && isset($datos['idPersona']) && isset($datos['monto_total']) && isset($datos['descuento']) && isset($datos['monto_final']) && isset($datos['id_usuario']) && isset($datos['nitCliente']) && isset($datos['nombreFactura']) && isset($datos['NombreEstudiante']) && isset($datos['Concepto']) && isset($datos['tipoPago']) && isset($datos['nroTarjeta']) && isset($datos['tipoDocumento']) && isset($datos['complementoDocumento']) && isset($datos['periodoFacturado'])){
                                 $sucursal=$datos['sucursal'];
                                 $tipoTabla=$datos['tipoTabla'];
@@ -68,14 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                                 "mensaje"=>"ERROR. Variables incompletas");
                             }
                                                         
-                        }else{
-                            $resultado=array("estado"=>4,
-                            "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
-                        }
-                    }else{
-                        $resultado=array("estado"=>4,
-                        "mensaje"=>"ERROR. Variables incompletas");
-                    }
+                        // }else{
+                        //     $resultado=array("estado"=>4,
+                        //     "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
+                        // }
+                    // }else{
+                    //     $resultado=array("estado"=>4,
+                    //     "mensaje"=>"ERROR. Variables incompletas");
+                    // }
             }else{
                 $resultado=array("estado"=>4,
                     "mensaje"=>"ERROR. No existe la Accion Solicitada.");
@@ -109,8 +109,17 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     require_once "../siat_folder/funciones_siat.php";
 
     $usuarioVendedor=$id_usuario;//codigo usuario
-    $globalSucursal=1;//cod ciudad //encontrar dato
-    $almacenOrigen=1000;//cod almacen
+    
+    // $globalSucursal=1;//cod ciudad //encontrar dato
+    // $almacenOrigen=1000;//cod almacen
+    // $globalSucursal=$sucursal;//cod ciudad //encontrar dato    
+
+    
+    $datosCiudad=obtenerAlmacen($sucursal,$enlaceCon);
+    $globalSucursal=$datosCiudad[0];
+    $almacenOrigen=$datosCiudad[1];
+    $cod_impuestos=$datosCiudad[2];
+    $cod_entidad=$datosCiudad[3];
 
     $errorProducto="";
     $totalFacturaMonto=0;
@@ -140,9 +149,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
 
     $tipoVenta=$tipoPago;
     $observaciones="";
-
     $cuf="";
-
     $totalVenta=$monto_total;
     $descuentoVenta=$descuento;
     $totalFinal=$monto_final;
@@ -204,9 +211,9 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     }
 
     $created_by=$usuarioVendedor;
-
     $contador = 0;
     do {
+        // echo "1<br>";
         $anio=date("Y");
         $created_at=date("Y-m-d H:i:s");
         $sql="SELECT IFNULL(max(cod_salida_almacenes)+1,1) FROM salida_almacenes";
@@ -214,7 +221,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         // $codigo=mysqli_result($resp,0,0);
         $datCodSalida=mysqli_fetch_array($resp);
         $codigo=$datCodSalida[0];
-
+        // echo "2*".$codigo."<br>";
         //PARA CUANDO ES FACTURA Y ACTIVAMOS PROCESOS SIAT
         // if($tipoDoc==1 || $tipoDoc==4){      
             $sqlCuis="select cuis FROM siat_cuis where cod_ciudad='$globalSucursal' and estado=1 and cod_gestion='$anio' LIMIT 1";
@@ -222,7 +229,14 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
             $respCuis=mysqli_query($enlaceCon,$sqlCuis);
             // $cuis=mysqli_result($respCuis,0,0);
             $datConf=mysqli_fetch_array($respCuis);
-            $cuis=$datConf[0];      
+            $cuis=$datConf[0];    
+            // echo "3*".$cuis."<br>";
+            $sqlPV="SELECT codigoPuntoVenta FROM siat_puntoventa where cod_ciudad='$globalSucursal' LIMIT 1";
+            $respPV=mysqli_query($enlaceCon,$sqlPV);
+            // $codigoPuntoVenta=mysqli_result($respPV,0,0);
+            $datPV=mysqli_fetch_array($respPV);
+            $codigoPuntoVenta=$datPV[0];
+            // echo "4*".$codigoPuntoVenta."<br>";
             $sqlCufd="SELECT codigo,cufd,codigo_control FROM siat_cufd where cod_ciudad='$globalSucursal' and estado=1 and fecha='$fecha' and cuis='$cuis' LIMIT 1";        
             // echo $sqlCufd;
             $respCufd=mysqli_query($enlaceCon,$sqlCufd);
@@ -230,12 +244,16 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
             $codigoCufd=$datCufd[0];
             $cufd=$datCufd[1];
             $controlCodigo=$datCufd[2];
-
-            $sqlPV="SELECT codigoPuntoVenta FROM siat_puntoventa where cod_ciudad='$globalSucursal' LIMIT 1";   
-            $respPV=mysqli_query($enlaceCon,$sqlPV);
-            // $codigoPuntoVenta=mysqli_result($respPV,0,0);
-            $datPV=mysqli_fetch_array($respPV);
-            $codigoPuntoVenta=$datPV[0];
+            if($codigoCufd==null || $codigoCufd==""){                
+                generarCufd($globalSucursal,$cod_impuestos,$codigoPuntoVenta,$cod_entidad);
+                $sqlCufd="SELECT codigo,cufd,codigo_control FROM siat_cufd where cod_ciudad='$globalSucursal' and estado=1 and fecha='$fecha' and cuis='$cuis' LIMIT 1";        
+                // echo $sqlCufd;
+                $respCufd=mysqli_query($enlaceCon,$sqlCufd);
+                $datCufd=mysqli_fetch_array($respCufd);
+                $codigoCufd=$datCufd[0];
+                $cufd=$datCufd[1];
+                $controlCodigo=$datCufd[2];
+            }
             
             $vectorNroCorrelativo=numeroCorrelativoCUFD($enlaceCon,$tipoDoc,$globalSucursal,$almacenOrigen);
             $nro_correlativo=$vectorNroCorrelativo[0];      
@@ -287,7 +305,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
 
        if($nroTarjeta!=0&&$nroTarjeta!=""){//&&$tipoVenta==2 
            $nro_tarjeta=$nroTarjeta;
-           $monto_tarjeta=$monto_final;
+           $monto_tarjeta=$totalFinal;
            $banco_tarjeta=0;
            $nro_tarjeta=str_replace("*","0",$nro_tarjeta);
            $sql_tarjeta="INSERT INTO tarjetas_salidas (nro_tarjeta,monto,cod_banco,cod_salida_almacen,estado) VALUES('$nro_tarjeta','$monto_tarjeta','$banco_tarjeta','$codigo',1)";
@@ -314,7 +332,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 // $precioUnitario=$_POST["precio_unitario$i"];
                 // $descuentoProducto=$_POST["descuentoProducto$i"];
                 $cantidadUnitaria=1;
-                $precioUnitario=$monto_final;
+                $precioUnitario=$totalVenta;
                 $descuentoProducto=0;
 
                 //SE DEBE CALCULAR EL MONTO DEL MATERIAL POR CADA UNO PRECIO*CANTIDAD - EL DESCUENTO ES UN DATO ADICIONAL
@@ -436,4 +454,24 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         $estado_facturado=2;//error
         return array($estado_facturado,$mensaje,$codigo,$nro_correlativo);
     }   
+}
+
+
+function obtenerAlmacen($cod_ciudad_externo,$enlaceCon){
+    //require("conexionmysqli2.php");
+    $sql="SELECT c.cod_ciudad,a.cod_almacen,c.cod_impuestos,c.cod_entidad
+        from ciudades c join almacenes a on c.cod_ciudad=a.cod_ciudad
+        where c.cod_externo=$cod_ciudad_externo";
+    $resp=mysqli_query($enlaceCon,$sql);
+    $cod_ciudad=0;
+    $cod_almacen=0;
+    $cod_impuestos=0;
+    $cod_entidad=0;
+    while ($dat = mysqli_fetch_array($resp)) {
+        $cod_ciudad=$dat['cod_ciudad'];
+        $cod_almacen=$dat['cod_almacen'];
+        $cod_impuestos=$dat['cod_impuestos'];
+        $cod_entidad=$dat['cod_entidad'];
+    }
+    return array($cod_ciudad,$cod_almacen,$cod_impuestos,$cod_entidad);
 }

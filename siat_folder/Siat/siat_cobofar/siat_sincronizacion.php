@@ -88,9 +88,10 @@ class SyncTest
 					foreach ($lista as $li) {
 						if(isset($li->codigoCaeb) && isset($li->descripcion)){
 							$sqlInsert="INSERT INTO siat_sincronizaractividades (codigoCaeb,descripcion,tipoActividad,created_at,cod_entidad) VALUES ('$li->codigoCaeb','$li->descripcion','$li->tipoActividad',NOW(),'$cod_entidad')";
+							mysqli_query($enlaceCon,$sqlInsert);
 						}
 						// echo $sqlInsert;
-						mysqli_query($enlaceCon,$sqlInsert);
+						
 					}
 				break;
 				case 'sincronizarListaActividadesDocumentoSector':

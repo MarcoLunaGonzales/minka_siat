@@ -73,7 +73,7 @@ function insertar_detalleSalidaVenta($enlaceCon,$cod_salida, $cod_almacen, $cod_
 	$banderaError=1;
 
 	$sqlInsert="insert into salida_detalle_almacenes (cod_salida_almacen, cod_material, cantidad_unitaria, lote, fecha_vencimiento, precio_unitario,
-	descuento_unitario, monto_unitario, orden_detalle,observaciones) values ('$cod_salida', '$cod_material', '$cantidad', '0', '0000-00-00',
+	descuento_unitario, monto_unitario, orden_detalle,observaciones) values ('$cod_salida', '$cod_material', '$cantidad', '0', '2022-01-01',
 	'$precio','$descuento','$montoparcial','$orden','$concepto')";
 	
 	$respInsert=mysqli_query($enlaceCon,$sqlInsert);

@@ -59,28 +59,37 @@ class FacturaOnline
 		$codigoSalida=$dataFact['cod_salida_almacenes'];
 		$descuentoVenta=$dataFact['descuento'];
 		require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";
-		$sqlDetalle="SELECT m.codigo_material, sum(s.cantidad_unitaria), m.descripcion_material, s.precio_unitario, 
-        sum(s.descuento_unitario), sum(s.monto_unitario),s.observaciones
+		// $sqlDetalle="SELECT m.codigo_material, sum(s.cantidad_unitaria), m.descripcion_material, s.precio_unitario, 
+  //       sum(s.descuento_unitario), sum(s.monto_unitario),s.observaciones
+  //       from salida_detalle_almacenes s, material_apoyo m 
+  //       where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoSalida 
+  //       group by s.cod_material
+  //       order by s.orden_detalle
+  //       ";
+
+        $sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
+        sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
         from salida_detalle_almacenes s, material_apoyo m 
-        where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoSalida 
-        group by s.cod_material
-        order by s.orden_detalle";
+        where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoSalida
+        group by m.codigo_material, s.orden_detalle,m.descripcion_material,s.observaciones,s.precio_unitario
+        order by s.orden_detalle;";
+
+
         //print_r($enlaceCon);
 		$respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 		$montoTotal=0;$descuentoVentaProd=0;$filaIndice=0;
 
 		while($datDetalle=mysqli_fetch_array($respDetalle)){
-		    $codInterno=$datDetalle[0];
-		    $cantUnit=$datDetalle[1];
-		    $observaciones="";
+		    $codInterno=$datDetalle['codigo_material'];
+		    $cantUnit=$datDetalle['cantidad_unitario'];
+		    $observaciones=$datDetalle['observaciones'];
 		    if($datDetalle['observaciones']==null){
 		    	$observaciones="";
 		    }
-		    $nombreMat=$datDetalle[2].$observaciones;
+		    $nombreMat=$datDetalle['descripcion_material']." ".$observaciones;
 		    $nombreMat=str_replace("&","&amp;",$nombreMat);		    
-		    $precioUnit=$datDetalle[3];
-		    $descUnit=$datDetalle[4];
-		    
+		    $precioUnit=$datDetalle['precio_unitario'];
+		    $descUnit=$datDetalle['descuento_unitario'];
 		    //$montoUnit=$datDetalle[5];
 		    $montoUnit=($cantUnit*$precioUnit)-$descUnit;
 		    
@@ -205,10 +214,11 @@ class FacturaOnline
 
 			$codigoPuntoVenta = $dataFact['codigoPuntoVenta'];
 			$codigoSucursal = $dataFact['cod_impuestos'];
+
 			$serviceCodigos = new ServicioFacturacionCodigos(null, null, $config->tokenDelegado);
 			$serviceCodigos->setConfig((array)$config);
 			$serviceCodigos->cuis = $dataFact['cuis'];
-
+			// print_r($serviceCodigos);echo "<br><br>";
 			if($tipoEmision==2){//tipo emision OFFLINE
 				$tipoFactura=SiatInvoice::FACTURA_DERECHO_CREDITO_FISCAL;
 				$tipoEmision = SiatInvoice::TIPO_EMISION_OFFLINE;
@@ -307,20 +317,26 @@ class FacturaOnline
 				// }else{
 				// 	$factura->cabecera->codigoExcepcion=0;
 				// }
-
+				// echo "<br>FACTURA1:<br>";
+				// print_r($factura);
 				if($online_siat==2){
 					$res = $service->recepcionFactura($factura,$online_siat);	
 				}else{
 					$res = $service->recepcionFactura($factura);				
 				}
-				
+				// echo "<br>FACTURA2<br><br>";
+				// print_r($factura);
+				// echo "<br>Respuetsa:<br><br>";
 				// print_r($res);
+				// echo "<br><br><br>";
+
 				return $res;
 			}
 		}
 		catch(Exception $e)
 		{
-			return $e->getMessage();
+			// return $e->getMessage();
+			print_r($e->getMessage());
 			//echo "\033[0;31m", $e->getMessage(), "\033[0m", "\n\n";
 			// print $e->getTraceAsString();
 		}

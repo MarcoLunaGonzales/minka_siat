@@ -65,9 +65,16 @@ class PuntoVentaTest
 			if((int)$codigoPuntoVentaNuevo>0){
 
 				require dirname(__DIR__). SB_DS ."../../conexionmysqli2.inc";
-				$sqlDelete="DELETE FROM siat_puntoventa where cod_ciudad=$ciudad and cod_entidad=$cod_entidad";				
-
+				$sqlDelete="DELETE FROM siat_puntoventa where cod_ciudad='$ciudad' and cod_entidad=$cod_entidad";				
 				mysqli_query($enlaceCon,$sqlDelete);
+				//al cerrar un punto de venta tbn se cierra cuis y cufd
+
+				$sqlDeleteCuis="UPDATE siat_cuis set estado=2 where  cod_ciudad='$ciudad' and cod_entidad='$cod_entidad'";
+				mysqli_query($enlaceCon,$sqlDeleteCuis);
+
+				$sqlDeleteCufd="UPDATE siat_cufd set estado=2 where  cod_ciudad='$ciudad' and cod_entidad='$cod_entidad'";
+				mysqli_query($enlaceCon,$sqlDeleteCufd);
+
 				$sqlInsert="INSERT INTO siat_puntoventa (cod_ciudad,codigoPuntoVenta,cod_entidad) VALUES ('$ciudad','$codigoPuntoVentaNuevo','$cod_entidad')";
 				//echo $sqlInsert;
 				mysqli_query($enlaceCon,$sqlInsert);
