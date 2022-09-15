@@ -578,9 +578,7 @@ function obtenerEstadoSalida($codSalida){
     file_put_contents($rutaGuardado, $output);
   }
 
-  function descargarPDFFacturasCopiaCliente($nom,$html,$codFactura){
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+  function descargarPDFFacturasCopiaCliente($nom,$html,$codFactura,$rutaGuardado){
     //aumentamos la memoria  
     ini_set("memory_limit", "128M");
     // Cargamos DOMPDF
@@ -589,7 +587,7 @@ ini_set('display_errors', '1');
       $dompdf = new DOMPDF();
 
       // $dompdf->set_paper("letter", "portrait");
-      $dompdf->set_paper("A4", "portrait");
+      $dompdf->set_paper("letter", "portrait");
       ob_clean();
       
       $dompdf->load_html($html);    
@@ -612,7 +610,8 @@ ini_set('display_errors', '1');
        //fin marca agua
       } 
       $pdf = $dompdf->output();
-      file_put_contents($nom.".pdf", $pdf);
+      // file_put_contents($nom.".pdf", $pdf);
+      file_put_contents($rutaGuardado, $pdf);
   }
 
 ?>
