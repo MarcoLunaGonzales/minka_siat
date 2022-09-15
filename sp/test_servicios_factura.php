@@ -7,6 +7,7 @@ require_once("../funciones.php");
 $sIde = "MinkaSw123*";
 $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
 
+
 // $sucursal="0";
 // $tipoTabla="3";
 // $idRecibo="28626";
@@ -29,10 +30,11 @@ $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
 // $id_usuario=1000;
 // $periodoFacturado="JUNIO - 2022";
 
+
 $sucursal="1";
 $tipoTabla="1";
 $idRecibo="300520";
-$fecha="2022-09-07";
+$fecha="2022-09-13";
 $idPersona="15069";
 $idPlan="36";
 $cuota="9";
@@ -79,32 +81,13 @@ $periodoFacturado="JULIO-2022";
            "periodoFacturado"=>$periodoFacturado//***
        );  
     
-	$url="http://localhost:8080/minka_siat/wsminka/ws_generarFactura.php";
+	$url="http://localhost/minka_siat/wsminka/ws_generarFactura.php";
 	$jsons=callService($parametros, $url);
 	//print_r($jsons);
   
 $obj=json_decode($jsons);//decodificando json
 header('Content-type: application/json');  
 print_r($jsons); 
-
-// if(isset($obj->estado)){
-//   $estado=$obj->estado;
-//   $mensaje=$obj->mensaje;
-//   if(isset($obj->idTransaccion)){
-//     $idTransaccion=$obj->idTransaccion;
-//     $nroFactura=$obj->nroFactura;
-//   }else{
-//     $idTransaccion=0;
-//     $nroFactura=0;
-//   }
-  
-//   echo "SIAT: ".$mensaje." * NroFactura: ".$nroFactura." * IdTransaccion: ".$idTransaccion;
-// }else{
-//   echo "Hubo algun error";
-// }
-
-
-
 
 
 
