@@ -578,4 +578,41 @@ function obtenerEstadoSalida($codSalida){
     file_put_contents($rutaGuardado, $output);
   }
 
+  function descargarPDFFacturasCopiaCliente($nom,$html,$codFactura){
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+    //aumentamos la memoria  
+    ini_set("memory_limit", "128M");
+    // Cargamos DOMPDF
+    require_once 'assets/libraries/dompdf/dompdf_config.inc.php';
+
+      $dompdf = new DOMPDF();
+
+      // $dompdf->set_paper("letter", "portrait");
+      $dompdf->set_paper("A4", "portrait");
+      ob_clean();
+      
+      $dompdf->load_html($html);    
+      $dompdf->render();
+      $estado=1;
+
+      if($estado==2){ //facturas anuladas MARCA DE AGUA ANULADO
+         //marca de agua
+         $canvas2 = $dompdf->get_canvas(); 
+         $w = $canvas2->get_width(); 
+         $h = $canvas2->get_height(); 
+         $font = Font_Metrics::get_font("times"); 
+         $text = "ANULADO"; 
+         $txtHeight = -100; 
+         $textWidth = 250; 
+         $canvas2->set_opacity(.5); 
+         $x = (($w-$textWidth)/2); 
+         $y = (($h-$txtHeight)/2); 
+         $canvas2->text($x, $y, $text, $font, 100, $color = array(100,0,0), $word_space = 0.0, $char_space = 0.0, $angle = -45);
+       //fin marca agua
+      } 
+      $pdf = $dompdf->output();
+      file_put_contents($nom.".pdf", $pdf);
+  }
+
 ?>

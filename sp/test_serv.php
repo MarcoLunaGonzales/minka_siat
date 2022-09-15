@@ -38,7 +38,7 @@ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey,
             "codSucursal"=>'1' //codigo de agencia
           );
     
-	$url="http://localhost:8090/minka_siat/wsminka/ws_operaciones.php";
+	$url="http://localhost:8080/minka_siat/wsminka/ws_operaciones.php";
 	$jsons=callService($parametros, $url);
   $obj=json_decode($jsons);//decodificando json
   header('Content-type: application/json');  

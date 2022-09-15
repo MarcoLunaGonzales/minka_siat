@@ -53,11 +53,11 @@ class CufdTest
 
 			$resCuis = $servCodigos->cuis($codigoPuntoVenta, $codigoSucursal);
 			$cuis = $resCuis->RespuestaCuis->codigo;	
-
+			// print_r($resCuis);
 			$fechaActual=date("Y-m-d");
 			//estado=1 para que solo busque los activos caso: eventos significativos
-			$sql="select cufd from siat_cufd where cod_ciudad='$ciudad' and fecha='$fechaActual' and estado=1 and cuis='$cuis' and cod_entidad='$cod_entidad'";
-			// echo $sql;
+			// $sql="select cufd from siat_cufd where cod_ciudad='$ciudad' and fecha='$fechaActual' and estado=1 and cuis='$cuis' and cod_entidad='$cod_entidad'";
+			// echo $sql."<br><br>*";
 			$resp=mysqli_query($enlaceCon,$sql);
 			$dat=mysqli_fetch_array($resp);
 			$cufdAnt=$dat[0];
