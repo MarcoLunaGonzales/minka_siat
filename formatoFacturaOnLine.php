@@ -147,7 +147,7 @@ ob_start();
     <head>
         <!-- CSS Files -->
         <!-- <link rel="icon" type="image/png" href="../assets/img/favicon.png"> -->
-        <link href="assets/libraries/plantillaPDFFactura.css?1.0" rel="stylesheet" type="text/css" />
+        <link href="assets/libraries/plantillaPDFFactura.css" rel="stylesheet" type="text/css" />
         
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
    </head>
@@ -426,6 +426,19 @@ while($datDatosVenta=mysqli_fetch_array($respDatosVenta)){
 }
 $nombreFile="siat_folder/Siat/temp/Facturas-XML/$cuf.pdf";
 unlink($nombreFile);	
-echo $html;
-// guardarPDFArqueoCajaVerticalFactura($cuf,$html,$nombreFile,$codigoVenta);
- descargarPDFFacturasCopiaCliente($cuf,$html,$codigoVenta,$nombreFile);
+// echo $html;
+guardarPDFArqueoCajaVerticalFactura($cuf,$html,$nombreFile,$codigoVenta);
+
+
+
+
+    ?><script type="text/javascript">
+        var link = document.createElement('a');
+        link.href = '<?=$nombreFile?>';
+        link.download = '<?=$cuf?>.pdf';
+        link.dispatchEvent(new MouseEvent('click'));window.location.href='deleteFile.php?file=<?=$nombreFile?>';</script><?php
+
+
+
+
+ // descargarPDFFacturasCopiaCliente($cuf,$html,$codigoVenta,$nombreFile);
