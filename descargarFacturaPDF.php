@@ -19,8 +19,8 @@ while($datDatosVenta=mysqli_fetch_array($respDatosVenta)){
 $nombreFile="siat_folder/Siat/temp/Facturas-XML/$cuf.pdf";
 unlink($nombreFile);	
 // echo $html;
-// guardarPDFArqueoCajaVerticalFactura($cuf,$html,$nombreFile,$codigoVenta);
- descargarPDFFacturasCopiaCliente($cuf,$html,$codigoVenta,$nombreFile);
+guardarPDFArqueoCajaVerticalFactura($cuf,$html,$nombreFile,$codigoVenta);
+ // descargarPDFFacturasCopiaCliente($cuf,$html,$codigoVenta,$nombreFile);
 
 
 if(isset($_GET["ds"])){

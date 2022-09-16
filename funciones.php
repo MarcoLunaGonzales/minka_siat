@@ -578,7 +578,7 @@ function obtenerEstadoSalida($codSalida){
     file_put_contents($rutaGuardado, $output);
   }
 
-  function descargarPDFFacturasCopiaCliente($nom,$html,$codFactura,$rutaGuardado){
+  function descargarPDFFacturasCopiaCliente2($nom,$html,$codFactura,$rutaGuardado){
     //aumentamos la memoria  
     ini_set("memory_limit", "128M");
     // Cargamos DOMPDF
@@ -592,8 +592,7 @@ function obtenerEstadoSalida($codSalida){
       
       $dompdf->load_html($html);    
       $dompdf->render();
-      $estado=1;
-
+      $estado=obtenerEstadoSalida($codFactura);
       if($estado==2){ //facturas anuladas MARCA DE AGUA ANULADO
          //marca de agua
          $canvas2 = $dompdf->get_canvas(); 
@@ -614,4 +613,38 @@ function obtenerEstadoSalida($codSalida){
       file_put_contents($rutaGuardado, $pdf);
   }
 
+
+
+  function descargarPDFFacturasCopiaCliente($nom,$html,$codFactura,$rutaGuardado){
+  	ini_set("memory_limit", "128M");
+    // Cargamos DOMPDF
+    require_once 'assets/libraries/dompdf/dompdf_config.inc.php';
+    $mydompdf = new DOMPDF();
+    ob_clean();
+    $mydompdf->load_html($html);
+    $mydompdf->set_paper("letter", "portrait");
+    $mydompdf->render();
+
+    $estado=obtenerEstadoSalida($codFactura);
+      if($estado==2){ //facturas anuladas MARCA DE AGUA ANULADO
+         //marca de agua
+         $canvas2 = $dompdf->get_canvas(); 
+         $w = $canvas2->get_width(); 
+         $h = $canvas2->get_height(); 
+         $font = Font_Metrics::get_font("times"); 
+         $text = "ANULADO"; 
+         $txtHeight = -100; 
+         $textWidth = 250; 
+         $canvas2->set_opacity(.5); 
+         $x = (($w-$textWidth)/2); 
+         $y = (($h-$txtHeight)/2); 
+         $canvas2->text($x, $y, $text, $font, 100, $color = array(100,0,0), $word_space = 0.0, $char_space = 0.0, $angle = -45);
+       //fin marca agua
+      } 
+
+    $canvas = $mydompdf->get_canvas();
+    $canvas->page_text(500, 25, "", Font_Metrics::get_font("sans-serif"), 10, array(0,0,0));   
+    $mydompdf->set_base_path('assets/libraries/plantillaPDFFactura.css');
+    $mydompdf->stream($nom.".pdf", array("Attachment" => false));
+  }
 ?>

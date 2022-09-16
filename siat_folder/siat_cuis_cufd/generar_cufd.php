@@ -15,3 +15,5 @@ $cuis=obtenerCuis_vigente_BD($ciudad,$cod_entidad);
 deshabilitarCufd($ciudad,$cuis,date('Y-m-d'),$cod_entidad);
 
 generarCufd($ciudad,$cod_impuestos,$codigoPuntoVenta,$cod_entidad);
+?>
+<script type="text/javascript">window.location.href='index.php'</script>

@@ -46,17 +46,33 @@ include("datosUsuario.php");
 ?>
 
 <div id="page">
+		
+	<div class="" style='position: absolute;top:0px;left:0;width: 100%;background:  #5dade2 ;z-index:999999;'>
+		<span style="color:white">
+			<b><?=$nombreTiendaRopa;?>	</b>
+		</span>
+		
+		
+		<div style="position:absolute; width:95%; height:50px; text-align:right; top:0px; font-size: 11px; font-weight: bold; color: #fff;">
+			<?php echo " ".$nombreUsuarioSesion?> [<?php echo $nombreAlmacenSesion;?>]&nbsp;&nbsp;&nbsp;<a href="reloj.php" target="contenedorPrincipal">[<?php echo $fechaSistemaSesion?>  <?php echo $horaSistemaSesion;?>]</a>
+			<a title="Cambiar Tipo de Agencia" style="color:#5A8A85; " href='cambiarAlmacenTipoSesion.php' target="contenedorPrincipal">[ MED ]</a>
+			<button onclick="location.href='salir.php'" style="position:relative;z-index:99999;right:0px;" class="boton-azul">Salir</button>          
+		</div>
+	</div>
+<!-- 
 	<div class="header">
-		<a href="#menu"><span></span></a>
+		
 		<?php echo $nombreTiendaRopa;?>
 		<div style="position:absolute; width:95%; height:50px; text-align:right; top:0px; font-size: 11px; font-weight: bold; color: #fff;">
-			[<?php echo $fechaSistemaSesion?>][<?php echo $horaSistemaSesion;?>]			
+			[<?php echo $fechaSistemaSesion?>][<?php echo $horaSistemaSesion;?>]
+
+			<a title="Cambiar Tipo de Agencia" style="color:#5A8A85; " href='cambiarAlmacenTipoSesion.php' target="contenedorPrincipal">[ MED ]</a>
             <button onclick="location.href='salir.php'" style="position:relative;z-index:99999;right:0px;" class="boton-azul">Salir</button>
 		</div>
 		<div style="position:absolute; width:95%; height:50px; text-align:left; top:0px; font-size: 11px; font-weight: bold; color: #fff;">
 			[<?php echo $nombreUsuarioSesion?>][<?php echo $nombreAlmacenSesion;?>]
 		</div>
-	</div>	
+	</div> -->	
 	<div class="content">
 		<iframe src="inicio_almacenes.php" name="contenedorPrincipal" id="mainFrame"  style="top:50px;" border="1"></iframe>	
 	</div>
