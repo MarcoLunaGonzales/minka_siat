@@ -147,7 +147,8 @@ ob_start();
     <head>
         <!-- CSS Files -->
         <!-- <link rel="icon" type="image/png" href="../assets/img/favicon.png"> -->
-        <link href="assets/libraries/plantillaPDFFactura.css" rel="stylesheet" />
+        <link href="assets/libraries/plantillaPDFFactura.css" rel="stylesheet" type="text/css" />
+        <!-- <link href="assets/libraries/plantillaPDFFactura.css" rel="text/css" /> -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
    </head>
 
