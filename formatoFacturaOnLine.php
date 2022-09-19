@@ -793,20 +793,15 @@ while($datDatosVenta=mysqli_fetch_array($respDatosVenta)){
     $cuf=$datDatosVenta['siat_cuf'];
 }
 $nombreFile="siat_folder/Siat/temp/Facturas-XML/$cuf.pdf";
-unlink($nombreFile);	
+unlink($nombreFile);
 // echo $html;
-guardarPDFArqueoCajaVerticalFactura($cuf,$html,$nombreFile,$codigoVenta);
+// guardarPDFArqueoCajaVerticalFactura($cuf,$html,$nombreFile,$codigoVenta);
 
-// descargarPDFFacturasCopiaCliente($cuf,$html,$codigoVenta,$nombreFile);
-
-
-    ?><script type="text/javascript">
-        var link = document.createElement('a');
-        link.href = '<?=$nombreFile?>';
-        link.download = '<?=$cuf?>.pdf';
-        link.dispatchEvent(new MouseEvent('click'));window.location.href='deleteFile.php?file=<?=$nombreFile?>';</script><?php
+descargarPDFFacturasCopiaCliente($cuf,$html,$codigoVenta,$nombreFile);
 
 
-
-
- // descargarPDFFacturasCopiaCliente($cuf,$html,$codigoVenta,$nombreFile);
+    // ?><script type="text/javascript">
+    //     var link = document.createElement('a');
+    //     link.href = '<?=$nombreFile?>';
+    //     link.download = '<?=$cuf?>.pdf';
+    //     link.dispatchEvent(new MouseEvent('click'));window.location.href='deleteFile.php?file=<?=$nombreFile?>';</script><?php
