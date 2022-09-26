@@ -71,7 +71,7 @@ class ServicioFacturacion extends ServicioSiat
 			*/
 			$solicitud->setBuffer($facturaXml, true);
 			$solicitud->validate();
-			
+			// print_r($solicitud);
 			try
 			{
 				$data = [
