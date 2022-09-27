@@ -55,8 +55,7 @@ $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
 // $periodoFacturado="JULIO-2022";
 
 
-
-$sucursal="1";
+$sucursal="0";
 $tipoTabla="3";
 $idRecibo="28644";
 $fecha="2022-09-27";
@@ -64,8 +63,8 @@ $idPersona="-28644";
 $idPlan="36";
 $cuota="9";
 $monto_total="300";
-$descuento=0;
-$monto_final="300";
+$descuento=100;
+$monto_final="200";
 $gestion="2022";
 $id_usuario="1000";
 $usuario="ester guardia";
@@ -79,9 +78,8 @@ $tipoDocumento="1";
 $complementoDocumento="";
 $periodoFacturado="JULIO-2022";
 
-
-  //Lista de Tipos documento
-	$parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
+//Lista de Tipos documento
+$parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
            "accion"=>"generarFacturaMinka", //
            // "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
            // "nitEmpresa"=>'10916889016', //Nit de empresa
@@ -94,6 +92,7 @@ $periodoFacturado="JULIO-2022";
            "descuento"=>$descuento,
            "monto_final"=>$monto_final,
            "id_usuario"=>$id_usuario,//***
+           "usuario"=>$usuario,//***
            "nitCliente"=>$nitCliente,
            "nombreFactura"=>$nombreFactura,
            "NombreEstudiante"=>$NombreEstudiante,

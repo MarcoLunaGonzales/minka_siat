@@ -538,12 +538,11 @@ border-bottom: 1px solid #000;
                               FACTURA N° : <br>
                               CÓD. AUTORIZACIÓN : </b>
                           </td>
-                          <td>
+                          <td class="text-left">
                               <?=$nitTxt?><br>
                               <?=$nroDocVenta?><br>
                           </td>
                         </tr>
-
                         <tr><td colspan="2"><?=$cuf?></td></tr>
                         <tr><td colspan="2">
                             <b>FECHA FACTURA : </b> <?=$fechaFactura?><br>
@@ -588,11 +587,11 @@ border-bottom: 1px solid #000;
             $suma_total=0;
             ?>
             
-            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td></td></tr>
             <?php
 
                 $contador_items=0;                    
-                $cantidad_por_defecto=8;//cantidad de items por defect
+                $cantidad_por_defecto=5;//cantidad de items por defect
 
                 $sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material,s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
                 sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
@@ -641,15 +640,15 @@ border-bottom: 1px solid #000;
 
                     ?>
                     <tr>
-                        <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=$codInterno?></td>
-                        <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;">
+                        <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=$codInterno?></td>
+                        <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;">
                             <?=$nombreMat;?>
                         </td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><small><?=$unidad_medida?></small></td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=$cantUnit?></td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=number_format($precioUnitFactura,2)?></td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=number_format($descUnit,2)?></td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=number_format($montoUnitProdDesc,2)?></td>
+                        <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><small><?=$unidad_medida?></small></td>
+                        <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=$cantUnit?></td>
+                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=number_format($precioUnitFactura,2)?></td>
+                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=number_format($descUnit,2)?></td>
+                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=number_format($montoUnitProdDesc,2)?></td>
                     </tr>
                     
                     <?php $contador_items++;
@@ -658,11 +657,11 @@ border-bottom: 1px solid #000;
                 for($i=$contador_items;$i<$cantidad_por_defecto;$i++){ ?>
                     <tr>
                         <td style="padding-top: 0px;padding-bottom: 0px; border-top: hidden;">&nbsp;</td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-top: hidden;"></td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-top: hidden;"></td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-top: hidden;"></td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-top: hidden;"></td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-top: hidden;"></td>
+                        <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
+                        <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
+                        <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
+                        <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
+                        <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
                         <td style="padding-top: 0px;padding-bottom: 0px; border-top: hidden;"></td>
                     </tr>
                 <?php 
@@ -717,11 +716,11 @@ border-bottom: 1px solid #000;
             $resp1=mysqli_query($enlaceCon,$sql1);
             while($filaDesc=mysqli_fetch_array($resp1)){    
                     $txtGlosaDescuento=iconv('utf-8', 'windows-1252', $filaDesc[0]);        
-            }
-                    ?>
+            } ?>
             <tr>
                 <td rowspan="2" align="center" style="margin: 0px;">
-                    <img src="<?=$fileName?>"/>
+                    
+                    <img src="<?=$fileName?>" style="margin: 0px;padding: 0;width: 120px;">
                 </td>
                 <td  colspan="6">
                     <table class="table">
