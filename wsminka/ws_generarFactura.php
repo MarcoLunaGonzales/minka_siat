@@ -334,7 +334,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
             $sql_inserta=mysqli_query($enlaceCon,$sql_insert);
         // }
         $contador++;
-    } while ($sql_inserta<>1 && $contador <= 0);
+    } while ($sql_inserta<>1 && $contador <= 100);
 
 
     if($sql_inserta==1){
