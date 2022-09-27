@@ -1,5 +1,27 @@
 <?php
 
+// function insertarlogFacturas_entrada($json,$mensaje){
+//     $dbh = new Conexion();    
+//     $sql="INSERT INTO log_facturas(fecha,detalle_error,json) values(NOW(),'$mensaje','$json')";
+//     $stmt = $dbh->prepare($sql);
+//     $stmt->execute();
+// }
+
+function InsertlogFacturas_salida($cod_error,$detalle_error,$json,$enlaceCon){  
+    // $dbh = new Conexion();    
+    // $sql="INSERT INTO log_facturas(fecha,cod_error,detalle_error,json) values(NOW(),'$cod_error','$detalle_error','$json')";
+    // $stmt = $dbh->prepare($sql);
+    // $stmt->execute();
+    // require_once '../conexionmysqli2.php';
+    // print_r($json);
+    $jsonString=json_encode($json);
+    $fechaActualX=date('Y-m-d H:i:s');
+    $sqlUpdate="INSERT INTO log_facturas(fecha,cod_error,detalle_error,json) values('$fechaActualX','$cod_error','$detalle_error','$jsonString')";
+    // echo $sqlUpdate;
+    // echo "<br>";
+    $resp=mysqli_query($enlaceCon,$sqlUpdate);
+}
+
 // SERVICIO WEB PARA FACTURAS
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
     $datos = json_decode(file_get_contents("php://input"), true); 
@@ -352,6 +374,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 $recepcion=$datPV[0];
 
                 $errorFacturaXml=0;
+                $json=null;
                 if($recepcion==""){         
                     // require_once "../siat_folder/funciones_siat.php";
                     $errorConexion=verificarConexion()[0];
@@ -375,7 +398,8 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                         $respUpdMonto=mysqli_query($enlaceCon,$sqlUpdMonto);
                         $errorFacturaXml=1;
                         // echo $sqlUpdMonto;
-                    }           
+                    }
+                    $json=$facturaImpuestos[0];           
                 }
                 if($errorFacturaXml==0){
                     $estado_facturado=0;
@@ -386,6 +410,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                     $mensaje="Factura emitida fuera de línea :(";               
                     $url="location.href='dFacturaElectronica.php?codigo_salida=$codigo';";
                 }
+                InsertlogFacturas_salida($estado_facturado,$mensaje,$json,$enlaceCon);
                 //SACAMOS LA VARIABLE PARA ENVIAR EL CORREO O NO SI ES 1 ENVIAMOS CORREO DESPUES DE LA TRANSACCION
                 // $banderaCorreo=obtenerValorConfiguracion($enlaceCon,10);
                 $banderaCorreo=0;

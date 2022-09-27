@@ -59,7 +59,7 @@ $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
 $sucursal="1";
 $tipoTabla="3";
 $idRecibo="28644";
-$fecha="2022-09-15";
+$fecha="2022-09-27";
 $idPersona="-28644";
 $idPlan="36";
 $cuota="9";
@@ -112,9 +112,5 @@ $periodoFacturado="JULIO-2022";
 $obj=json_decode($jsons);//decodificando json
 header('Content-type: application/json');  
 print_r($jsons); 
-
-
-
-      
   
 ?>
