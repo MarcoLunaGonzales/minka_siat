@@ -1,11 +1,18 @@
 <?php
 
-// function insertarlogFacturas_entrada($json,$mensaje){
-//     $dbh = new Conexion();    
-//     $sql="INSERT INTO log_facturas(fecha,detalle_error,json) values(NOW(),'$mensaje','$json')";
-//     $stmt = $dbh->prepare($sql);
-//     $stmt->execute();
-// }
+function insertarlogFacturas_entrada($json,$mensaje,$enlaceCon){
+    // $dbh = new Conexion();    
+    // $sql="INSERT INTO log_facturas(fecha,detalle_error,json) values(NOW(),'$mensaje','$json')";
+    // $stmt = $dbh->prepare($sql);
+    // $stmt->execute();
+
+    $jsonString=json_encode($json);
+    $fechaActualX=date('Y-m-d H:i:s');
+    $sql="INSERT INTO log_facturas(fecha,detalle_error,json) values('$fechaActualX','$mensaje','$json')";
+    // echo $sqlUpdate;
+    // echo "<br>";
+    $resp=mysqli_query($enlaceCon,$sql);
+}
 
 function InsertlogFacturas_salida($cod_error,$detalle_error,$json,$enlaceCon){  
     // $dbh = new Conexion();    
@@ -24,7 +31,11 @@ function InsertlogFacturas_salida($cod_error,$detalle_error,$json,$enlaceCon){
 
 // SERVICIO WEB PARA FACTURAS
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
-    $datos = json_decode(file_get_contents("php://input"), true); 
+    require_once '../conexionmysqli2.php';
+    // $datos = json_decode(file_get_contents("php://input"), true); 
+    $json=file_get_contents("php://input");
+    insertarlogFacturas_entrada($json,'Entrada json',$enlaceCon);
+    $datos = json_decode($json, true);
     //Parametros de consulta
     $accion=NULL;
     if(isset($datos['accion'])&&isset($datos['sIdentificador'])&&isset($datos['sKey'])){//verificamos existencia de datos de conexion
@@ -34,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
             $estado=0;
             $mensaje="";
             if($accion=="generarFacturaMinka"){//obtenemos las ciudades del cliente
-                    require_once '../conexionmysqli2.php';
+                    // require_once '../conexionmysqli2.php';
                     require_once '../siat_folder/funciones_servicios.php';
                     // if(isset($datos['idEmpresa'])){
                         // $idEmpresa=$datos['idEmpresa'];//
