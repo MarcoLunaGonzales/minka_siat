@@ -595,7 +595,7 @@ while ($dat = mysqli_fetch_array($resp)) {
     $codigoVentaCambio=0;
     $sqlCambio="select c.cod_cambio from salida_almacenes c where c.cod_cambio=$codigo";
     $respCambio=mysqli_query($enlaceCon,$sqlCambio);
-    if($global_admin_cargo==1){
+    // if($global_admin_cargo==1){
      while($datCambio=mysqli_fetch_array($respCambio)){
         $codigoVentaCambio=$datCambio[0];        
      }
@@ -615,15 +615,15 @@ while ($dat = mysqli_fetch_array($resp)) {
 		// <img src='imagenes/restaurar2.png' width='20' border='0' title='Convertir en NR y Anular Factura'></a>
 		// </td>";
 	 // }else{
-  //       echo "<td align='center' bgcolor='$color_fondo'> </td>";
-  //    }
+      //       echo "<td align='center' bgcolor='$color_fondo'> </td>";
+      //    }
      // if($codTipoDoc!=1 && $codTipoDoc!=2){
      //    echo "<td  bgcolor='$color_fondo'> ";
      //    echo "</td>";   
      // }
      echo "<td  bgcolor='$color_fondo'> <a href='$urlDetalle?codigo_salida=$codigo' target='_BLANK' title='DOCUMENTO FACTURA'  class='text-dark'><i class='material-icons'>description</i></a>";
         echo "</td>";
-    }
+    // }
 
 	echo "</tr>";
 }
