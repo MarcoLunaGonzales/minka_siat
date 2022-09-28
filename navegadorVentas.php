@@ -468,7 +468,18 @@ echo "<div id='divCuerpo'><center><table class='texto'>";
 echo "<tr><th>&nbsp;</th><th>Nro. Doc</th><th>Fecha/hora<br>Registro Salida</th><th>Tipo de Salida</th><th>TipoPago</th><th>Razon Social</th><th>NIT</th><th>Observaciones</th><th>Factura</th>";
 
     echo "</tr>";
-	
+
+if(isset($_GET['cod_ciudad_externo'])){
+    $cod_ciudad_externo=$_GET['cod_ciudad_externo'];
+    $sql="SELECT c.cod_ciudad,a.cod_almacen
+        from ciudades c join almacenes a on c.cod_ciudad=a.cod_ciudad
+        where c.cod_externo=$cod_ciudad_externo";
+    $resp=mysqli_query($enlaceCon,$sql);    
+    while ($dat = mysqli_fetch_array($resp)) {        
+        $global_almacen=$dat['cod_almacen'];
+    }
+}	
+
 echo "<input type='hidden' name='global_almacen' value='$global_almacen' id='global_almacen'>";
 
 $consulta = "

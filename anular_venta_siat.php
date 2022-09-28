@@ -144,7 +144,7 @@ if($anulado==0){ //verificamos si no está anulado // 0 no anulada 1 //anulado
 					}).then(function() {
 					    location.href='dFacturaElectronica.php?codigo_salida=".$codigo_registro."';
 					});
-					</script>";
+					</script>";//location.href='navegadorVentas.php';
 			}else{
 				echo "<script language='Javascript'>
 				Swal.fire({
