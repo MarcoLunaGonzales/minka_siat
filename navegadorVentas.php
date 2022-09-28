@@ -460,10 +460,10 @@ echo "<table class='texto' cellspacing='0' width='90%'>
 echo "<br><br><div class='divBotones'>
 		<input type='button' value='Registrar' name='adicionar' class='boton' onclick='enviar_nav()'>
 		<input type='button' value='Buscar' class='boton' onclick='ShowBuscar()'></td>		
-		<!--input type='button' value='Anular' class='boton2' onclick='anular_salida(this.form)'-->
-        <input type='button' value='Anular Con SIAT' class='boton2' onclick='anular_salida_siat(this.form)'>
-    </div>";
 		
+    </div>";
+		// <!--input type='button' value='Anular' class='boton2' onclick='anular_salida(this.form)'-->
+  //       <input type='button' value='Anular Con SIAT' class='boton2' onclick='anular_salida_siat(this.form)'>
 echo "<div id='divCuerpo'><center><table class='texto'>";
 echo "<tr><th>&nbsp;</th><th>Nro. Doc</th><th>Fecha/hora<br>Registro Salida</th><th>Tipo de Salida</th><th>TipoPago</th><th>Razon Social</th><th>NIT</th><th>Observaciones</th><th>Factura</th>";
 
