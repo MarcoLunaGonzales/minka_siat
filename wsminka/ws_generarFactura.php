@@ -71,8 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                                 $tipoDocumento=$datos['tipoDocumento'];
                                 $complementoDocumento=$datos['complementoDocumento'];
                                 $periodoFacturado=$datos['periodoFacturado'];
+                                $correo=$datos['correo'];
 
-                                $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado);
+                                $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo);
 
                                 $estado=$datosFactura[0];//estado
                                 $mensaje=$datosFactura[1];//mensaje
@@ -129,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
     echo json_encode($resultado);
 }
 
-function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$siat_usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado){
+function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$siat_usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino){
 
     
     require_once "../conexionmysqli2.php";
@@ -438,7 +439,8 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 if($banderaCorreo==1){
                     //para correo solo en caso de offline y online
                     $enviar_correo=true;
-                    $correo_destino=obtenerCorreosListaCliente($codCliente);
+                    // $correo_destino=obtenerCorreosListaCliente($codCliente);
+
                     if($correo_destino==null || $correo_destino=="" || $correo_destino==" "){
                         $enviar_correo=false;
                         $texto_correo="<span style=\"border:1px;font-size:18px;color:orange;\"><b>EL CLIENTE NO TIENE UN CORREO REGISTRADO</b></span>";
