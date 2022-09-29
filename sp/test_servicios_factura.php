@@ -78,6 +78,35 @@ $tipoDocumento="1";
 $complementoDocumento="";
 $periodoFacturado="JULIO-2022";
 
+
+$sucursal=1;
+$tipoTabla="1";
+$idRecibo="300505";
+$fecha="2022-09-29";
+$idPersona="15069";
+$idPlan="36";
+$cuota="6";
+$monto_total="850";
+$descuento=540;
+$monto_final="310";
+$gestion="2022";
+$id_usuario=12;
+$usuario="ESTER GUARDIA";
+$nitCliente="6121838019";
+$nombreFactura="MARAu00d1ON";
+$NombreEstudiante="CARDENAS MARAu00d1ON DONNA JOE (14275-4)";
+$Concepto="Pago cuota:5 Gestion:2022 Plan:36";
+$tipoPago="1";
+$nroTarjeta=0;
+$tipoDocumento="5";
+$complementoDocumento="";
+$periodoFacturado="5-2022";
+$correo="donnajoecardenas@gmail.com";
+$accion="generarFacturaMinka";
+$sIdentificador="MinkaSw123*";
+$sKey="rrf656nb2396k6g6x44434h56jzx5g6";
+
+
 //Lista de Tipos documento
 $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
            "accion"=>"generarFacturaMinka", //
