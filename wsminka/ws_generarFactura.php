@@ -435,9 +435,9 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 }
                 InsertlogFacturas_salida($estado_facturado,$mensaje,$json,$enlaceCon);
                 //SACAMOS LA VARIABLE PARA ENVIAR EL CORREO O NO SI ES 1 ENVIAMOS CORREO DESPUES DE LA TRANSACCION
-                $banderaCorreo=obtenerValorConfiguracion($enlaceCon,10);
-                // $banderaCorreo=1;
-                
+                //$banderaCorreo=obtenerValorConfiguracion($enlaceCon,10);
+                 $banderaCorreo=0;
+
                 if($banderaCorreo==1){
                     //para correo solo en caso de offline y online
                     $enviar_correo=true;
