@@ -1,7 +1,6 @@
 <?php
 // error_reporting(E_ALL);
 // ini_set('display_errors', '1');
-
 $home=1;
 ob_start();
 
@@ -20,9 +19,11 @@ $nombreFile="siat_folder/Siat/temp/Facturas-XML/$cuf.pdf";
 unlink($nombreFile);	
 // echo $html;
 guardarPDFArqueoCajaVerticalFactura($cuf,$html,$nombreFile,$codigoVenta);
- // descargarPDFFacturasCopiaCliente($cuf,$html,$codigoVenta,$nombreFile);
+ //s descargarPDFFacturasCopiaCliente($cuf,$html,$codigoVenta,$nombreFile);
 
-
+if(isset($sw_correo)){
+	
+}else{
 if(isset($_GET["ds"])){
     ?><script type="text/javascript">
         var link = document.createElement('a');
@@ -32,7 +33,7 @@ if(isset($_GET["ds"])){
 }else{
     echo $cuf.".pdf";
 }
-
+}
 
 
 

@@ -5,8 +5,7 @@ if(isset($_GET['codVenta'])){
 	$codSalida=$codigoVenta;
 }
 
-
-require "conexionmysqli2.inc";
+require "conexionmysqli2.php";
 require_once "siat_folder/funciones_siat.php";  
 $facturaImpuestos=generarXMLFacturaVentaImpuestos($codSalida);
 
@@ -20,7 +19,7 @@ while($datDatosVenta=mysqli_fetch_array($respDatosVenta)){
 
 }
 $nombreFile="siat_folder/Siat/temp/Facturas-XML/$cuf.xml";
-unlink($nombreFile);	
+// unlink($nombreFile);	
 $archivo = fopen($nombreFile,'a');    
 fputs($archivo,$facturaImpuestos);
 fclose($archivo);

@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
 function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$siat_usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino){
 
     $correo_destino="bsullcamani@gmail.com";
-    
+
     require_once "../conexionmysqli2.php";
     // require_once "../estilos_almacenes.inc";
     require_once "../funciones.php";
@@ -435,13 +435,13 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 }
                 InsertlogFacturas_salida($estado_facturado,$mensaje,$json,$enlaceCon);
                 //SACAMOS LA VARIABLE PARA ENVIAR EL CORREO O NO SI ES 1 ENVIAMOS CORREO DESPUES DE LA TRANSACCION
-                // $banderaCorreo=obtenerValorConfiguracion($enlaceCon,10);
-                $banderaCorreo=0;
+                $banderaCorreo=obtenerValorConfiguracion($enlaceCon,10);
+                // $banderaCorreo=1;
+                
                 if($banderaCorreo==1){
                     //para correo solo en caso de offline y online
                     $enviar_correo=true;
                     // $correo_destino=obtenerCorreosListaCliente($codCliente);
-
                     if($correo_destino==null || $correo_destino=="" || $correo_destino==" "){
                         $enviar_correo=false;
                         $texto_correo="<span style=\"border:1px;font-size:18px;color:orange;\"><b>EL CLIENTE NO TIENE UN CORREO REGISTRADO</b></span>";
@@ -453,10 +453,9 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 if($enviar_correo){
                     $sw_correo=true;
                     $codigoVenta=$codigo;
-                    require_once "descargarFacturaXml.php";
+                    require_once "../descargarFacturaXml.php";
                     $codigoVenta=$codigo;
-                    require_once "descargarFacturaPDF.php";
-
+                    require_once "../descargarFacturaPDF.php";
                     $estado_envio=envio_factura($codigoVenta,$correo_destino,$enlaceCon);
                     if($estado_envio==1){
                         $texto_correo="<span style=\"border:1px;font-size:18px;color:#91d167;\"><b>SE ENVIÓ EL CORREO CON EXITO.</b></span>";
@@ -465,15 +464,16 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                     }else{
                         $texto_correo="<span style=\"border:1px;font-size:18px;color:red;\"><b>Ocurrio un error al enviar el correo, vuelva a intentarlo.</b></span>";
                     }
-                    echo "<script language='Javascript'>
-                        Swal.fire({
-                        title: 'SIAT: ".$mensaje."',
-                        html: '".$texto_correo."',
-                        type: 'success'
-                        }).then(function() {
-                           location.href='navegadorVentas.php'; 
-                        });
-                        </script>";
+                    // echo "<script language='Javascript'>
+                    //     Swal.fire({
+                    //     title: 'SIAT: ".$mensaje."',
+                    //     html: '".$texto_correo."',
+                    //     type: 'success'
+                    //     }).then(function() {
+                    //        location.href='navegadorVentas.php'; 
+                    //     });
+                    //     </script>";
+                        return array($estado_facturado,$mensaje,$codigo,$nro_correlativo);
                     // $texto_correo="<span style=\"border:1px;font-size:18px;color:#91d167;\"><b>¿DESEAS ENVIAR CORREO?</b></span>";
                     // echo "<script language='Javascript'>
                 }else{
