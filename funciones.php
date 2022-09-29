@@ -626,21 +626,22 @@ function obtenerEstadoSalida($codSalida){
     $mydompdf->render();
 
     $estado=obtenerEstadoSalida($codFactura);
-      if($estado==2){ //facturas anuladas MARCA DE AGUA ANULADO
-         //marca de agua
-         $canvas2 = $dompdf->get_canvas(); 
-         $w = $canvas2->get_width(); 
-         $h = $canvas2->get_height(); 
-         $font = Font_Metrics::get_font("times"); 
-         $text = "ANULADO"; 
-         $txtHeight = -100; 
-         $textWidth = 250; 
-         $canvas2->set_opacity(.5); 
-         $x = (($w-$textWidth)/2); 
-         $y = (($h-$txtHeight)/2); 
-         $canvas2->text($x, $y, $text, $font, 100, $color = array(100,0,0), $word_space = 0.0, $char_space = 0.0, $angle = -45);
-       //fin marca agua
-      } 
+
+    if($estado!=0){ //facturas anuladas MARCA DE AGUA ANULADO
+      //marca de agua
+      $canvas2 = $mydompdf->get_canvas(); 
+      $w = $canvas2->get_width(); 
+      $h = $canvas2->get_height(); 
+      $font = Font_Metrics::get_font("times"); 
+      $text = "ANULADO"; 
+      $txtHeight = -100; 
+      $textWidth = 250; 
+      $canvas2->set_opacity(.5); 
+      $x = (($w-$textWidth)/2); 
+      $y = (($h-$txtHeight)/2); 
+      $canvas2->text($x, $y, $text, $font, 100, $color = array(100,0,0), $word_space = 0.0, $char_space = 0.0, $angle = -45);
+    	//fin marca agua
+    }
 
     $canvas = $mydompdf->get_canvas();
     $canvas->page_text(500, 25, "", Font_Metrics::get_font("sans-serif"), 10, array(0,0,0));   
