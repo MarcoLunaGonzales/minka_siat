@@ -112,11 +112,11 @@ function sendemailFiles($mail_username,$mail_userpassword,$mail_setFromEmail,$ma
 	    require_once 'PHPMailer/src/SMTP.php';
 	}   
 	if($variablex==1){
-		require_once 'funciones.php';	
-		require_once 'config.php';
+		require_once '../funciones.php';	
+		require_once '../config.php';
 		// require_once 'conexionmysqli.inc';
 		$enlaceCon=$conn;
-		$add_url="";
+		$add_url="../";
 	}else{
 		require_once '../../funciones.php';	
 		require_once '../../conexionmysqli.inc';
