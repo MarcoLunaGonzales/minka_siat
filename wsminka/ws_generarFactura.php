@@ -369,7 +369,8 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         for($i=1;$i<=$cantidad_material;$i++)
         {       
             // $codMaterial=$_POST["materiales$i"];
-            $codMaterial=$tipoTabla;
+            // $codMaterial=$tipoTabla;
+            $codMaterial=1;
             if($codMaterial!=0){
 
                 // $cantidadUnitaria=$_POST["cantidad_unitaria$i"];
