@@ -170,10 +170,13 @@ require("../funciones_siat.php");
       }else{
         
         if($nuevo_cufd==1){
-            deshabilitarCufd($cod_ciudad,$cuis,$fecha_X);
-            $cufdNuevo=generarCufd($cod_ciudad,$cod_impuestos,$codigoPuntoVenta);
-            $cufd=obtenerCufd_Vigente_BD($cod_ciudad,$fecha_X,$cuis);
-          }
+          $cod_entidad=2;
+          // echo $cod_ciudad."-".$cuis."-".$fecha_X;
+          deshabilitarCufd($cod_ciudad,$cuis,$fecha_X,$cod_entidad);
+          // echo $cod_ciudad."-".$cod_ciudad."-".$fecha_X;
+          $cufdNuevo=generarCufd($cod_ciudad,$cod_impuestos,$codigoPuntoVenta,$cod_entidad);
+          $cufd=obtenerCufd_Vigente_BD($cod_ciudad,$fecha_X,$cuis);
+        }
         
         echo "<script language='Javascript'>
         Swal.fire({

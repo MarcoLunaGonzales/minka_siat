@@ -28,7 +28,7 @@ function solicitudEventoSignificativo($codigoClasificador,$descripcion,$codigoPu
 }
 
 function obtenerCuis_vigente_BD($cod_ciudad,$cod_entidad){
-	$sql="SELECT cuis from siat_cuis where cod_ciudad=$cod_ciudad and estado=1 and cod_entidad='$cod_entidad'";
+	$sql="SELECT cuis from siat_cuis where cod_ciudad=$cod_ciudad and estado=1";
 	 // echo $sql;
   $valor="0";
   // require("../../conexionmysqli2.php");
@@ -195,7 +195,7 @@ function deshabilitarCufd($cod_ciudad,$cuis,$fecha_X,$cod_entidad){
   $valor="0";
   // require("../../conexionmysqli2.php");
   require dirname(__DIR__)."/conexionmysqli2.php";
-  $sqlUpdate="UPDATE siat_cufd SET estado=0 where cod_ciudad='$cod_ciudad' and fecha='$fecha_X' and cuis='$cuis' and estado=1 and cod_entidad='$cod_entidad';";
+  $sqlUpdate="UPDATE siat_cufd SET estado=0 where cod_ciudad='$cod_ciudad' and fecha='$fecha_X' and cuis='$cuis' and estado=1;";
   mysqli_query($enlaceCon,$sqlUpdate);
 
   return $valor;
