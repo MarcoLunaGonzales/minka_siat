@@ -35,7 +35,7 @@ $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
          "accion"=>"verificarCUFDEmpresa", //
          "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
          "nitEmpresa"=>'315910027', //nit  de empresa
-         "codSucursal"=>'1' //COD SUCURSAL
+         "codSucursal"=>'2' //COD SUCURSAL
        );  
 
     
