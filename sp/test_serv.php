@@ -34,7 +34,7 @@ $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
 $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
             "accion"=>"obtenerCufdMinka", //Nuevo contacto de empresa
             "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
-            "nitEmpresa"=>'10916889016', //nit  de empresa
+            "nitEmpresa"=>'315910027', //nit  de empresa
             "codSucursal"=>'1' //codigo de agencia
           );
     
