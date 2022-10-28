@@ -141,7 +141,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
 
 
 function verificarCUFDEmpresa($idEmpresa,$nitEmpresa,$codSucursal,$enlaceCon){
-    // require_once '../conexionmysqli2.php';  
+    // require_once '../conexionmysqli2.php';
+    date_default_timezone_set('America/La_Paz');  
     $fechaActual=date("Y-m-d");
     $cons = "SELECT count(*) from siat_cufd sc, siat_puntoventa sp, datos_empresa de where de.cod_empresa=sp.cod_entidad and sc.cod_ciudad=sp.cod_ciudad and sp.cod_ciudad='$codSucursal' and sc.fecha='$fechaActual' and sc.estado=1 and de.nit='$nitEmpresa' and de.cod_empresa='$idEmpresa';";
     $respCons = mysqli_query($enlaceCon,$cons);    
