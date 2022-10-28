@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('America/La_Paz');  
+
 // SERVICIO WEB PARA FACTURAS
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
     $datos = json_decode(file_get_contents("php://input"), true); 
