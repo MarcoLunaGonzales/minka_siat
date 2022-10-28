@@ -14,11 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
             if($accion=="verificarComunicacion"){//obtenemos las ciudades del cliente
                 // try{
                     require_once '../conexionmysqli2.php';
-                    if(isset($datos['idEmpresa'])){
-                        $idEmpresa=$datos['idEmpresa'];//
-                        $nitEmpresa=$datos['nitEmpresa'];//
-                        if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
-                            $DatosConexion=verificarComunicacion($idEmpresa,$nitEmpresa);//
+                    // if(isset($datos['idEmpresa'])){
+                        // $idEmpresa=$datos['idEmpresa'];//
+                        // $nitEmpresa=$datos['nitEmpresa'];//
+                        // if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
+                            $DatosConexion=verificarComunicacion();//
                             if($DatosConexion[0]==1){
                                 $resultado=array("estado"=>1,
                                     "mensaje"=>"Conexion Establecida");
@@ -26,64 +26,64 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                                 $resultado=array("estado"=>2,
                                     "mensaje"=>"ERROR en servicio SIAT : ".$DatosConexion[1]);
                             }
-                        }else{
-                            $resultado=array("estado"=>4,
-                            "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
-                        }
-                    }else{
-                        $resultado=array("estado"=>4,
-                        "mensaje"=>"ERROR. Variables incompletas");
-                    }
+                        // }else{
+                        //     $resultado=array("estado"=>4,
+                        //     "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
+                        // }
+                    // }else{
+                    //     $resultado=array("estado"=>4,
+                    //     "mensaje"=>"ERROR. Variables incompletas");
+                    // }
             }elseif($accion=="sincronizarParametricaTipoMetodoPago"){
                 require_once '../conexionmysqli2.php';
-                if(isset($datos['nitEmpresa']) && isset($datos['nitEmpresa'])){                    
-                    $idEmpresa=$datos['idEmpresa'];//
-                    $nitEmpresa=$datos['nitEmpresa'];//
-                    if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
-                        $listAccion=sincronizarParametros($accion,$idEmpresa,$enlaceCon);//
+                // if(isset($datos['nitEmpresa']) && isset($datos['nitEmpresa'])){                    
+                //     $idEmpresa=$datos['idEmpresa'];//
+                //     $nitEmpresa=$datos['nitEmpresa'];//
+                    // if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
+                        $listAccion=sincronizarParametros($accion,$enlaceCon);//
                         $totalComponentes=count($listAccion);
                         $resultado=array("estado"=>1,
                             "mensaje"=>"Tipos de pago obtenido correctamente", 
                             "lista"=>$listAccion, 
                             "totalComponentes"=>$totalComponentes
                             );
-                    }else{
-                        $resultado=array("estado"=>4,
-                        "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
-                    }
-                }else{
-                    $resultado=array("estado"=>4,
-                    "mensaje"=>"ERROR. Variables incompletas");
-                }
+                    // }else{
+                    //     $resultado=array("estado"=>4,
+                    //     "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
+                    // }
+                // }else{
+                //     $resultado=array("estado"=>4,
+                //     "mensaje"=>"ERROR. Variables incompletas");
+                // }
 
             }elseif($accion=="sincronizarParametricaTipoDocumentoIdentidad"){
                 require_once '../conexionmysqli2.php';
-                if(isset($datos['nitEmpresa']) && isset($datos['nitEmpresa'])){                    
-                    $idEmpresa=$datos['idEmpresa'];//
-                    $nitEmpresa=$datos['nitEmpresa'];//
-                    if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
-                        $listAccion=sincronizarParametros($accion,$idEmpresa,$enlaceCon);//
+                // if(isset($datos['nitEmpresa']) && isset($datos['nitEmpresa'])){                    
+                //     $idEmpresa=$datos['idEmpresa'];//
+                //     $nitEmpresa=$datos['nitEmpresa'];//
+                    // if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
+                        $listAccion=sincronizarParametros($accion,$enlaceCon);//
                         $totalComponentes=count($listAccion);
                         $resultado=array("estado"=>1,
                             "mensaje"=>"Tipos de documento obtenido correctamente", 
                             "lista"=>$listAccion, 
                             "totalComponentes"=>$totalComponentes
                             );
-                    }else{
-                        $resultado=array("estado"=>4,
-                        "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
-                    }
-                }else{
-                    $resultado=array("estado"=>4,
-                    "mensaje"=>"ERROR. Variables incompletas");
-                }
+                //     }else{
+                //         $resultado=array("estado"=>4,
+                //         "mensaje"=>"ERROR. IdEmpresa o nitEmpresa inexistente");
+                //     }
+                // }else{
+                //     $resultado=array("estado"=>4,
+                //     "mensaje"=>"ERROR. Variables incompletas");
+                // }
             }elseif($accion=="verificarCUFDEmpresa"){
                 require_once '../conexionmysqli2.php';
-                if( isset($datos['idEmpresa']) && isset($datos['nitEmpresa']) && isset($datos['codSucursal']) ){                    
-                    $idEmpresa=$datos['idEmpresa'];//
-                    $nitEmpresa=$datos['nitEmpresa'];//
+                if(isset($datos['codSucursal']) ){                    
+                    // $idEmpresa=$datos['idEmpresa'];//
+                    // $nitEmpresa=$datos['nitEmpresa'];//
                     $codSucursal=$datos['codSucursal'];//
-                    $banderaCUFD=verificarCUFDEmpresa($idEmpresa,$nitEmpresa,$codSucursal,$enlaceCon);
+                    $banderaCUFD=verificarCUFDEmpresa($codSucursal,$enlaceCon);
                     if($banderaCUFD==1){
                         $resultado=array("estado"=>1,
                             "mensaje"=>"Correcto. CUFD Valido para la sucursal.");
@@ -140,10 +140,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
 }
 
 
-function verificarCUFDEmpresa($idEmpresa,$nitEmpresa,$codSucursal,$enlaceCon){
-    // require_once '../conexionmysqli2.php';  
+function verificarCUFDEmpresa($codSucursal,$enlaceCon){
+    
+    date_default_timezone_set("America/La_Paz");
     $fechaActual=date("Y-m-d");
-    $cons = "SELECT count(*) from siat_cufd sc, siat_puntoventa sp, datos_empresa de where de.cod_empresa=sp.cod_entidad and sc.cod_ciudad=sp.cod_ciudad and sp.cod_ciudad='$codSucursal' and sc.fecha='$fechaActual' and sc.estado=1 and de.nit='$nitEmpresa' and de.cod_empresa='$idEmpresa';";
+    $cons = "SELECT count(*) from siat_cufd sc, siat_puntoventa sp where sc.cod_ciudad=sp.cod_ciudad and sp.cod_ciudad='$codSucursal' and sc.fecha='$fechaActual' and sc.estado=1 ;";
     $respCons = mysqli_query($enlaceCon,$cons);    
     $valor=0;
     while ($datCons = mysqli_fetch_array($respCons)) {
@@ -164,7 +165,7 @@ function verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon){
   return $value;
 }
 
-function verificarComunicacion($idEmpresa,$nitEmpresa){
+function verificarComunicacion(){
     // error_reporting(E_ALL);
     // ini_set('display_errors', '1');  
   require_once '../siat_folder/funciones_siat.php';
@@ -176,7 +177,7 @@ function verificarComunicacion($idEmpresa,$nitEmpresa){
   // }
   return $DatosConexion;
 }
-function sincronizarParametros($act,$cod_entidad,$enlaceCon){    
+function sincronizarParametros($act,$enlaceCon){    
     // error_reporting(E_ALL);
     // ini_set('display_errors', '1');  
     // require_once '../siat_folder/funciones_siat.php';
@@ -184,60 +185,60 @@ function sincronizarParametros($act,$cod_entidad,$enlaceCon){
     // echo $act;
     switch ($act) {
         case 'sincronizarActividades':                      
-             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizaractividades where cod_entidad=$cod_entidad order by codigo;";
+             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizaractividades order by codigo;";
                // echo $sql;
         break;
         case 'sincronizarListaActividadesDocumentoSector':
-             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarlistaactividadesdocumentosector where cod_entidad=$cod_entidad order by codigo;";
+             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarlistaactividadesdocumentosector order by codigo;";
                 
         break;
         case 'sincronizarListaLeyendasFactura':
                  $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarListaLeyendasFactura where (codigoActividad=$cod_entidad order by codigo;";
         break;
         case 'sincronizarListaMensajesServicios':
-            $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarlistamensajesservicios where cod_entidad=$cod_entidad order by codigo;";
+            $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarlistamensajesservicios order by codigo;";
                 
                
         break;
         case 'sincronizarListaProductosServicios':
-            $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarlistaproductosservicios where cod_entidad=$cod_entidad order by codigo;";
+            $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarlistaproductosservicios order by codigo;";
                 
              
         break;
         case 'sincronizarParametricaEventosSignificativos':
-             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricaeventossignificativos where cod_entidad=$cod_entidad order by codigo;";
+             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricaeventossignificativos order by codigo;";
                 
                 
         break;
         case 'sincronizarParametricaMotivoAnulacion':
-             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricamotivoanulacion where cod_entidad=$cod_entidad order by codigo;";
+             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricamotivoanulacion order by codigo;";
                 
              
         break;
         case 'sincronizarParametricaTipoDocumentoIdentidad':
-             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipodocumentoidentidad where cod_entidad=$cod_entidad order by codigo;";
+             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipodocumentoidentidad order by codigo;";
         break;
         case 'sincronizarParametricaTipoDocumentoSector':
-            $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipodocumentosector where cod_entidad=$cod_entidad order by codigo;";
+            $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipodocumentosector order by codigo;";
                 
               
         break;
         case 'sincronizarParametricaTipoEmision':
-            $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipoemision where cod_entidad=$cod_entidad order by codigo;";
+            $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipoemision order by codigo;";
                 
               
         break;
         case 'sincronizarParametricaTipoMetodoPago':
-             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipometodopago where cod_entidad=$cod_entidad order by codigo;";
+             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipometodopago order by codigo;";
         break;
         case 'sincronizarParametricaTipoMoneda':
-             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipomoneda where cod_entidad=$cod_entidad order by codigo;";
+             $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipomoneda order by codigo;";
         break;              
         default:
             // code...
             break;
     }
-    // $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipometodopago where cod_entidad=$cod_entidad order by codigo;";
+    // $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipometodopago order by codigo;";
     // echo $sql;
     $resp=mysqli_query($enlaceCon,$sql);
     $ff=0;

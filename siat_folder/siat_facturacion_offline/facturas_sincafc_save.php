@@ -51,17 +51,17 @@ require("../funciones_siat.php");
     if($DatosConexion[0]==1){
       $string_codigos=trim($string_codigos,",");
       $cod_tipoEmision=2;//tipo emision OFFLINE
-      $sql="SELECT s.fecha,s.cod_almacen,a.nombre_almacen,(select cod_impuestos from ciudades where cod_ciudad= a.cod_ciudad)as cod_impuestos,a.cod_ciudad,sc.cufd
+      $sql="SELECT DATE_FORMAT(s.siat_fechaemision,'%Y-%m-%d')as fecha2,s.cod_almacen,a.nombre_almacen,(select cod_impuestos from ciudades where cod_ciudad= a.cod_ciudad)as cod_impuestos,a.cod_ciudad,sc.cufd
         FROM salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen join siat_cufd sc on s.siat_codigocufd=sc.codigo
         WHERE s.cod_salida_almacenes in ($string_codigos)
         GROUP BY s.cod_almacen,s.fecha,s.siat_codigocufd
-        ORDER BY a.nombre_almacen,s.created_at";
+        ORDER BY a.nombre_almacen,fecha2";
         // echo $sql;
         $fecha_X=date('Y-m-d');
         // $fecha_X=date('2022-07-02');
       $resp1=mysqli_query($enlaceCon,$sql);
       while($row=mysqli_fetch_array($resp1)){ 
-        $fecha=$row['fecha'];
+        $fecha=$row['fecha2'];
         $cod_almacen=$row['cod_almacen'];
         $nombre_almacen=$row['nombre_almacen'];
         $cod_impuestos=$row['cod_impuestos'];
@@ -101,12 +101,38 @@ require("../funciones_siat.php");
             if($fecha_inicio==$fecha_fin){//solo es una factura
               $fecha_z=$fecha." ".$datos_hora[1]; 
               $fechanueva = new DateTime($fecha_z); 
-              // $fechanueva->modify('-5 hours'); 
-              $fechanueva->modify('+10 second'); 
+
+              switch ($addminute) {
+                case 0://una hora
+                  $fechanueva->modify('60 minute');
+                  $seconds=".000";
+                break;
+                case 1://30 in
+                  $fechanueva->modify('30 minute');
+                  $seconds=".000";
+                break;
+                case 2://un min
+                  $fechanueva->modify('1 minute');
+                  $seconds=".000";
+                break;
+                case 3://10 sec
+                  $fechanueva->modify('10 second');
+                  $seconds=".000";
+                break;
+                case 4://1 sec
+                  $fechanueva->modify('1 second');
+                  $seconds=".000";
+                break;
+                case 5://un milisegundo
+                  $seconds=".001";
+                break;
+              }
+              
+              // $fechanueva->modify('+10 second'); 
               // $fechanueva->modify('-30 second'); 
               $fecha_fin=$fechanueva->format('Y-m-d H:i:s');
               $fecha_fin_datos=explode(" ", $fecha_fin);
-              $fecha_fin=$fecha_fin_datos[0]."T".$fecha_fin_datos[1].".000";//agregamos milisegundos 
+              $fecha_fin=$fecha_fin_datos[0]."T".$fecha_fin_datos[1].$seconds;//agregamos milisegundos 
             }
             // if($nuevo_cufd==1){
             //   deshabilitarCufd($cod_ciudad,$cuis,$fecha_X);

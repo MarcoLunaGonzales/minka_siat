@@ -39,7 +39,7 @@ if(isset($_GET['rpt_territorio'])){
           <div class="card-body">
             <div class="row">
               <label class="col-sm-1 col-form-label">Motivo </label>
-              <div class="col-sm-4">
+              <div class="col-sm-3">
                 <div class="form-group">
                     <select id="cod_motivo" name="cod_motivo" class="selectpicker form-control " data-style="btn btn-primary" data-show-subtext="true" data-live-search="true" required="true">
                     <?php
@@ -81,10 +81,19 @@ if(isset($_GET['rpt_territorio'])){
                       </label>
                     </div>
                 </div>
-              </div><?php
-              // }
-              ?>            
-
+              </div>        
+              <div class="col-sm-2">
+                <div class="form-group">
+                    <select id="addminute" name="addminute" class="selectpicker form-control " data-style="btn btn-primary" data-show-subtext="true" data-live-search="true" required="true">
+                      <option  value="0">1 Hora</option>
+                      <option  value="1">30 Minutos</option>
+                      <option  value="2">1 Minuto</option>
+                      <option  value="3">10 Segundos</option>
+                      <option  value="4">1 Segundo</option>
+                      <option  value="5">1 Milisegundos</option>                    
+                    </select>
+                </div>
+              </div>
 
             </div>
             <div class="table-responsive">
