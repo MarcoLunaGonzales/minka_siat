@@ -18,7 +18,7 @@ $fecha_X=date('Y-m-d');
 $cufd=0;
 $cuis=0;
 $sql="SELECT s.fecha,s.siat_cuf,s.cod_almacen,s.salida_anulada,(select cod_impuestos from ciudades where cod_ciudad= a.cod_ciudad)as cod_impuestos,a.cod_ciudad,s.nro_correlativo,(select p.nombre_cliente from clientes p where p.cod_cliente=s.cod_cliente) as cliente,s.cod_cliente,s.siat_cuf,s.nit,
-    (SELECT nombre_ciudad from ciudades where cod_ciudad=(SELECT cod_ciudad from almacenes where cod_almacen=s.cod_almacen))as nombre_ciudad,s.siat_codigotipodocumentoidentidad,s.siat_estado_facturacion,s.siat_complemento,s.siat_fechaemision,s.idTabla,s.idRecibo
+    (SELECT nombre_ciudad from ciudades where cod_ciudad=(SELECT cod_ciudad from almacenes where cod_almacen=s.cod_almacen))as nombre_ciudad,s.siat_codigotipodocumentoidentidad,s.siat_estado_facturacion,s.siat_complemento,s.siat_fechaemision,s.idtabla,s.idrecibo
     FROM salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen 
     WHERE s.cod_salida_almacenes in ($codigo_registro)";
      // echo $sql;
@@ -44,8 +44,8 @@ while($dat_verif=mysqli_fetch_array($resp_verif)){
 	$proveedor=$dat_verif['cliente'];
 	$idproveedor=$dat_verif['cod_cliente'];
 
-	$idTabla=$dat_verif['idTabla'];
-	$idRecibo=$dat_verif['idRecibo'];
+	$idTabla=$dat_verif['idtabla'];
+	$idRecibo=$dat_verif['idrecibo'];
 	// $correo_destino=obtenerCorreosListaCliente($idproveedor);
 }		
 // $anulado==0;
