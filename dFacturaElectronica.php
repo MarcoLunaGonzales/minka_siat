@@ -2,6 +2,12 @@
 <?php
 require "conexionmysqli.inc";
 $codSalida=$_GET['codigo_salida'];
+
+if(isset($_GET['admin'])){
+  $admin=$_GET['admin'];
+}else{
+  $admin=0;
+}
 //obtenemos la sucursal de la factura
 $sql="SELECT a.cod_ciudad from salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen where s.cod_salida_almacenes='$codSalida'";
 // echo $sql;
@@ -257,17 +263,23 @@ $estadoFacturacion=$datConf[0];
             </div>
          </a>
         </div>
-        <div class="col-lg-4 col-md-8 mb-5 mb-lg-0 mx-auto">
-         <button class="after-loop-item card border-0 card-tercero shadow-lg" style="background:#FF5733;color:#fff;" onclick='anular_salida_siat(<?=$codigo_salida?>)'>
-            <div class="card-body d-flex align-items-center flex-column">
-              <center>
-               <h4><i class="material-icons">delete</i> <b>ANULAR FACTURA</b></h4>
-               </center>
-               <p>FACTURA COMPUTARIZADA</p>
-            </div>
-         </button>
-         
-        </div>
+        <?php
+
+        if($admin==1){?>
+          <div class="col-lg-4 col-md-8 mb-5 mb-lg-0 mx-auto">
+           <button class="after-loop-item card border-0 card-tercero shadow-lg" style="background:#FF5733;color:#fff;" onclick='anular_salida_siat(<?=$codigo_salida?>)'>
+              <div class="card-body d-flex align-items-center flex-column">
+                <center>
+                 <h4><i class="material-icons">delete</i> <b>ANULAR FACTURA</b></h4>
+                 </center>
+                 <p>FACTURA COMPUTARIZADA</p>
+              </div>
+           </button>
+           
+          </div>
+        <?php }
+        ?>
+        
         </div>
         <center>
         <div id="wrap" style="width:100% !important">

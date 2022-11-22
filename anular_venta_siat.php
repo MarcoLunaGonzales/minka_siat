@@ -18,12 +18,12 @@ $fecha_X=date('Y-m-d');
 $cufd=0;
 $cuis=0;
 $sql="SELECT s.fecha,s.siat_cuf,s.cod_almacen,s.salida_anulada,(select cod_impuestos from ciudades where cod_ciudad= a.cod_ciudad)as cod_impuestos,a.cod_ciudad,s.nro_correlativo,(select p.nombre_cliente from clientes p where p.cod_cliente=s.cod_cliente) as cliente,s.cod_cliente,s.siat_cuf,s.nit,
-    (SELECT nombre_ciudad from ciudades where cod_ciudad=(SELECT cod_ciudad from almacenes where cod_almacen=s.cod_almacen))as nombre_ciudad,s.siat_codigotipodocumentoidentidad,s.siat_estado_facturacion,s.siat_complemento,s.siat_fechaemision
+    (SELECT nombre_ciudad from ciudades where cod_ciudad=(SELECT cod_ciudad from almacenes where cod_almacen=s.cod_almacen))as nombre_ciudad,s.siat_codigotipodocumentoidentidad,s.siat_estado_facturacion,s.siat_complemento,s.siat_fechaemision,s.idTabla,s.idRecibo
     FROM salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen 
     WHERE s.cod_salida_almacenes in ($codigo_registro)";
      // echo $sql;
 $resp_verif=mysqli_query($enlaceCon,$sql);
-while($dat_verif=mysqli_fetch_array($resp_verif)){	
+while($dat_verif=mysqli_fetch_array($resp_verif)){
 	$anulado=$dat_verif['salida_anulada'];
 	$cuf=$dat_verif['siat_cuf'];
     $cod_impuestos=$dat_verif['cod_impuestos'];
@@ -43,6 +43,9 @@ while($dat_verif=mysqli_fetch_array($resp_verif)){
 	$nro_correlativo = $dat_verif['nro_correlativo'];;
 	$proveedor=$dat_verif['cliente'];
 	$idproveedor=$dat_verif['cod_cliente'];
+
+	$idTabla=$dat_verif['idTabla'];
+	$idRecibo=$dat_verif['idRecibo'];
 	// $correo_destino=obtenerCorreosListaCliente($idproveedor);
 }		
 // $anulado==0;
@@ -136,26 +139,49 @@ if($anulado==0){ //verificamos si no está anulado // 0 no anulada 1 //anulado
 					$texto_correo="<span style=\"border:1px;font-size:18px;color:red;\"><b>Ocurrio un error al enviar el correo, vuelva a intentarlo.</b></span>";
 				}
 
+				// echo "<script language='Javascript'>
+				// 	Swal.fire({
+				//     title: 'SIAT: ".$mensaje." :)',
+				//     html: '".$texto_correo."',
+				//     type: 'success'
+				// 	}).then(function() {
+				// 	    location.href='dFacturaElectronica.php?codigo_salida=".$codigo_registro."';
+				// 	});
+				// 	</script>";//location.href='navegadorVentas.php';
+				$url_anulacion=obtenerValorConfiguracion($enlaceCon,48);
+
+
 				echo "<script language='Javascript'>
 					Swal.fire({
 				    title: 'SIAT: ".$mensaje." :)',
 				    html: '".$texto_correo."',
 				    type: 'success'
 					}).then(function() {
-					    location.href='dFacturaElectronica.php?codigo_salida=".$codigo_registro."';
+					    location.href='".$url_anulacion."wsclasificadores.php?m=anulaf&t=".$idTabla."&i=".$idRecibo."';
 					});
-					</script>";//location.href='navegadorVentas.php';
+					</script>";
 			}else{
+				// echo "<script language='Javascript'>
+				// Swal.fire({
+			 //    title: 'SIAT: ".$mensaje." :)',
+			 //    html: '<b>EL CLIENTE NO TIENE UN CORREO REGISTRADO.</b>',
+			 //    text: '',
+			 //    type: 'success'
+				// }).then(function() {
+				//     location.href='dFacturaElectronica.php?codigo_salida=".$codigo_registro."';
+				// });
+				// </script>";
+
 				echo "<script language='Javascript'>
-				Swal.fire({
-			    title: 'SIAT: ".$mensaje." :)',
-			    html: '<b>EL CLIENTE NO TIENE UN CORREO REGISTRADO.</b>',
-			    text: '',
-			    type: 'success'
-				}).then(function() {
-				    location.href='dFacturaElectronica.php?codigo_salida=".$codigo_registro."';
-				});
-				</script>";	//location.href='dFacturaElectronica.php?codigo_salida=".$codigo_registro."';
+					Swal.fire({
+				    title: 'SIAT: ".$mensaje." :)',
+				    html: '<b>EL CLIENTE NO TIENE UN CORREO REGISTRADO.</b>',
+				    text: '',
+				    type: 'success'
+					}).then(function() {
+					    location.href='".$url_anulacion."wsclasificadores.php?m=anulaf&t=".$idTabla."&i=".$idRecibo."';
+					});
+					</script>";
 			}
 
 		}else{

@@ -480,6 +480,12 @@ if(isset($_GET['cod_ciudad_externo'])){
     }
 }	
 
+if(isset($_GET['admin'])){
+    $admin=$_GET['admin'];
+}else{
+    $admin=0;
+}
+
 echo "<input type='hidden' name='global_almacen' value='$global_almacen' id='global_almacen'>";
 
 $consulta = "
@@ -621,7 +627,7 @@ while ($dat = mysqli_fetch_array($resp)) {
      //    echo "<td  bgcolor='$color_fondo'> ";
      //    echo "</td>";   
      // }
-     echo "<td  bgcolor='$color_fondo'> <a href='$urlDetalle?codigo_salida=$codigo' target='_BLANK' title='DOCUMENTO FACTURA'  class='text-dark'><i class='material-icons'>description</i></a>";
+     echo "<td  bgcolor='$color_fondo'> <a href='$urlDetalle?codigo_salida=$codigo&admin=$admin' target='_BLANK' title='DOCUMENTO FACTURA'  class='text-dark'><i class='material-icons'>description</i></a>";
         echo "</td>";
     // }
 
