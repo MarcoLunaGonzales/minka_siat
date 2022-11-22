@@ -592,7 +592,7 @@ border-bottom: 1px solid #000;
             $suma_total=0;
             ?>
             
-            <tr><td></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td></td></tr>
+            <tr><td></td><td style="border-left: hidden;border-right: hidden;"></td><td style="border-left: hidden;border-right: hidden;"></td><td style="border-left: hidden;border-right: hidden;"></td><td style="border-left: hidden;border-right: hidden;"></td><td style="border-left: hidden;border-right: hidden;"></td><td></td></tr>
             <?php
 
                 $contador_items=0;                    
@@ -645,7 +645,7 @@ border-bottom: 1px solid #000;
 
                     ?>
                     <tr>
-                        <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=$codInterno?></td>
+                        <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=$codInterno?></td>
                         <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;">
                             <?=$nombreMat;?>
                         </td>
@@ -653,7 +653,7 @@ border-bottom: 1px solid #000;
                         <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=$cantUnit?></td>
                         <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=number_format($precioUnitFactura,2)?></td>
                         <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=number_format($descUnit,2)?></td>
-                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=number_format($montoUnitProdDesc,2)?></td>
+                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=number_format($montoUnitProdDesc,2)?></td>
                     </tr>
                     
                     <?php $contador_items++;
@@ -661,13 +661,13 @@ border-bottom: 1px solid #000;
                 
                 for($i=$contador_items;$i<$cantidad_por_defecto;$i++){ ?>
                     <tr>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-top: hidden;">&nbsp;</td>
+                        <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;">&nbsp;</td>
                         <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
                         <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
                         <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
                         <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
                         <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-top: hidden;"></td>
+                        <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
                     </tr>
                 <?php 
                 }

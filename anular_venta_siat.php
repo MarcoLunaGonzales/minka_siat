@@ -148,7 +148,18 @@ if($anulado==0){ //verificamos si no está anulado // 0 no anulada 1 //anulado
 				// 	    location.href='dFacturaElectronica.php?codigo_salida=".$codigo_registro."';
 				// 	});
 				// 	</script>";//location.href='navegadorVentas.php';
-				$url_anulacion=obtenerValorConfiguracion($enlaceCon,48);
+				// $url_anulacion=obtenerValorConfiguracion($enlaceCon,48);
+
+				// $anularServicio=solicitarAnulacionServicio($enlaceCon,$idTabla,$idRecibo);
+				$anularServicio="";
+
+				$mensajeAnulacionServicio="<br><span style=\"border:1px;font-size:18px;color:red;\"><b>Error al anular Recibo</b></span>";
+				if(isset($anularServicio->estado)){
+					if($anularServicio->estado==1){//anulacin correcta
+						$mensajeAnulacionServicio="<br><span style=\"border:1px;font-size:18px;color:green;\"><b>Servicio de anulación de Recibo OK</b></span>";
+					}
+				}
+				$texto_correo.=$mensajeAnulacionServicio;
 
 
 				echo "<script language='Javascript'>
@@ -157,7 +168,7 @@ if($anulado==0){ //verificamos si no está anulado // 0 no anulada 1 //anulado
 				    html: '".$texto_correo."',
 				    type: 'success'
 					}).then(function() {
-					    location.href='".$url_anulacion."wsclasificadores.php?m=anulaf&t=".$idTabla."&i=".$idRecibo."';
+					    location.href='dFacturaElectronica.php?codigo_salida=".$codigo_registro."';
 					});
 					</script>";
 			}else{
@@ -171,15 +182,26 @@ if($anulado==0){ //verificamos si no está anulado // 0 no anulada 1 //anulado
 				//     location.href='dFacturaElectronica.php?codigo_salida=".$codigo_registro."';
 				// });
 				// </script>";
+				// $anularServicio=solicitarAnulacionServicio($enlaceCon,$idTabla,$idRecibo);
+				$anularServicio="";
+				
+				$texto_correo="<b>EL CLIENTE NO TIENE UN CORREO REGISTRADO.</b>";
+				$mensajeAnulacionServicio="<br><span style=\"border:1px;font-size:18px;color:red;\"><b>Error al anular Recibo</b></span>";
+				if(isset($anularServicio->estado)){
+					if($anularServicio->estado==1){//anulacin correcta
+						$mensajeAnulacionServicio="<br><span style=\"border:1px;font-size:18px;color:green;\"><b>Servicio de anulación de Recibo OK</b></span>";
+					}
+				}
+				$texto_correo.=$mensajeAnulacionServicio;
 
 				echo "<script language='Javascript'>
 					Swal.fire({
 				    title: 'SIAT: ".$mensaje." :)',
-				    html: '<b>EL CLIENTE NO TIENE UN CORREO REGISTRADO.</b>',
+				    html: '".$texto_correo."',
 				    text: '',
 				    type: 'success'
 					}).then(function() {
-					    location.href='".$url_anulacion."wsclasificadores.php?m=anulaf&t=".$idTabla."&i=".$idRecibo."';
+					    location.href='dFacturaElectronica.php?codigo_salida=".$codigo_registro."';
 					});
 					</script>";
 			}

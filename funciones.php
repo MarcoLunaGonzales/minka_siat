@@ -652,4 +652,13 @@ function obtenerEstadoSalida($codSalida){
     $mydompdf->set_base_path('assets/libraries/plantillaPDFFactura.css');
     $mydompdf->stream($nom.".pdf", array("Attachment" => false));
   }
+
+  function solicitarAnulacionServicio($enlaceCon,$idTabla,$idRecibo){
+
+    $url_anulacion=obtenerValorConfiguracion($enlaceCon,48);
+	$url_anulacion.="wsclasificadores.php?m=anulaf&t=".$idTabla."&i=".$idRecibo;
+	$parametros="";	  
+    $jsons=callService($parametros, $url);
+    return json_decode($jsons);
+}
 ?>
