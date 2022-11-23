@@ -481,15 +481,14 @@ echo "<form method='post' action=''>";
 echo "<input type='hidden' name='fecha_sistema' value='$fecha_sistema'>";
 //$global_admin_cargo
 echo "<h1>Listado de Ventas</h1>";
-echo "<table class='texto' cellspacing='0' width='90%'>
-<tr><th>Leyenda:</th>
-<th>Ventas Registradas</th><td bgcolor='#f9e79f' width='5%'></td>
-<th>Ventas Entregadas</th><td bgcolor='#1abc9c' width='5%'></td>
-<th>Ventas Anuladas</th><td bgcolor='#e74c3c' width='5%'></td>
-<td bgcolor='' width='10%'>&nbsp;</td></tr></table><br>";
+// echo "<table class='texto' cellspacing='0' width='90%'>
+// <tr><th>Leyenda:</th>
+// <th>Ventas Registradas</th><td bgcolor='#f9e79f' width='5%'></td>
+// <th>Ventas Entregadas</th><td bgcolor='#1abc9c' width='5%'></td>
+// <th>Ventas Anuladas</th><td bgcolor='#e74c3c' width='5%'></td>
+// <td bgcolor='' width='10%'>&nbsp;</td></tr></table><br>";
 //
-echo "<br><br><div class='divBotones'>
-		
+echo "<div class='divBotones'>
 		<input type='button' value='Buscar' class='boton' onclick='ShowBuscar()'></td>		
 		
     </div>";
