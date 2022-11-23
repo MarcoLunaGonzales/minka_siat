@@ -9,10 +9,15 @@ if(isset($_GET['admin'])){
   $admin=0;
 }
 //obtenemos la sucursal de la factura
-$sql="SELECT a.cod_ciudad from salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen where s.cod_salida_almacenes='$codSalida'";
+$sql="SELECT a.cod_ciudad,s.nro_correlativo,s.razon_social,s.fecha 
+from salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen 
+where s.cod_salida_almacenes='$codSalida'";
 // echo $sql;
 $respq=mysqli_query($enlaceCon,$sql);
 $globalSucursal=mysqli_result($respq,0,0);
+$nro_correlativo=mysqli_result($respq,0,1);
+$razon_social=mysqli_result($respq,0,2);
+$fecha_factura=mysqli_result($respq,0,3);
 // $globalSucursal=$_COOKIE['global_agencia'];
 
 ?>
@@ -220,7 +225,7 @@ $estadoFacturacion=$datConf[0];
 </script>
 <div class="card">
     <div class="card-header card-header-primary">
-        <h4>Detalle de Factura Electronica SIAT</h4>
+        <h4>Detalle de Factura Electronica SIAT ---- Nro Factura : <?=$nro_correlativo?>, Razón Social : <?=$razon_social?>, Fecha : <?=$fecha_factura?></h4>
     </div>        
     <div class="card-body">
         <?=$stringEstado?>
