@@ -16,8 +16,8 @@ $clienteBusqueda=$_GET['clienteBusqueda'];
 $fechaIniBusqueda=formateaFechaVista($fechaIniBusqueda);
 $fechaFinBusqueda=formateaFechaVista($fechaFinBusqueda);
 
-echo "<center><table class='table table-sm' cellspacing='0'>";
 
+echo "<br><br><center><table class='table table-sm' cellspacing='0'>";
 
 echo "<tr><th>&nbsp;</th><th>Sucursal</th><th>Caja</th><th>Nro. Doc</th><th>Fecha/hora<br>Registro Salida</th><th>TipoPago</th><th>Razon Social</th><th>NIT</th><th>Observaciones</th><th>Factura</th>";
     echo "</tr>";
@@ -45,30 +45,30 @@ $consulta = " SELECT s.cod_salida_almacenes, s.fecha, s.hora_salida, ts.nombre_t
     (select c.nombre_cliente from clientes c where c.cod_cliente = s.cod_cliente), s.cod_tipo_doc, razon_social, nit,
     (select t.nombre_tipopago from tipos_pago t where t.cod_tipopago=s.cod_tipopago)as tipopago,s.siat_estado_facturacion,s.siat_usuario
     FROM salida_almacenes s, tipos_salida ts 
-    WHERE s.cod_tiposalida = ts.cod_tiposalida and s.cod_tiposalida=1001 AND s.cod_almacen = '$global_almacen' $sqlUser";
+    WHERE s.cod_tiposalida = ts.cod_tiposalida and s.cod_tiposalida=1001 AND s.cod_almacen = '$global_almacen' ";
 
-$nroProcesoBusqueda=$_GET['nroProcesoBusqueda'];
-if($nroProcesoBusqueda!=0){
-  $consulta = $consulta."AND s.cod_salida_almacenes='$nroProcesoBusqueda' ";
-}else{
+// $nroProcesoBusqueda=$_GET['nroProcesoBusqueda'];
+// if($nroProcesoBusqueda!=0){
+//   $consulta = $consulta."AND s.cod_salida_almacenes='$nroProcesoBusqueda' ";
+// }else{
 
-if($nroCorrelativoBusqueda!="")
-   {$consulta = $consulta."AND s.nro_correlativo='$nroCorrelativoBusqueda' ";
-   }
-if($fechaIniBusqueda!="--" && $fechaFinBusqueda!="--")
-   {$consulta = $consulta."AND '$fechaIniBusqueda'<=s.fecha AND s.fecha<='$fechaFinBusqueda' ";
-   }
-if($clienteBusqueda!=0){
-	$consulta=$consulta." and cod_cliente='$clienteBusqueda' ";
-}   
-if($verBusqueda==1){
-	$consulta=$consulta." AND estado_salida=4 ";
-}
-if($verBusqueda==2){
-    $consulta=$consulta." AND salida_anulada=1 ";
-}
+    if($nroCorrelativoBusqueda!="")
+       {$consulta = $consulta."AND s.nro_correlativo='$nroCorrelativoBusqueda' ";
+       }
+    if($fechaIniBusqueda!="--" && $fechaFinBusqueda!="--")
+       {$consulta = $consulta."AND '$fechaIniBusqueda'<=s.fecha AND s.fecha<='$fechaFinBusqueda' ";
+       }
+    if($clienteBusqueda!=0){
+    	$consulta=$consulta." and cod_cliente='$clienteBusqueda' ";
+    }   
+    if($verBusqueda==1){
+    	$consulta=$consulta." AND estado_salida=4 ";
+    }
+    if($verBusqueda==2){
+        $consulta=$consulta." AND salida_anulada=1 ";
+    }
 
-}
+// }
 $consulta = $consulta."ORDER BY s.fecha desc, s.nro_correlativo DESC limit 0,20";
 
 // echo $consulta;
@@ -132,7 +132,7 @@ while ($dat = mysqli_fetch_array($resp)) {
         $chk="";
     }
 
-    
+    $estado_preparado=0;
     echo "<input type='hidden' name='estado_preparado' value='$estado_preparado'>";
     //echo "<tr><td><input type='checkbox' name='codigo' value='$codigo'></td><td align='center'>$fecha_salida_mostrar</td><td>$nombre_tiposalida</td><td>$nombre_ciudad</td><td>$nombre_almacen</td><td>$nombre_funcionario</td><td>&nbsp;$obs_salida</td><td>$txt_detalle</td></tr>";
     echo "<tr>";

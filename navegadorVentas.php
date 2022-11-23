@@ -447,7 +447,7 @@ if(!isset($fecha_sistema)){
 
 }
 
-
+$cod_ciudad_externo=0;
 if(isset($_GET['cod_ciudad_externo'])){
     $cod_ciudad_externo=$_GET['cod_ciudad_externo'];
     $sql="SELECT c.cod_ciudad,a.cod_almacen
@@ -458,6 +458,7 @@ if(isset($_GET['cod_ciudad_externo'])){
         $global_almacen=$dat['cod_almacen'];
     }
 }   
+
 
 if(isset($_GET['admin'])){
     $admin=$_GET['admin'];
@@ -488,13 +489,13 @@ echo "<table class='texto' cellspacing='0' width='90%'>
 <td bgcolor='' width='10%'>&nbsp;</td></tr></table><br>";
 //
 echo "<br><br><div class='divBotones'>
-		<input type='button' value='Registrar' name='adicionar' class='boton' onclick='enviar_nav()'>
+		
 		<input type='button' value='Buscar' class='boton' onclick='ShowBuscar()'></td>		
 		
     </div>";
 		// <!--input type='button' value='Anular' class='boton2' onclick='anular_salida(this.form)'-->
   //       <input type='button' value='Anular Con SIAT' class='boton2' onclick='anular_salida_siat(this.form)'>
-echo "<div id='divCuerpo'><center><table class='texto'>";
+echo "<div id='divCuerpo'><center><br><table class='texto'>";
 echo "<tr><th>&nbsp;</th><th>Sucursal</th><th>Caja</th><th>Nro. Doc</th><th>Fecha/hora<br>Registro Salida</th><th>TipoPago</th><th>Razon Social</th><th>NIT</th><th>Observaciones</th><th>Factura</th>";
     echo "</tr>";
 
@@ -650,7 +651,7 @@ echo "</table></center><br>";
 echo "</div>";
 
 echo "<div class='divBotones'>
-		<input type='button' value='Registrar' name='adicionar' class='boton' onclick='enviar_nav()'>
+		
 		<input type='button' value='Buscar' class='boton' onclick='ShowBuscar()'></td>		
 		
     </div>";
