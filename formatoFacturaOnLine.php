@@ -535,10 +535,9 @@ border-bottom: 1px solid #000;
                 
                 <td >
                     <div style="width:100%;text-align: left;font-size: 14px"><p><b>FACTURA</b><br><small><small>(Con Derecho a Crédito Fiscal)</small></small></p></div><br>
-                    <table style="width: 100%;border: black 1px solid;text-align: left;">
-                        
+                    <table style="width: 100%;border: hidden;text-align: left;">
                         <tr align="left">
-                          <td width="40%"><b>
+                          <td width="40%" ><b>
                               NIT : <br>
                               FACTURA N° : <br>
                               CÓD. AUTORIZACIÓN : </b>
@@ -553,7 +552,6 @@ border-bottom: 1px solid #000;
                             <b>FECHA FACTURA : </b> <?=$fechaFactura?><br>
                         </td></tr>
                     </table>
-                    
                 </td>
             </tr>
         </table>
@@ -580,19 +578,19 @@ border-bottom: 1px solid #000;
         </table>
         <table class="table2">
             <tr>
-                <td width="8%" class="text-center">Codigo<br>Servicio</td>
-                <td width="40%" class="text-center">DESCRIPCIÓN</td>
-                <td width="8%" class="text-center">Unidad Medida</td>
-                <td width="8%" class="text-center">Cantidad</td>
-                <td class="text-center">Precio Unitario</td>
-                <td class="text-center">Descuento</td>
-                <td class="text-center">Subtotal</td>
+                <td width="8%" class="td-border-none text-center">Codigo<br>Servicio</td>
+                <td width="40%" class="td-border-none text-center">DESCRIPCIÓN</td>
+                <td width="8%" class="td-border-none text-center">Unidad Medida</td>
+                <td width="8%" class="td-border-none text-center">Cantidad</td>
+                <td class="td-border-none text-center">Precio Unitario</td>
+                <td class="td-border-none text-center">Descuento</td>
+                <td class="td-border-none text-center">Subtotal</td>
             </tr>
             <?php
             $suma_total=0;
             ?>
             
-            <tr><td></td><td style="border-left: hidden;border-right: hidden;"></td><td style="border-left: hidden;border-right: hidden;"></td><td style="border-left: hidden;border-right: hidden;"></td><td style="border-left: hidden;border-right: hidden;"></td><td style="border-left: hidden;border-right: hidden;"></td><td></td></tr>
+            <tr ><td style="border: hidden;"></td><td style="border: hidden;"></td><td style="border: hidden;"></td><td style="border: hidden;"></td><td style="border: hidden;"></td><td style="border: hidden;"></td><td style="border: hidden;"></td></tr>
             <?php
 
                 $contador_items=0;                    
@@ -723,13 +721,12 @@ border-bottom: 1px solid #000;
                     $txtGlosaDescuento=iconv('utf-8', 'windows-1252', $filaDesc[0]);        
             } ?>
             <tr>
-                <td rowspan="2" align="center" style="margin: 0px;">
-                    
+                <td rowspan="2" align="center" style="margin: 0px;border: hidden;">
                     <img src="<?=$fileName?>" style="margin: 0px;padding: 0;width: 120px;">
                 </td>
-                <td  colspan="6">
+                <td  colspan="6" style="border: hidden;">
                     <table class="table">
-                        <tr ><td style="padding: 0px;margin: 0px;border-right: hidden;border-bottom: hidden;border-top: hidden;border-left: hidden;" valign="top">
+                        <tr ><td style="padding: 0px;margin: 0px;border: hidden;" valign="top">
                             <?php
                         $entero=floor(round($importe,2));
                         $decimal=$importe-$entero;
@@ -739,11 +736,11 @@ border-bottom: 1px solid #000;
                         }?>
                         <span class="bold table-title" valign="bottom"><small>Son: <?="$txtMonto"." ".$montoDecimal."/100 Bolivianos"?></small></span>
                         </td>
-                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom">
+                            <td align="right" style="border: hidden;" valign="bottom">
                                 <table class="table" style="font-size: 9px;" >
                                     <tr>
-                                        <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom">SUBTOTAL Bs:</td>
-                                        <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><?=number_format($montoTotal,2)?></td>
+                                        <td align="right" style="border: hidden;" valign="bottom">SUBTOTAL Bs:</td>
+                                        <td align="right" style="border: hidden;" valign="bottom"><?=number_format($montoTotal,2)?></td>
                                     </tr>
 
                                     <tr>
@@ -752,16 +749,16 @@ border-bottom: 1px solid #000;
                                     </tr>
                                     <tfoot>
                                         <tr>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom">TOTAL Bs:</td>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
+                                            <td align="right" style="border: hidden;" valign="bottom">TOTAL Bs:</td>
+                                            <td align="right" style="border: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
                                         </tr>
                                         <tr>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><b>MONTO A PAGAR Bs:</b></td>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
+                                            <td align="right" style="border: hidden;" valign="bottom"><b>MONTO A PAGAR Bs:</b></td>
+                                            <td align="right" style="border: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
                                         </tr>
                                         <tr>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><b>IMPORTE BASE CRÉDITO FISCAL:</b></td>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
+                                            <td align="right" style="border: hidden;" valign="bottom"><b>IMPORTE BASE CRÉDITO FISCAL:</b></td>
+                                            <td align="right" style="border: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -772,7 +769,7 @@ border-bottom: 1px solid #000;
                 </td>
             </tr>
             
-            <tr><td colspan="6" style="border-top:hidden;" valign="bottom"><span style="padding: 0px;margin: 0px;"><small><small>Forma de Pago: <?=$nombrePago?></small></small></span></td></tr>
+            <tr><td colspan="6" style="border:hidden;" valign="bottom"><span style="padding: 0px;margin: 0px;"><small><small>Forma de Pago: <?=$nombrePago?></small></small></span></td></tr>
             
         </table>
         <table class="table3" >

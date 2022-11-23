@@ -93,7 +93,7 @@ function funOk(codReg,funOkConfirm)
 }
 
 function ajaxBuscarVentas(f){
-	var fechaIniBusqueda, fechaFinBusqueda, nroCorrelativoBusqueda, verBusqueda, global_almacen, clienteBusqueda,vendedorBusqueda,tipoVentaBusqueda;
+	var fechaIniBusqueda, fechaFinBusqueda, nroCorrelativoBusqueda, verBusqueda, global_almacen, clienteBusqueda,vendedorBusqueda,tipoVentaBusqueda,admin;
 	fechaIniBusqueda=document.getElementById("fechaIniBusqueda").value;
 	fechaFinBusqueda=document.getElementById("fechaFinBusqueda").value;
 	nroCorrelativoBusqueda=document.getElementById("nroCorrelativoBusqueda").value;
@@ -102,12 +102,13 @@ function ajaxBuscarVentas(f){
 	clienteBusqueda=document.getElementById("clienteBusqueda").value;
     vendedorBusqueda=document.getElementById("vendedorBusqueda").value;
     tipoVentaBusqueda=document.getElementById("tipoVentaBusqueda").value;
+    admin=document.getElementById("admin").value;
 
 	var contenedor;
 	contenedor = document.getElementById('divCuerpo');
 	ajax=nuevoAjax();
 
-	ajax.open("GET", "ajaxSalidaVentas.php?fechaIniBusqueda="+fechaIniBusqueda+"&fechaFinBusqueda="+fechaFinBusqueda+"&nroCorrelativoBusqueda="+nroCorrelativoBusqueda+"&verBusqueda="+verBusqueda+"&global_almacen="+global_almacen+"&clienteBusqueda="+clienteBusqueda+"&vendedorBusqueda="+vendedorBusqueda+"&tipoVentaBusqueda="+tipoVentaBusqueda,true);
+	ajax.open("GET", "ajaxSalidaVentas.php?fechaIniBusqueda="+fechaIniBusqueda+"&fechaFinBusqueda="+fechaFinBusqueda+"&nroCorrelativoBusqueda="+nroCorrelativoBusqueda+"&verBusqueda="+verBusqueda+"&global_almacen="+global_almacen+"&clienteBusqueda="+clienteBusqueda+"&vendedorBusqueda="+vendedorBusqueda+"&tipoVentaBusqueda="+tipoVentaBusqueda+"&admin="+admin,true);
 	ajax.onreadystatechange=function() {
 		if (ajax.readyState==4) {
 			contenedor.innerHTML = ajax.responseText;
@@ -446,6 +447,35 @@ if(!isset($fecha_sistema)){
 
 }
 
+
+if(isset($_GET['cod_ciudad_externo'])){
+    $cod_ciudad_externo=$_GET['cod_ciudad_externo'];
+    $sql="SELECT c.cod_ciudad,a.cod_almacen
+        from ciudades c join almacenes a on c.cod_ciudad=a.cod_ciudad
+        where c.cod_externo=$cod_ciudad_externo";
+    $resp=mysqli_query($enlaceCon,$sql);    
+    while ($dat = mysqli_fetch_array($resp)) {        
+        $global_almacen=$dat['cod_almacen'];
+    }
+}   
+
+if(isset($_GET['admin'])){
+    $admin=$_GET['admin'];
+}else{
+    $admin=0;
+}
+if($admin==1){
+    $sql_add=" ";
+}else{
+    $sql_add="AND s.cod_almacen = '$global_almacen'";
+}
+echo "<input type='hidden' name='global_almacen' value='$global_almacen' id='global_almacen'>";
+echo "<input type='hidden' name='admin' value='$admin' id='admin'>";
+echo "<input type='hidden' name='cod_ciudad_externo' value='$cod_ciudad_externo' id='cod_ciudad_externo'>";
+
+
+
+
 echo "<form method='post' action=''>";
 echo "<input type='hidden' name='fecha_sistema' value='$fecha_sistema'>";
 //$global_admin_cargo
@@ -465,37 +495,17 @@ echo "<br><br><div class='divBotones'>
 		// <!--input type='button' value='Anular' class='boton2' onclick='anular_salida(this.form)'-->
   //       <input type='button' value='Anular Con SIAT' class='boton2' onclick='anular_salida_siat(this.form)'>
 echo "<div id='divCuerpo'><center><table class='texto'>";
-echo "<tr><th>&nbsp;</th><th>Nro. Doc</th><th>Fecha/hora<br>Registro Salida</th><th>Tipo de Salida</th><th>TipoPago</th><th>Razon Social</th><th>NIT</th><th>Observaciones</th><th>Factura</th>";
-
+echo "<tr><th>&nbsp;</th><th>Sucursal</th><th>Caja</th><th>Nro. Doc</th><th>Fecha/hora<br>Registro Salida</th><th>TipoPago</th><th>Razon Social</th><th>NIT</th><th>Observaciones</th><th>Factura</th>";
     echo "</tr>";
 
-if(isset($_GET['cod_ciudad_externo'])){
-    $cod_ciudad_externo=$_GET['cod_ciudad_externo'];
-    $sql="SELECT c.cod_ciudad,a.cod_almacen
-        from ciudades c join almacenes a on c.cod_ciudad=a.cod_ciudad
-        where c.cod_externo=$cod_ciudad_externo";
-    $resp=mysqli_query($enlaceCon,$sql);    
-    while ($dat = mysqli_fetch_array($resp)) {        
-        $global_almacen=$dat['cod_almacen'];
-    }
-}	
 
-if(isset($_GET['admin'])){
-    $admin=$_GET['admin'];
-}else{
-    $admin=0;
-}
-
-echo "<input type='hidden' name='global_almacen' value='$global_almacen' id='global_almacen'>";
-
-$consulta = "
-	SELECT s.cod_salida_almacenes, s.fecha, s.hora_salida, ts.nombre_tiposalida, 
-	(select a.nombre_almacen from almacenes a where a.`cod_almacen`=s.almacen_destino), s.observaciones, 
+$consulta = " SELECT s.cod_salida_almacenes, s.fecha, s.hora_salida, ts.nombre_tiposalida, 
+	(select a.nombre_almacen from almacenes a where a.`cod_almacen`=s.cod_almacen), s.observaciones, 
 	s.estado_salida, s.nro_correlativo, s.salida_anulada, s.almacen_destino, 
 	(select c.nombre_cliente from clientes c where c.cod_cliente = s.cod_cliente), s.cod_tipo_doc, razon_social, nit,
-	(select t.nombre_tipopago from tipos_pago t where t.cod_tipopago=s.cod_tipopago)as tipopago,siat_estado_facturacion
+	(select t.nombre_tipopago from tipos_pago t where t.cod_tipopago=s.cod_tipopago)as tipopago,s.siat_estado_facturacion,s.siat_usuario
 	FROM salida_almacenes s, tipos_salida ts 
-	WHERE s.cod_tiposalida = ts.cod_tiposalida AND s.cod_almacen = '$global_almacen' and s.cod_tiposalida=1001 ";
+	WHERE s.cod_tiposalida = ts.cod_tiposalida and s.cod_tiposalida=1001 $sql_add";
 
 if($txtnroingreso!="")
    {$consulta = $consulta."AND s.nro_correlativo='$txtnroingreso' ";
@@ -531,7 +541,7 @@ while ($dat = mysqli_fetch_array($resp)) {
 	$razonSocial=$dat[12];
 	$razonSocial=strtoupper($razonSocial);
 	$nitCli=$dat[13];
-	$tipoPago=$dat[14];
+	$tipoPago=$dat[14];    
 	
     echo "<input type='hidden' name='fecha_salida$nro_correlativo' value='$fecha_salida_mostrar'>";
 	
@@ -551,6 +561,7 @@ while ($dat = mysqli_fetch_array($resp)) {
 
     $urlDetalle="dFacturaElectronica.php";
     $siat_estado_facturacion=$dat['siat_estado_facturacion'];
+    $siat_usuario=$dat['siat_usuario'];
     // if($codTipoDoc==4){
     //     $nro_correlativo="<i class=\"text-danger\">M-$nro_correlativo</i>";
     //     if($siat_estado_facturacion!=1){
@@ -574,9 +585,11 @@ while ($dat = mysqli_fetch_array($resp)) {
     //echo "<tr><td><input type='checkbox' name='codigo' value='$codigo'></td><td align='center'>$fecha_salida_mostrar</td><td>$nombre_tiposalida</td><td>$nombre_ciudad</td><td>$nombre_almacen</td><td>$nombre_funcionario</td><td>&nbsp;$obs_salida</td><td>$txt_detalle</td></tr>";
     echo "<tr>";
     echo "<td align='center'>&nbsp;$chk</td>";
+    echo "<td align='center'><b>$stikea $nombre_almacen $stikec</b></td>";
+    echo "<td align='center'>$stikea$siat_usuario $stikec</td>";
     echo "<td align='center'>$stikea$nombreTipoDoc-$nro_correlativo $stikec</td>";
     echo "<td align='center'>$stikea$fecha_salida_mostrar $hora_salida$stikec</td>";
-    echo "<td>$stikea $nombre_tiposalida $stikec</td>";
+    // echo "<td>$stikea $nombre_tiposalida $stikec</td>";
     echo "<td>$stikea $tipoPago $stikec</td><td>$stikea &nbsp;$razonSocial $stikec</td><td>$stikea&nbsp;$nitCli $stikec</td><td>$stikea &nbsp;$obs_salida $stikec</td>";
     $url_notaremision = "navegador_detallesalidamuestras.php?codigo_salida=$codigo";    
 	
@@ -639,8 +652,7 @@ echo "</div>";
 echo "<div class='divBotones'>
 		<input type='button' value='Registrar' name='adicionar' class='boton' onclick='enviar_nav()'>
 		<input type='button' value='Buscar' class='boton' onclick='ShowBuscar()'></td>		
-		<!--input type='button' value='Anular' class='boton2' onclick='anular_salida(this.form)'-->
-        <input type='button' value='Anular Con SIAT' class='boton2' onclick='anular_salida_siat(this.form)'>
+		
     </div>";
 	
 echo "</form>";
@@ -743,11 +755,11 @@ echo "</form>";
                     <select name="tipoVentaBusqueda" class="texto" id="tipoVentaBusqueda">
                         <option value="0">Todos</option>
                     <?php
-                        $sqlClientes="select c.`cod_tipopago`, c.`nombre_tipopago` from tipos_pago c order by 2";
-                        $respClientes=mysqli_query($enlaceCon,$sqlClientes);
-                        while($datClientes=mysql_fetch_array($respClientes)){
-                            $codCliBusqueda=$datClientes[0];
-                            $nombreCliBusqueda=$datClientes[1];
+                        $sqlTipoPago="select c.`cod_tipopago`, c.`nombre_tipopago` from tipos_pago c order by 2";
+                        $respTipoPago=mysqli_query($enlaceCon,$sqlTipoPago);
+                        while($datTipoPago=mysqli_fetch_array($respTipoPago)){
+                            $codCliBusqueda=$datTipoPago[0];
+                            $nombreCliBusqueda=$datTipoPago[1];
                     ?>
                             <option value="<?php echo $codCliBusqueda;?>"><?php echo $nombreCliBusqueda;?></option>
                     <?php
