@@ -13,8 +13,12 @@ $verBusqueda=$_GET['verBusqueda'];
 $global_almacen=$_GET['global_almacen'];
 $clienteBusqueda=$_GET['clienteBusqueda'];
 
-$fechaIniBusqueda=formateaFechaVista($fechaIniBusqueda);
-$fechaFinBusqueda=formateaFechaVista($fechaFinBusqueda);
+if($fechaIniBusqueda!=""){
+    $fechaIniBusqueda=formateaFechaVista($fechaIniBusqueda);    
+}
+if($fechaFinBusqueda!=""){
+    $fechaFinBusqueda=formateaFechaVista($fechaFinBusqueda);
+}
 
 
 echo "<br><br><center><table class='table table-sm' cellspacing='0'>";
