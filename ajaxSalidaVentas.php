@@ -15,9 +15,13 @@ $clienteBusqueda=$_GET['clienteBusqueda'];
 
 if($fechaIniBusqueda!=""){
     $fechaIniBusqueda=formateaFechaVista($fechaIniBusqueda);    
+}else{
+    $fechaIniBusqueda="--";
 }
 if($fechaFinBusqueda!=""){
     $fechaFinBusqueda=formateaFechaVista($fechaFinBusqueda);
+}else{
+    $fechaFinBusqueda="--";
 }
 
 
