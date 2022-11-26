@@ -656,6 +656,9 @@ function obtenerEstadoSalida($codSalida){
   function solicitarAnulacionServicio($enlaceCon,$idTabla,$idRecibo){
 
     $url_anulacion=obtenerValorConfiguracion($enlaceCon,48);
+	// $url_anulacion="http://localhost:8080/minka_siat/sp/";
+	// $url_anulacion.="test_servicio_anulacion.php?m=anulaf&t=".$idTabla."&i=".$idRecibo;
+
 	$url_anulacion.="wsclasificadores.php?m=anulaf&t=".$idTabla."&i=".$idRecibo;
 	$parametros="";	  
     $jsons=callService($parametros, $url);

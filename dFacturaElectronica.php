@@ -104,7 +104,6 @@ if(isset($_GET['r'])){
 
 
                 ?><script type="text/javascript">window.location.href='formatoFacturaOnLine.php?codVenta=<?=$codSalida?>'</script><?php
-
             }else{
                 $codigoError=$facturaImpuestos[0]->RespuestaServicioFacturacion->mensajesList->codigo;
                 $mens="<b>(".$facturaImpuestos[0]->RespuestaServicioFacturacion->mensajesList->codigo.") ".$facturaImpuestos[0]->RespuestaServicioFacturacion->mensajesList->descripcion."</b>";
@@ -113,7 +112,7 @@ if(isset($_GET['r'])){
                         where cod_salida_almacenes='$codSalida' "; //,siat_fechaemision='$fechaEmision',
                 $respUpdMonto=mysqli_query($enlaceCon,$sqlUpdMonto);
                 $errorFacturaXml=1;
-            }           
+            }
         }
     $stringEstado="";
 }else{

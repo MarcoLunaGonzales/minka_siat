@@ -1,5 +1,4 @@
 <?php
-$start_time = microtime(true);
 function insertarlogFacturas_entrada($json,$mensaje,$enlaceCon){
     // $dbh = new Conexion();    
     // $sql="INSERT INTO log_facturas(fecha,detalle_error,json) values(NOW(),'$mensaje','$json')";
@@ -136,6 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
 
 function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$siat_usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino){
 
+    $start_time_factura = microtime(true);
     //$correo_destino="lunagonzalesmarco@gmail.com";
     $correo_destino="sinpruebas2@gmail.com";
 
@@ -393,6 +393,10 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codMaterial,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$Concepto);
             }           
         }
+
+        $end_time_factura = microtime(true);
+        $duration_factura=$end_time_factura-$start_time_factura;
+        $start_time_siat = microtime(true);
         if($tipoSalida==1001){
             //servicios siat
             // if($tipoDoc==1){
@@ -415,9 +419,12 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                     // echo $facturaImpuestos."**";
                     $fechaEmision=$facturaImpuestos[1];
                     $cuf=$facturaImpuestos[2];      
+                    
+                    $end_time_siat = microtime(true);
+                    $duration_siat=$end_time_siat-$start_time_siat;          
                     if(isset($facturaImpuestos[0]->RespuestaServicioFacturacion->codigoRecepcion)){
                         $codigoRecepcion=$facturaImpuestos[0]->RespuestaServicioFacturacion->codigoRecepcion;
-                        $sqlUpdMonto="update salida_almacenes set siat_fechaemision='$fechaEmision',siat_estado_facturacion='1',siat_codigoRecepcion='$codigoRecepcion',siat_cuf='$cuf',siat_codigocufd='$codigoCufd',siat_codigotipoemision='1' 
+                        $sqlUpdMonto="update salida_almacenes set siat_fechaemision='$fechaEmision',siat_estado_facturacion='1',siat_codigoRecepcion='$codigoRecepcion',siat_cuf='$cuf',siat_codigocufd='$codigoCufd',siat_codigotipoemision='1',tiempo_duracion='$duration_factura',tiempo_duracion_siat='$duration_siat'
                                 where cod_salida_almacenes='$codigo' ";
                         $respUpdMonto=mysqli_query($enlaceCon,$sqlUpdMonto);
                         $siat_estado_facturacion=1;
