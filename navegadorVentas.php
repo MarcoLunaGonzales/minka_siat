@@ -423,6 +423,7 @@ function llamar_preparado(f, estado_preparado, codigo_salida)
     <body>
 <?php
 
+error_reporting(0);
 
 $txtnroingreso="";
 $fecha1="";
