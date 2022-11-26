@@ -86,12 +86,13 @@ $periodoFacturado=mysqli_result($respDatosFactura,0,7);
 
 $cod_funcionario=$_COOKIE["global_usuario"];
 //datos documento
-$sqlDatosVenta="select DATE_FORMAT(s.fecha, '%d/%m/%Y'), t.`nombre`, 'cliente', s.`nro_correlativo`, s.descuento, s.hora_salida,s.monto_total,s.monto_final,s.monto_efectivo,s.monto_cambio,s.cod_chofer,s.cod_tipopago,s.cod_tipo_doc,s.fecha,(SELECT cod_ciudad from almacenes where cod_almacen=s.cod_almacen)as cod_ciudad,s.cod_cliente,s.siat_cuf,s.siat_complemento,(SELECT nombre_tipopago from tipos_pago where cod_tipopago=s.cod_tipopago) as nombre_pago,s.siat_fechaemision,s.siat_codigotipoemision,s.siat_codigoPuntoVenta,(SELECT descripcionLeyenda from siat_sincronizarlistaleyendasfactura where codigo=s.siat_cod_leyenda) as leyenda,(SELECT siat_unidadProducto from ciudades where cod_ciudad in (select cod_ciudad from almacenes where cod_almacen=s.cod_almacen)) as unidad_medida
+$sqlDatosVenta="select DATE_FORMAT(s.fecha, '%d/%m/%Y'), t.`nombre`, 'cliente', s.`nro_correlativo`, s.descuento, s.hora_salida,s.monto_total,s.monto_final,s.monto_efectivo,s.monto_cambio,s.cod_chofer,s.cod_tipopago,s.cod_tipo_doc,s.fecha,(SELECT cod_ciudad from almacenes where cod_almacen=s.cod_almacen)as cod_ciudad,s.cod_cliente,s.siat_cuf,s.siat_complemento,(SELECT nombre_tipopago from tipos_pago where cod_tipopago=s.cod_tipopago) as nombre_pago,s.siat_fechaemision,s.siat_codigotipoemision,s.siat_codigoPuntoVenta,(SELECT descripcionLeyenda from siat_sincronizarlistaleyendasfactura where codigo=s.siat_cod_leyenda) as leyenda,(SELECT siat_unidadProducto from ciudades where cod_ciudad in (select cod_ciudad from almacenes where cod_almacen=s.cod_almacen)) as unidad_medida, UPPER(siat_usuario) as siat_usuario
         from `salida_almacenes` s, `tipos_docs` t, `clientes` c
         where s.`cod_salida_almacenes`='$codigoVenta' and s.cod_tipo_doc=t.codigo";
         // echo $sqlDatosVenta;
 $respDatosVenta=mysqli_query($enlaceCon,$sqlDatosVenta);
 $siat_complemento="";
+$usuarioCaja="";
 while($datDatosVenta=mysqli_fetch_array($respDatosVenta)){
     $cuf=$datDatosVenta['siat_cuf'];
     $fechaVenta=$datDatosVenta[0];
@@ -128,6 +129,8 @@ while($datDatosVenta=mysqli_fetch_array($respDatosVenta)){
     $siat_codigopuntoventa=$datDatosVenta['siat_codigoPuntoVenta'];
 
     $unidad_medida=$datDatosVenta['unidad_medida'];
+
+    $usuarioCaja=$datDatosVenta['siat_usuario'];
 
     $nombrePago=$datDatosVenta['nombre_pago'];
     $txt3=$datDatosVenta['leyenda'];
@@ -529,28 +532,29 @@ border-bottom: 1px solid #000;
 <div  style="height: 49.4%">
         <table  style="width: 100%;">
             <tr>
-                <td align="center" width="45%"><br><br>
+                <td align="center" width="40%"><br><br>
                     </small></small>
                 </td>
                 
-                <td >
-                    <div style="width:100%;text-align: left;font-size: 14px"><p><b>FACTURA</b><br><small><small>(Con Derecho a Crédito Fiscal)</small></small></p></div><br>
+                <td>
+                    <div style="width:100%;text-align: Center;font-size: 14px"><p><b>FACTURA</b><br><small><small>(Con Derecho a Crédito Fiscal)</small></small></p></div><br>
                     <table style="width: 100%;border: hidden;text-align: left;">
                         <tr align="left">
-                          <td width="40%" ><b>
-                              NIT : <br>
-                              FACTURA N° : <br>
-                              CÓD. AUTORIZACIÓN : </b>
-                          </td>
-                          <td class="text-left">
-                              <?=$nitTxt?><br>
-                              <?=$nroDocVenta?><br>
-                          </td>
+                          <td><b>NIT:</b></td>
+                          <td class="text-left"><?=$nitTxt?></td>
                         </tr>
-                        <tr><td colspan="2"><?=$cuf?></td></tr>
-                        <tr><td colspan="2">
-                            <b>FECHA FACTURA : </b> <?=$fechaFactura?><br>
-                        </td></tr>
+                        <tr>
+                            <td><b>FACTURA N°:</b></td>
+                            <td class="text-left"><?=$nroDocVenta?></td>
+                        </tr>
+                        <tr>
+                            <td><b><small>COD.AUTORIZACIÓN:</small></b></td>
+                            <td class="text-left"><small><?=$cuf?></small></td>
+                        </tr>                        
+                        <tr>
+                            <td><b>FECHA FACTURA:</b></td>
+                            <td class="text-left"><?=$fechaFactura;?></td>
+                        </tr>
                     </table>
                 </td>
             </tr>
@@ -560,19 +564,19 @@ border-bottom: 1px solid #000;
             <tr >
                 <td class="td-border-none text-left" width="15%" ><b>Nombre/Razón Social : </b></td>
                 <td class="td-border-none" width="43%"><?=$razonSocialCliente?></td>
-                <td class="td-border-none text-right" width="15%"><b>NIT/CI/CEX:</b></td>
+                <td class="td-border-none text-left" width="15%"><b>NIT/CI/CEX:</b></td>
                 <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nitCliente." ".$siat_complemento?></td>
             </tr>
             <tr >
               <td class="td-border-none text-left" width="25%" ><b>Nombre Estudiante : </b></td>
               <td class="td-border-none" ><?=$nombreEstudiante?></td>
-              <td class="td-border-none text-right" ><b>Cod. Cliente :</b></td>
+              <td class="td-border-none text-left" ><b>Cod. Cliente :</b></td>
               <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$cod_cliente?></td>
             </tr>
             <tr >
               <td class="td-border-none text-left" width="25%" ></td>
               <td class="td-border-none" ></td>
-              <td class="td-border-none text-right" ><b>Periodo Facturado :</b></td>
+              <td class="td-border-none text-left" ><b>Periodo Facturado :</b></td>
               <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$periodoFacturado?></td>
             </tr>
         </table>
@@ -769,7 +773,10 @@ border-bottom: 1px solid #000;
                 </td>
             </tr>
             
-            <tr><td colspan="6" style="border:hidden;" valign="bottom"><span style="padding: 0px;margin: 0px;"><small><small>Forma de Pago: <?=$nombrePago?></small></small></span></td></tr>
+            <tr>
+                <td colspan="3" style="border:hidden;" valign="bottom"><span style="padding: 0px;margin: 0px;"><small><small>Forma de Pago: <?=$nombrePago?></small></small></span></td>
+                <td colspan="3" style="border:hidden;" valign="bottom"><span style="padding: 0px;margin: 0px;"><small><small>Cajero: <?=$usuarioCaja;?></small></small></span></td>
+            </tr>
             
         </table>
         <table class="table3" >
