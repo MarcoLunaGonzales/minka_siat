@@ -150,12 +150,12 @@ if($anulado==0){ //verificamos si no está anulado // 0 no anulada 1 //anulado
 				// 	</script>";//location.href='navegadorVentas.php';
 				// $url_anulacion=obtenerValorConfiguracion($enlaceCon,48);
 
-				// $anularServicio=solicitarAnulacionServicio($enlaceCon,$idTabla,$idRecibo);
-				$anularServicio="";
+				$anularServicio=solicitarAnulacionServicio($enlaceCon,$idTabla,$idRecibo);
+				// $anularServicio="";
 
 				$mensajeAnulacionServicio="<br><span style=\"border:1px;font-size:18px;color:red;\"><b>Error al anular Recibo</b></span>";
-				if(isset($anularServicio->estado)){
-					if($anularServicio->estado==1){//anulacin correcta
+				if(isset($anularServicio->anula->estado)){
+					if($anularServicio->anula->estado==1){//anulacion correcta
 						$mensajeAnulacionServicio="<br><span style=\"border:1px;font-size:18px;color:green;\"><b>Servicio de anulación de Recibo OK</b></span>";
 					}
 				}
@@ -182,8 +182,8 @@ if($anulado==0){ //verificamos si no está anulado // 0 no anulada 1 //anulado
 				//     location.href='dFacturaElectronica.php?codigo_salida=".$codigo_registro."';
 				// });
 				// </script>";
-				// $anularServicio=solicitarAnulacionServicio($enlaceCon,$idTabla,$idRecibo);
-				$anularServicio="";
+				$anularServicio=solicitarAnulacionServicio($enlaceCon,$idTabla,$idRecibo);
+				// $anularServicio="";
 				
 				$texto_correo="<b>EL CLIENTE NO TIENE UN CORREO REGISTRADO.</b>";
 				$mensajeAnulacionServicio="<br><span style=\"border:1px;font-size:18px;color:red;\"><b>Error al anular Recibo</b></span>";
