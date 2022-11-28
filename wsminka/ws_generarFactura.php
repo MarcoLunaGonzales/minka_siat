@@ -429,7 +429,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                         $respUpdMonto=mysqli_query($enlaceCon,$sqlUpdMonto);
                         $siat_estado_facturacion=1;
                     }else{
-                        $sqlUpdMonto="update salida_almacenes set siat_codigotipoemision=2,siat_fechaemision='$fechaEmision',siat_codigocufd='$codigoCufd',siat_cuf='$cuf'
+                        $sqlUpdMonto="update salida_almacenes set siat_codigotipoemision=2,siat_fechaemision='$fechaEmision',siat_codigocufd='$codigoCufd',siat_cuf='$cuf',tiempo_duracion='$duration_factura',tiempo_duracion_siat='$duration_siat'
                             where cod_salida_almacenes='$codigo' ";
                         $respUpdMonto=mysqli_query($enlaceCon,$sqlUpdMonto);
                         $errorFacturaXml=1;
