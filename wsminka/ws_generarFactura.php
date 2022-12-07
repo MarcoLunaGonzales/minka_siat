@@ -86,11 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                         "nroFactura"=>$nro_factura, 
                         );
 
-                    /*insertamos la respuesta para validacion*/
-                    InsertlogFacturas_salida(-100,"Respuesta",json_encode($resultado),$enlaceCon);    
         
                     /*ACTUALIZAMOS LOS RECIBOS DE LA UNILOYOLA*/    
-                    /*
+                    
                     if ($tipoTabla==1){
                         $sqlUpdReciboExterno="update Loyola.recibo set Numrecibo='$codigo_transaccion' where idrecibo='$idRecibo'";
                     }
@@ -100,11 +98,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     if ($tipoTabla==3){
                         $sqlUpdReciboExterno="update Loyola.cobros set NumRecibo='$codigo_transaccion' where idCobro='$idRecibo'";
                     }
-                    $respUpdReciboExterno=mysqli_query($enlaceCon,$sqlUpdReciboExterno);
-                    */
+                    $respUpdReciboExterno=mysqli_query($enlaceCon,$sqlUpdReciboExterno);                    
                     /*FIN ACTUALIZAR RECIBOS*/
 
-
+                    /*insertamos la respuesta para validacion*/
+                    InsertlogFacturas_salida(-100,"Respuesta my: $respUpdReciboExterno",json_encode($resultado),$enlaceCon);
 
 
                 }else{
