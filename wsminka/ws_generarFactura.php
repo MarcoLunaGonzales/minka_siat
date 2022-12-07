@@ -1,10 +1,5 @@
 <?php
 function insertarlogFacturas_entrada($json,$mensaje,$enlaceCon){
-    // $dbh = new Conexion();    
-    // $sql="INSERT INTO log_facturas(fecha,detalle_error,json) values(NOW(),'$mensaje','$json')";
-    // $stmt = $dbh->prepare($sql);
-    // $stmt->execute();
-
     $jsonString=json_encode($json);
     $fechaActualX=date('Y-m-d H:i:s');
     $sql="INSERT INTO log_facturas(fecha,detalle_error,json) values('$fechaActualX','$mensaje','$json')";
@@ -14,12 +9,6 @@ function insertarlogFacturas_entrada($json,$mensaje,$enlaceCon){
 }
 
 function InsertlogFacturas_salida($cod_error,$detalle_error,$json,$enlaceCon){  
-    // $dbh = new Conexion();    
-    // $sql="INSERT INTO log_facturas(fecha,cod_error,detalle_error,json) values(NOW(),'$cod_error','$detalle_error','$json')";
-    // $stmt = $dbh->prepare($sql);
-    // $stmt->execute();
-    // require_once '../conexionmysqli2.php';
-    // print_r($json);
     $jsonString=json_encode($json);
     $fechaActualX=date('Y-m-d H:i:s');
     $sqlUpdate="INSERT INTO log_facturas(fecha,cod_error,detalle_error,json) values('$fechaActualX','$cod_error','$detalle_error','$jsonString')";
@@ -44,69 +33,86 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
             $estado=0;
             $mensaje="";
             if($accion=="generarFacturaMinka"){//obtenemos las ciudades del cliente
-                    // require_once '../conexionmysqli2.php';
-                    require_once '../siat_folder/funciones_servicios.php';
-                    // if(isset($datos['idEmpresa'])){
-                        // $idEmpresa=$datos['idEmpresa'];//
-                        // $nitEmpresa=$datos['nitEmpresa'];//
-                        // if(verificarExistenciaEmpresa($idEmpresa,$nitEmpresa,$enlaceCon)){
-                            if(isset($datos['sucursal']) && isset($datos['tipoTabla']) && isset($datos['idRecibo']) && isset($datos['fecha']) && isset($datos['idPersona']) && isset($datos['monto_total']) && isset($datos['descuento']) && isset($datos['monto_final']) && isset($datos['id_usuario']) && isset($datos['nitCliente']) && isset($datos['nombreFactura']) && isset($datos['NombreEstudiante']) && isset($datos['Concepto']) && isset($datos['tipoPago']) && isset($datos['nroTarjeta']) && isset($datos['tipoDocumento']) && isset($datos['complementoDocumento']) && isset($datos['periodoFacturado'])){
-                                $sucursal=$datos['sucursal'];
-                                $tipoTabla=$datos['tipoTabla'];
-                                $idRecibo=$datos['idRecibo'];
-                                $fecha=$datos['fecha'];
-                                $idPersona=$datos['idPersona'];
-                                $monto_total=$datos['monto_total'];
-                                $descuento=$datos['descuento'];
-                                $monto_final=$datos['monto_final'];
-                                $id_usuario=$datos['id_usuario'];
-                                $usuario=$datos['usuario'];
-                                $nitCliente=$datos['nitCliente'];
-                                $nombreFactura=$datos['nombreFactura'];
-                                $NombreEstudiante=$datos['NombreEstudiante'];
-                                $Concepto=$datos['Concepto'];
-                                $tipoPago=$datos['tipoPago'];
-                                $nroTarjeta=$datos['nroTarjeta'];
-                                $tipoDocumento=$datos['tipoDocumento'];
-                                $complementoDocumento=$datos['complementoDocumento'];
-                                $periodoFacturado=$datos['periodoFacturado'];
-                                if (isset($datos['correo'])) {
-                                    $correo_destino=$datos['correo'];
-                                }else{
-                                    $correo_destino="";
-                                }
-                                
-                                $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino);
+                require_once '../siat_folder/funciones_servicios.php';
+                
+                if(isset($datos['sucursal']) && isset($datos['tipoTabla']) && isset($datos['idRecibo']) && isset($datos['fecha']) && isset($datos['idPersona']) && isset($datos['monto_total']) && isset($datos['descuento']) && isset($datos['monto_final']) && isset($datos['id_usuario']) && isset($datos['nitCliente']) && isset($datos['nombreFactura']) && isset($datos['NombreEstudiante']) && isset($datos['Concepto']) && isset($datos['tipoPago']) && isset($datos['nroTarjeta']) && isset($datos['tipoDocumento']) && isset($datos['complementoDocumento']) && isset($datos['periodoFacturado'])){
+                    $sucursal=$datos['sucursal'];
+                    $tipoTabla=$datos['tipoTabla'];
+                    $idRecibo=$datos['idRecibo'];
+                    $fecha=$datos['fecha'];
+                    $idPersona=$datos['idPersona'];
+                    $monto_total=$datos['monto_total'];
+                    $descuento=$datos['descuento'];
+                    $monto_final=$datos['monto_final'];
+                    $id_usuario=$datos['id_usuario'];
+                    $usuario=$datos['usuario'];
+                    $nitCliente=$datos['nitCliente'];
+                    $nombreFactura=$datos['nombreFactura'];
+                    $NombreEstudiante=$datos['NombreEstudiante'];
+                    $Concepto=$datos['Concepto'];
+                    $tipoPago=$datos['tipoPago'];
+                    $nroTarjeta=$datos['nroTarjeta'];
+                    $tipoDocumento=$datos['tipoDocumento'];
+                    $complementoDocumento=$datos['complementoDocumento'];
+                    $periodoFacturado=$datos['periodoFacturado'];
+                    if (isset($datos['correo'])) {
+                        $correo_destino=$datos['correo'];
+                    }else{
+                        $correo_destino="";
+                    }
+                    
+                    $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino);
 
-                                $estado=$datosFactura[0];//estado
-                                $mensaje=$datosFactura[1];//mensaje
-                                $codigo_transaccion=$datosFactura[2];//codigo
-                                $nro_factura=$datosFactura[3];//nro factura
-                                                                
-                                switch ($estado) {
-                                    case 0://factura online
-                                        $estado_ws=1;
-                                    break;
-                                    case 1://factura offline
-                                        $estado_ws=1;
-                                    break;
-                                    case 2://error en factura
-                                        # code...
-                                        $estado_ws=5;//error al generar factura
-                                    break;
-                                }
-                                $resultado=array("estado"=>$estado_ws,
-                                    "mensaje"=>$mensaje, 
-                                    "idTransaccion"=>$codigo_transaccion, 
-                                    "nroFactura"=>$nro_factura, 
-                                    );
+                    $estado=$datosFactura[0];//estado
+                    $mensaje=$datosFactura[1];//mensaje
+                    $codigo_transaccion=$datosFactura[2];//codigo
+                    $nro_factura=$datosFactura[3];//nro factura
+                                                    
+                    switch ($estado) {
+                        case 0://factura online
+                            $estado_ws=1;
+                        break;
+                        case 1://factura offline
+                            $estado_ws=1;
+                        break;
+                        case 2://error en factura
+                            # code...
+                            $estado_ws=5;//error al generar factura
+                        break;
+                    }
+                    $resultado=array("estado"=>$estado_ws,
+                        "mensaje"=>$mensaje, 
+                        "idTransaccion"=>$codigo_transaccion, 
+                        "nroFactura"=>$nro_factura, 
+                        );
 
-                            }else{
-                                $mensaje="ERROR. Variables incompletas";
-                                $resultado=array("estado"=>4,
-                                "mensaje"=>$mensaje);
-                                InsertlogFacturas_salida(4,$mensaje,null,$enlaceCon);
-                            }
+                    /*insertamos la respuesta para validacion*/
+                    InsertlogFacturas_salida(-100,"Respuesta",json_encode($resultado),$enlaceCon);    
+        
+                    /*ACTUALIZAMOS LOS RECIBOS DE LA UNILOYOLA*/    
+                    /*
+                    if ($tipoTabla==1){
+                        $sqlUpdReciboExterno="update Loyola.recibo set Numrecibo='$codigo_transaccion' where idrecibo='$idRecibo'";
+                    }
+                    if ($tipoTabla==2){
+                        $sqlUpdReciboExterno="update Loyola.auxrecibo set NumRecibo='$codigo_transaccion' where idrecibo='$idRecibo'";
+                    }
+                    if ($tipoTabla==3){
+                        $sqlUpdReciboExterno="update Loyola.cobros set NumRecibo='$codigo_transaccion' where idCobro='$idRecibo'";
+                    }
+                    $respUpdReciboExterno=mysqli_query($enlaceCon,$sqlUpdReciboExterno);
+                    */
+                    /*FIN ACTUALIZAR RECIBOS*/
+
+
+
+
+                }else{
+                    $mensaje="ERROR. Variables incompletas";
+                    $resultado=array("estado"=>4,
+                    "mensaje"=>$mensaje);
+                    InsertlogFacturas_salida(4,$mensaje,null,$enlaceCon);
+                }
             }else{
                 $mensaje="ERROR. No existe la Accion Solicitada.";
                 $resultado=array("estado"=>4,
@@ -133,6 +139,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
     echo json_encode($resultado);
 }
 
+
+
+
+
+
 function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$siat_usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino){
 
     $start_time_factura = microtime(true);
@@ -147,12 +158,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     require_once "../siat_folder/funciones_siat.php";
 
     $usuarioVendedor=$id_usuario;//codigo usuario
-    
-    // $globalSucursal=1;//cod ciudad //encontrar dato
-    // $almacenOrigen=1000;//cod almacen
-    // $globalSucursal=$sucursal;//cod ciudad //encontrar dato    
-
-    
+        
     $datosCiudad=obtenerAlmacen($sucursal,$enlaceCon);
     $globalSucursal=$datosCiudad[0];
     $almacenOrigen=$datosCiudad[1];
@@ -161,9 +167,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
 
     $errorProducto="";
     $totalFacturaMonto=0;
-    // $tipoSalida=$_POST['tipoSalida'];
     $tipoSalida=1001;
-    // $tipoDoc=$_POST['tipoDoc']; 
     $tipoDoc=1;//tipo factura automatica, nota emision =2, factura manual= 4 
     $almacenDestino=0;
     $cod_tipopreciogeneral=0;
@@ -188,10 +192,6 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     $tipoVenta=$tipoPago;
     $observaciones="";
     $cuf="";
-
-    // $totalVenta=$monto_total;
-    // $descuentoVenta=$descuento;
-    // $totalFinal=$monto_final;
 
     $totalVenta=$monto_final;
     $descuentoVenta=0;
@@ -237,16 +237,12 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         // $sqlConf="SELECT codigo FROM siat_sincronizarlistaleyendasfactura where codigoActividad=$codigoActividadSIAT and estado=1 ORDER BY rand() LIMIT 1;";
         $sqlConf="SELECT codigo FROM siat_sincronizarlistaleyendasfactura where codigoActividad in (SELECT siat_codigoActividad from ciudades where cod_ciudad='$globalSucursal') and estado=1 ORDER BY rand() LIMIT 1;";
         $respConf=mysqli_query($enlaceCon,$sqlConf);
-        // $cod_leyenda=mysqli_result($respConf,0,0);
         $datConf=mysqli_fetch_array($respConf);
         $cod_leyenda=$datConf[0];
-        // $sqlConf="SELECT codigo FROM siat_sincronizarlistaleyendasfactura where codigoActividad=$codigoActividadSIAT and estado=1 ORDER BY rand() LIMIT 1;";
         $sqlConf="SELECT codigo FROM siat_sincronizarlistaleyendasfactura where codigoActividad in (SELECT siat_codigoActividad from ciudades where cod_ciudad='$globalSucursal') and estado=1 ORDER BY rand() LIMIT 1;";
         $respConf=mysqli_query($enlaceCon,$sqlConf);
-        // $cod_leyenda=mysqli_result($respConf,0,0);
         $datConf=mysqli_fetch_array($respConf);
         $cod_leyenda=$datConf[0];
-        // $siat_codigotipodocumentoidentidad=$_POST["tipo_documento"]; 
         $siat_codigotipodocumentoidentidad=$tipoDocumento;
     }
     /*VALIDACION MANUAL CASOS ESPECIALES*/
@@ -265,24 +261,15 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         // $codigo=mysqli_result($resp,0,0);
         $datCodSalida=mysqli_fetch_array($resp);
         $codigo=$datCodSalida[0];
-        // echo "2*".$codigo."<br>";
-        //PARA CUANDO ES FACTURA Y ACTIVAMOS PROCESOS SIAT
-        // if($tipoDoc==1 || $tipoDoc==4){      
             $sqlCuis="select cuis FROM siat_cuis where cod_ciudad='$globalSucursal' and estado=1 and cod_gestion='$anio' LIMIT 1";
-            // echo $sqlCuis;
             $respCuis=mysqli_query($enlaceCon,$sqlCuis);
-            // $cuis=mysqli_result($respCuis,0,0);
             $datConf=mysqli_fetch_array($respCuis);
             $cuis=$datConf[0];    
-            // echo "3*".$cuis."<br>";
             $sqlPV="SELECT codigoPuntoVenta FROM siat_puntoventa where cod_ciudad='$globalSucursal' LIMIT 1";
             $respPV=mysqli_query($enlaceCon,$sqlPV);
-            // $codigoPuntoVenta=mysqli_result($respPV,0,0);
             $datPV=mysqli_fetch_array($respPV);
             $codigoPuntoVenta=$datPV[0];
-            // echo "4*".$codigoPuntoVenta."<br>";
             $sqlCufd="SELECT codigo,cufd,codigo_control FROM siat_cufd where cod_ciudad='$globalSucursal' and estado=1 and fecha='$fecha' and cuis='$cuis' LIMIT 1";        
-            // echo $sqlCufd;
             $respCufd=mysqli_query($enlaceCon,$sqlCufd);
             $datCufd=mysqli_fetch_array($respCufd);
             $codigoCufd=$datCufd[0];
@@ -343,7 +330,6 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         $contador++;
     } while ($sql_inserta<>1 && $contador <= 100);
 
-
     if($sql_inserta==1){
         $code="";
         //TARJETA INSERTAR
@@ -364,28 +350,15 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
             // echo $sqlInsertFactura;
             $respInsertFactura=mysqli_query($enlaceCon,$sqlInsertFactura);  
         }
-
         $montoTotalVentaDetalle=0;
         $cantidad_material=1;
-        for($i=1;$i<=$cantidad_material;$i++)
-        {       
-            // $codMaterial=$_POST["materiales$i"];
-            // $codMaterial=$tipoTabla;
+        for($i=1;$i<=$cantidad_material;$i++){       
             $codMaterial=1;
             if($codMaterial!=0){
-
-                // $cantidadUnitaria=$_POST["cantidad_unitaria$i"];
-                // $precioUnitario=$_POST["precio_unitario$i"];
-                // $descuentoProducto=$_POST["descuentoProducto$i"];
-                // $cantidadUnitaria=1;
-                // $precioUnitario=$totalVenta; 
-                // $descuentoProducto=0;
 
                 $cantidadUnitaria=1;
                 $precioUnitario=$monto_total; 
                 $descuentoProducto=$descuento;
-
-
                 //SE DEBE CALCULAR EL MONTO DEL MATERIAL POR CADA UNO PRECIO*CANTIDAD - EL DESCUENTO ES UN DATO ADICIONAL
                 $montoMaterial=$precioUnitario*$cantidadUnitaria;
                 // $montoMaterialConDescuento=($precioUnitario*$cantidadUnitaria)-$descuentoProducto;
@@ -456,11 +429,9 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                     // $correo_destino=obtenerCorreosListaCliente($codCliente);
                     if($correo_destino==null || $correo_destino=="" || $correo_destino==" "){
                         $enviar_correo=false;
-                        //$texto_correo="<span style=\"border:1px;font-size:18px;color:orange;\"><b>EL CLIENTE NO TIENE UN CORREO REGISTRADO</b></span>";
                     }
                 }else{
                     $enviar_correo=false;
-                    //$texto_correo="<span style=\"border:1px;font-size:18px;color:orange;\"><b>CORREO NO ENVIADO</b></span>";
                 }
                 if($enviar_correo){
                     $sw_correo=true;
@@ -470,47 +441,15 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                     require_once "../descargarFacturaPDF.php";
                     $estado_envio=envio_factura($codigoVenta,$correo_destino,$enlaceCon);
                     if($estado_envio==1){
-                        //$texto_correo="<span style=\"border:1px;font-size:18px;color:#91d167;\"><b>SE ENVIÓ EL CORREO CON EXITO.</b></span>";
                     }elseif($estado_envio==0){
-                        //$texto_correo="<span style=\"border:1px;font-size:18px;color:orange;\"><b>EL CLIENTE NO TIENE UN CORREO REGISTRADO</b></span>";
                     }else{
-                        //$texto_correo="<span style=\"border:1px;font-size:18px;color:red;\"><b>Ocurrio un error al enviar el correo, vuelva a intentarlo.</b></span>";
                     }
-                    // echo "<script language='Javascript'>
-                    //     Swal.fire({
-                    //     title: 'SIAT: ".$mensaje."',
-                    //     html: '".$texto_correo."',
-                    //     type: 'success'
-                    //     }).then(function() {
-                    //        location.href='navegadorVentas.php'; 
-                    //     });
-                    //     </script>";                    
-                        return array($estado_facturado,$mensaje,$codigo,$nro_correlativo);
-                    // $texto_correo="<span style=\"border:1px;font-size:18px;color:#91d167;\"><b>¿DESEAS ENVIAR CORREO?</b></span>";
-                    // echo "<script language='Javascript'>
+                    return array($estado_facturado,$mensaje,$codigo,$nro_correlativo);
                 }else{
-                    // echo "<script language='Javascript'>
-                    //  Swal.fire({
-                    //     title: 'SIAT: ".$mensaje."',
-                    //     html: '".$texto_correo."',
-                    //     type: 'success'
-                    //  }).then(function() {
-                    //      location.href='navegadorVentas.php';
-                    //  });
-                    //  </script>";
-
                     return array($estado_facturado,$mensaje,$codigo,$nro_correlativo);
                 }
-
-            // }
         }   
     }else{
-            // echo "<script type='text/javascript' language='javascript'>
-            //  alert('Ocurrio un error en la transaccion. Contacte con el administrador del sistema.');
-                
-            // </script>";//location.href='navegador_salidamateriales.php';
-        // $errorEmision = 1;
-
         $mensaje="Ocurrio un error en la transaccion. Contacte con el administrador del sistema";
         $estado_facturado=2;//error
         InsertlogFacturas_salida($estado_facturado,$mensaje,null,$enlaceCon);

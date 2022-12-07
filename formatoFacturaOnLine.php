@@ -9,11 +9,19 @@ require('funcion_nombres.php');
 require('NumeroALetras.php');
 include('phpqrcode/qrlib.php'); 
 
+if(isset($_GET["idRecibo"]) && isset($_GET["tipoTabla"])){
+    $idRecibo=$_GET["idRecibo"];
+    $tipoTabla=$_GET["tipoTabla"];
+    $sqlCodF="select s.cod_salida_almacenes from salida_almacenes s where s.idrecibo='$idRecibo' and s.idtabla='$tipoTabla'";
+    $respCodF=mysqli_query($enlaceCon,$sqlCodF);
+    $codigoVenta=mysqli_result($respCodF,0,0);
+}
 if(isset($_GET["codVenta"])){
     $codigoVenta=$_GET["codVenta"];
 }else{
     $codigoVenta=$codigoVenta;
 }
+
 
 // $cod_ciudad=$_COOKIE["global_agencia"];
 
