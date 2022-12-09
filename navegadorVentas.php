@@ -496,7 +496,7 @@ echo "<div class='divBotones'>
 		// <!--input type='button' value='Anular' class='boton2' onclick='anular_salida(this.form)'-->
   //       <input type='button' value='Anular Con SIAT' class='boton2' onclick='anular_salida_siat(this.form)'>
 echo "<div id='divCuerpo'><center><br><table class='texto'>";
-echo "<tr><th>&nbsp;</th><th>Sucursal</th><th>Caja</th><th>Nro. Doc</th><th>Fecha/hora<br>Registro Salida</th><th>TipoPago</th><th>Razon Social</th><th>NIT</th><th>Observaciones</th><th>Factura</th>";
+echo "<tr><th>&nbsp;</th><th>Sucursal</th><th>Caja</th><th>Nro. Doc</th><th>Fecha/hora<br>Registro Salida</th><th>TipoPago</th><th>Razon Social</th><th>NIT</th><th>Observaciones</th><th>FacturaE</th><th>Imprimir</th>";
     echo "</tr>";
 
 
@@ -641,7 +641,10 @@ while ($dat = mysqli_fetch_array($resp)) {
      //    echo "<td  bgcolor='$color_fondo'> ";
      //    echo "</td>";   
      // }
-     echo "<td  bgcolor='$color_fondo'> <a href='$urlDetalle?codigo_salida=$codigo&admin=$admin' target='_BLANK' title='DOCUMENTO FACTURA'  class='text-dark'><i class='material-icons'>description</i></a>";
+    echo "<td  bgcolor='$color_fondo' align='center'><a href='$urlDetalle?codigo_salida=$codigo&admin=$admin' target='_BLANK' title='DOCUMENTO FACTURA'  class='text-dark'><i class='material-icons'>description</i></a>";
+        echo "</td>";
+    
+    echo "<td  bgcolor='$color_fondo' align='center'><a href='formatoFacturaOnLine.php?codVenta=$codigo' target='_BLANK' title='Imprimir' class='text-dark'><i class='material-icons'>print</i></a>";
         echo "</td>";
     // }
 

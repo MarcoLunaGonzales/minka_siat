@@ -47,7 +47,7 @@ if(isset($_GET['rpt_territorio'])){
                       $resp=mysqli_query($enlaceCon,$sql);
                       while($row=mysqli_fetch_array($resp)){ 
                      ?>
-                      <option  value="<?=$row["codigo"];?>"><?=$row["descripcion"];?></option>
+                      <option  value="<?=$row["codigo"];?>" selected><?=$row["descripcion"];?></option>
                     <?php } ?> 
                     </select>
                 </div>
@@ -90,7 +90,7 @@ if(isset($_GET['rpt_territorio'])){
                       <option  value="2">1 Minuto</option>
                       <option  value="3">10 Segundos</option>
                       <option  value="4">1 Segundo</option>
-                      <option  value="5">1 Milisegundos</option>                    
+                      <option  value="5" selected>1 Milisegundos</option>                    
                     </select>
                 </div>
               </div>
@@ -100,8 +100,7 @@ if(isset($_GET['rpt_territorio'])){
               <table id="tablePaginatorHeaderFooter" class="table table-bordered table-condensed table-striped " style="width:100%">
                 <thead>
                   <tr>
-                    <tr class='bg-info text-white'><th></th><th>&nbsp;</th><th>Sucursal</th><th>Nro. Factura</th><th>Fecha Emisión<br></th>
-    				      <th>Cliente</th><th>Razon Social</th><th>NIT</th><th>Proceso</th><th>Monto</th></tr>
+                    <tr class='bg-info text-white'><th></th><th>&nbsp;</th><th>Sucursal</th><th>Nro. Factura</th><th>Fecha Emisión<br></th><th>Razon Social</th><th>NIT</th><th>Proceso</th><th>Monto</th></tr>
                   </tr>                                  
                 </thead>
                 <tbody>
@@ -146,7 +145,6 @@ if(isset($_GET['rpt_territorio'])){
                       <td class="text-left small"><?=$sucursal;?></td>
                       <td class="text-center small"><?=$nro_correlativo;?></td>
                       <td class="text-left small"><?=$fecha;?> <?=$hora_salida;?></td>
-                      <td class="text-left small"><?=$cliente;?></td>
                     
                       <td class="text-center small"><?=$razon_social;?></td>
                       <td class="text-left small"><?=$nit;?></td>
