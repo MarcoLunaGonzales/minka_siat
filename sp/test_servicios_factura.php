@@ -105,7 +105,7 @@ $correo="donnajoecardenas@gmail.com";
 $accion="generarFacturaMinka";
 $sIdentificador="MinkaSw123*";
 $sKey="rrf656nb2396k6g6x44434h56jzx5g6";
-
+z
 
 //Lista de Tipos documento
 $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 

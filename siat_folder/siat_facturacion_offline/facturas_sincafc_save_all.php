@@ -51,21 +51,25 @@ require("../funciones_siat.php");
     if($DatosConexion[0]==1){
       $string_codigos=trim($string_codigos,",");
       $cod_tipoEmision=2;//tipo emision OFFLINE
-      $sql="SELECT DATE_FORMAT(s.siat_fechaemision,'%Y-%m-%d')as fecha2,s.cod_almacen,a.nombre_almacen,(select cod_impuestos from ciudades where cod_ciudad= a.cod_ciudad)as cod_impuestos,a.cod_ciudad,sc.cufd,s.siat_codigocufd
+      $sql="SELECT s.cod_salida_almacenes,DATE_FORMAT(s.siat_fechaemision,'%Y-%m-%d')as fecha2,s.cod_almacen,a.nombre_almacen,(select cod_impuestos from ciudades where cod_ciudad= a.cod_ciudad)as cod_impuestos,a.cod_ciudad,sc.cufd,s.siat_codigocufd
         FROM salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen join siat_cufd sc on s.siat_codigocufd=sc.codigo
         WHERE s.cod_salida_almacenes in ($string_codigos)
-        GROUP BY s.cod_almacen,s.fecha,s.siat_codigocufd
+  
         ORDER BY a.nombre_almacen,fecha2";
+
+
         // echo $sql;
         $fecha_X=date('Y-m-d');
         // $fecha_X=date('2022-07-02');
       $resp1=mysqli_query($enlaceCon,$sql);
       while($row=mysqli_fetch_array($resp1)){ 
+        $string_codigos=$row['cod_salida_almacenes'];
         $fecha=$row['fecha2'];
         $cod_almacen=$row['cod_almacen'];
         $nombre_almacen=$row['nombre_almacen'];
         $cod_impuestos=$row['cod_impuestos'];
         $cod_ciudad=$row['cod_ciudad'];
+
         $siat_codigocufd=$row['siat_codigocufd'];
         // $cod_ciudad=85;
         $cod_impuestos=intval($cod_impuestos);
