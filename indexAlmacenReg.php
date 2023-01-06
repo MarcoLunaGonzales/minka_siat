@@ -101,7 +101,12 @@ include("datosUsuario.php");
 				<ul>
 					<li><a href="navegadorVentas.php" target="contenedorPrincipal">Listado de Ventas</a></li>
 					<!-- <li><a href="registrar_salidaventas_manuales.php" target="_blank">Factura Manual de Contigencia</a></li> -->
-				</ul>	
+				</ul>
+				<li><span>Reportes SIAT</span>
+				<ul>
+					<li><a href="rptOpLibroVentas.php" target="contenedorPrincipal">Libro de Ventas</a></li>
+					<!-- <li><a href="registrar_salidaventas_manuales.php" target="_blank">Factura Manual de Contigencia</a></li> -->
+				</ul>				
 			</li>
 			</ul>
 		</div>			
