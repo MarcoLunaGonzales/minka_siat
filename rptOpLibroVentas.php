@@ -81,6 +81,23 @@ function envia_formularioTXT_siatv2(f)
 	window.open('rptLibroVentastxt_siatv2.php?codTipoTerritorio='+codTipoTerritorio+'&codAnio='+codAnio+'&codMes='+codMes+'&tipo='+tipo,'','scrollbars=yes,status=no,toolbar=no,directories=no,menubar=no,resizable=yes,width=1000,height=800');			
 	return(true);
 }
+
+function envia_formularioSIATPdf(f)
+{	var codAnio,codMes,tipo;
+	codAnio=f.cod_anio.value;
+	codMes=f.cod_mes.value;
+	tipo=f.rpt_tipo.value;
+	var codTipoTerritorio=new Array();
+	var j=0;
+	for(var i=0;i<=f.rpt_territorio.options.length-1;i++)
+	{	if(f.rpt_territorio.options[i].selected)
+		{	codTipoTerritorio[j]=f.rpt_territorio.options[i].value;
+			j++;
+		}
+	}
+	window.open('rptLibroVentasSiatPdf.php?codTipoTerritorio='+codTipoTerritorio+'&codAnio='+codAnio+'&codMes='+codMes+'&tipo='+tipo,'','scrollbars=yes,status=no,toolbar=no,directories=no,menubar=no,resizable=yes,width=1000,height=800');			
+	return(true);
+}
 </script>
 <?php
 	
@@ -143,7 +160,8 @@ echo "</select></td></tr>";
 echo "</table></center>";
 
 echo "<div class=''>
-<input type='button' class='boton' value='Generar TXT (SIAT V2)' onClick='envia_formularioTXT_siatv2(this.form)'>
+<input type='button' class='boton' value='Generar SIAT' onClick='envia_formularioTXT_siatv2(this.form)'>
+<input type='button' class='boton' value='Generar SIAT PDF' onClick='envia_formularioSIATPdf(this.form)'>
 <input type='button' class='boton2' value='Facturas Anuladas' onClick='envia_formulario2(this.form)'>";
 
 echo "</form>";
