@@ -546,7 +546,7 @@ border-bottom: 1px solid #000;
                 
                 <td>
                     <div style="width:100%;text-align: Center;font-size: 14px"><p><b>FACTURA</b><br><small><small>(Con Derecho a Crédito Fiscal)</small></small></p></div><br>
-                    <table style="width: 100%;border: hidden;text-align: left; font-size:11px">
+                    <table style="width: 100%;border: hidden;text-align: left;">
                         <tr align="left">
                           <td><b>NIT:</b></td>
                           <td class="text-left"><?=$nitTxt?></td>
@@ -655,15 +655,15 @@ border-bottom: 1px solid #000;
 
                     ?>
                     <tr>
-                        <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;"><?=$codInterno?></td>
-                        <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;">
+                        <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=$codInterno?></td>
+                        <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;">
                             <?=$nombreMat;?>
                         </td>
-                        <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 9px;"><small><?=$unidad_medida?></small></td>
-                        <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;"><?=$cantUnit?></td>
-                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;"><?=number_format($precioUnitFactura,2)?></td>
-                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;"><?=number_format($descUnit,2)?></td>
-                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;"><?=number_format($montoUnitProdDesc,2)?></td>
+                        <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><small><?=$unidad_medida?></small></td>
+                        <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=$cantUnit?></td>
+                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=number_format($precioUnitFactura,2)?></td>
+                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=number_format($descUnit,2)?></td>
+                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=number_format($montoUnitProdDesc,2)?></td>
                     </tr>
                     
                     <?php $contador_items++;
@@ -749,7 +749,7 @@ border-bottom: 1px solid #000;
                         <span class="bold table-title" valign="bottom"><small>Son: <?="$txtMonto"." ".$montoDecimal."/100 Bolivianos"?></small></span>
                         </td>
                             <td align="right" style="border: hidden;" valign="bottom">
-                                <table class="table" style="font-size: 10px;" >
+                                <table class="table" style="font-size: 9px;" >
                                     <tr>
                                         <td align="right" style="border: hidden;" valign="bottom">SUBTOTAL Bs:</td>
                                         <td align="right" style="border: hidden;" valign="bottom"><?=number_format($montoTotal,2)?></td>
