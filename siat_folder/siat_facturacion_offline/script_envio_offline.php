@@ -11,19 +11,15 @@ require("consultaEvento.php");
 $DatosConexion=verificarConexion();
 if($DatosConexion[0]==1){
   $cod_tipoEmision=2;//tipo emision OFFLINE
-  //    $sql="SELECT s.cod_salida_almacenes,a.nombre_almacen as sucursal, s.fecha, s.hora_salida, s.nro_correlativo,  
-  // (select c.nombre_cliente from clientes c where c.cod_cliente = s.cod_cliente)cliente, s.cod_tipo_doc, razon_social, nit,s.cod_tipopago,s.monto_final,s.siat_codigotipoemision,a.cod_ciudad
-  // FROM salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen
-  // WHERE s.cod_tiposalida=1001 and s.salida_anulada=0 and s.cod_tipo_doc=1
-  // and s.siat_codigotipoemision=2 and s.siat_codigoRecepcion is null
-  // order by s.fecha,a.nombre_almacen,s.nro_correlativo";
   $sql="SELECT DATE_FORMAT(s.siat_fechaemision,'%Y-%m-%d')as fecha2,a.cod_ciudad,GROUP_CONCAT(s.cod_salida_almacenes) as  string_salida
   FROM salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen
   WHERE s.cod_tiposalida=1001 and s.salida_anulada=0 and s.cod_tipo_doc=1
   and s.siat_codigotipoemision=2 and s.siat_codigoRecepcion is null
   GROUP BY fecha2,a.cod_ciudad
   order by fecha2,a.cod_ciudad";
-    // echo $sql;
+  
+  //echo $sql;
+  
   $resp=mysqli_query($enlaceCon,$sql);
   $string_codigos="";
   while($row=mysqli_fetch_array($resp)){
@@ -46,6 +42,7 @@ if($DatosConexion[0]==1){
 }
 
 function enviarFacturasOffline($string_codigos,$enlaceCon){
+  $entidadDefecto=0;
   $tiempo_evento=6;
   $nuevo_cufd=0;
   $nuevo_cuf=0;
@@ -78,13 +75,16 @@ function enviarFacturasOffline($string_codigos,$enlaceCon){
     if($fecha=="" || $fecha==" " || $fecha==null || $fecha=="S"){
         $descripcioNuevo.="*** <span style=\"color:red;\">ERROR EN FECHA EMISION</span><BR>";
     }
+    
     $cod_impuestos=intval($cod_impuestos);
     // $codigoPuntoVenta=obtenerPuntoVenta_BD($cod_ciudad);
     // $cuis=obtenerCuis_siat($codigoPuntoVenta,$cod_impuestos);
-    $cuis=obtenerCuis_vigente_BD($cod_ciudad);
-    // echo "aqui";
+    $cuis=obtenerCuis_vigente_BD($cod_ciudad,$entidadDefecto);
+    //echo "aqui cuis";
     $cufd=obtenerCufd_Vigente_BD($cod_ciudad,$fecha_X,$cuis);
+
     
+    //echo "llego 2";
     if($cufd<>"0"){      
       $descripcioNuevo.=" *** CUFD VIGENTE CORRECTO <BR>";
       // $datos_hora=obtenerFechasEmisionFacturas($string_codigos,$cod_almacen,$fecha,$siat_codigocufd);

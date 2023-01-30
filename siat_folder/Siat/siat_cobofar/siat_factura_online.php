@@ -471,7 +471,9 @@ class FacturaOnline
 			$res = call_user_func([$sync, $action]);
 			$codigo=$res->return->mensajesList->codigo;
 			$mensaje=$res->return->mensajesList->descripcion;
-			// echo "<br>*";print_r($res);echo "<br>*";
+			
+			//echo "<br>*";print_r($res);echo "<br>*";
+			
 			if($codigo==926){
 				return array('1',$mensaje);
 			}else{//error
