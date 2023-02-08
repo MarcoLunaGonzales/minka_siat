@@ -90,7 +90,7 @@ while($datos=mysqli_fetch_array($resp)){
 
 	$codigoControl=$datos[7];
 	
-	$importe=number_format($importe,1,".","");
+	$importe=number_format($importe,2,".","");
 	$montoVentaFormat=number_format($importe,2,".",",");
 	$montoIVA=$importe*0.13;
 	$montoIVAFormat=number_format($montoIVA,2,".",",");
