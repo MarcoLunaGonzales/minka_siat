@@ -661,7 +661,7 @@ function obtenerEstadoSalida($codSalida){
 
 	$url_anulacion.="wsclasificadores.php?m=anulaf&t=".$idTabla."&i=".$idRecibo;
 	$parametros="";	  
-    $jsons=callService($parametros, $url);
+    $jsons=callService($parametros, $url_anulacion);
     return json_decode($jsons);
 }
 
