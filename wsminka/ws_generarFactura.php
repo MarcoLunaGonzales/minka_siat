@@ -60,7 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     }else{
                         $correo_destino="";
                     }
-                    
+                    $banderaTarjeta=0;
+                    if($tipoPago==2){
+                        $banderaTarjeta=1;
+                    }
+
+
                     $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino);
 
                     $estado=$datosFactura[0];//estado
@@ -90,13 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     /*ACTUALIZAMOS LOS RECIBOS DE LA UNILOYOLA*/    
                     
                     if ($tipoTabla==1){
-                        $sqlUpdReciboExterno="update Loyola.recibo set Numrecibo='$codigo_transaccion' where idrecibo='$idRecibo'";
+                        $sqlUpdReciboExterno="update Loyola.recibo set Numrecibo='$codigo_transaccion', Tarjeta='$banderaTarjeta' where idrecibo='$idRecibo'";
                     }
                     if ($tipoTabla==2){
-                        $sqlUpdReciboExterno="update Loyola.auxrecibo set NumRecibo='$codigo_transaccion' where idrecibo='$idRecibo'";
+                        $sqlUpdReciboExterno="update Loyola.auxrecibo set NumRecibo='$codigo_transaccion', Tarjeta='$banderaTarjeta' where idrecibo='$idRecibo'";
                     }
                     if ($tipoTabla==3){
-                        $sqlUpdReciboExterno="update Loyola.cobros set NumRecibo='$codigo_transaccion' where idCobro='$idRecibo'";
+                        $sqlUpdReciboExterno="update Loyola.cobros set NumRecibo='$codigo_transaccion', Tarjeta='$banderaTarjeta' where idCobro='$idRecibo'";
                     }
                     $respUpdReciboExterno=mysqli_query($enlaceCon,$sqlUpdReciboExterno);                    
                     /*FIN ACTUALIZAR RECIBOS*/
