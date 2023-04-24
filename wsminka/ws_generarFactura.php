@@ -64,6 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     if($tipoPago==2){
                         $banderaTarjeta=1;
                     }
+                    if($tipoPago>2){
+                        $banderaTarjeta=2;
+                    }
+
+
 
 
                     $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino);
