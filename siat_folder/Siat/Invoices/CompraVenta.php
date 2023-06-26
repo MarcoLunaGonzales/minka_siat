@@ -4,7 +4,7 @@ namespace SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\DocumentTypes;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\conexionSiatUrl;
 
-class CompraVenta extends SiatInvoice
+class CompraVenta extends SiatInvoiceEducacion
 {
 	public function __construct()
 	{

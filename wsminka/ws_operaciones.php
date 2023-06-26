@@ -266,7 +266,7 @@ function generarCufd_minka($cod_entidad,$nitEmpresa,$codSucursal,$enlaceCon){
     }
     // error_reporting(E_ALL);
     // ini_set('display_errors', '1');  
-  require_once '../siat_folder/funciones_siat.php';
+    require_once '../siat_folder/funciones_siat.php';
     $cuis=obtenerCuis_vigente_BD($codSucursal,$cod_entidad);
     deshabilitarCufd($codSucursal,$cuis,date('Y-m-d'),$cod_entidad);
     generarCufd($codSucursal,$codigoSucursal,$codigoPuntoVenta,$cod_entidad);

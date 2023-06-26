@@ -82,7 +82,7 @@ $periodoFacturado="JULIO-2022";*/
 $sucursal=0;
 $tipoTabla="1";
 $idRecibo="311129";
-$fecha="2023-06-09";
+$fecha="2022-12-07";
 $idPersona="16178";
 $idPlan="36";
 $cuota="12";
@@ -102,19 +102,19 @@ $tipoDocumento="5";
 $complementoDocumento="";
 $periodoFacturado="11-2022";
 $correo="";
-
+$accion="generarFacturaMinka";
 $sIdentificador="MinkaSw123*";
 $sKey="rrf656nb2396k6g6x44434h56jzx5g6";
 
 
 //Lista de Tipos documento
 $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
-           "accion"=>"generarFacturaElectronica", //
-           // "idEmpresa"=>3, //ID de empresa, otorgado por minkasoftware
+           "accion"=>"generarFacturaMinka", //
+           // "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
            // "nitEmpresa"=>'10916889016', //Nit de empresa
            "sucursal"=>$sucursal,
-           // "tipoTabla"=>$tipoTabla,
-           // "idRecibo"=>$idRecibo,
+           "tipoTabla"=>$tipoTabla,
+           "idRecibo"=>$idRecibo,
            "fecha"=>$fecha,
            "idPersona"=>$idPersona,
            "monto_total"=>$monto_total,
@@ -124,16 +124,16 @@ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey,
            "usuario"=>$usuario,//***
            "nitCliente"=>$nitCliente,
            "nombreFactura"=>$nombreFactura,
-           
+           "NombreEstudiante"=>$NombreEstudiante,
            "Concepto"=>$Concepto,
            "tipoPago"=>$tipoPago,
            "nroTarjeta"=>$nroTarjeta,
            "tipoDocumento"=>$tipoDocumento,
-           "complementoDocumento"=>$complementoDocumento
-           //***
+           "complementoDocumento"=>$complementoDocumento,
+           "periodoFacturado"=>$periodoFacturado//***
        );  
     
-	$url="http://localhost:8080/minka_siat/wsminka/ws_generarFactura.php";
+	$url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
 	$jsons=callService($parametros, $url);
 	//print_r($jsons);
   

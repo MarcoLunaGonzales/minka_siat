@@ -4,7 +4,7 @@ namespace SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Message;
 use Exception;
 
-class InvoiceHeader extends Message
+class InvoiceHeaderEducacion extends Message
 {
 	public	$nitEmisor;
 	public	$razonSocialEmisor;
@@ -23,8 +23,8 @@ class InvoiceHeader extends Message
 	public	$complemento;
 	public	$codigoCliente;
 
-	// public  $nombreEstudiante;//se adicionó esto para educacion
-	// public  $periodoFacturado;//se adicionó esto para educacion
+	public  $nombreEstudiante;//se adicionó esto para educacion
+	public  $periodoFacturado;//se adicionó esto para educacion
 
 	public	$codigoMetodoPago;
 	public	$numeroTarjeta;

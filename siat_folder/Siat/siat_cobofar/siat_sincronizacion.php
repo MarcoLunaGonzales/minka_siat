@@ -28,7 +28,8 @@ class SyncTest
 			'tipo' 			=> $siat_tipo,
 			'nit'			=> $siat_nit,
 			'razonSocial'	=> $siat_razonSocial,
-			'modalidad'     => ServicioSiat::MOD_COMPUTARIZADA_ENLINEA,
+			// 'modalidad'     => ServicioSiat::MOD_COMPUTARIZADA_ENLINEA,
+			'modalidad'     => $siat_modalidad,//1 para electronica en linea y 2 para computarizada
 			// 'ambiente'      => ServicioSiat::AMBIENTE_PRUEBAS,
 			'ambiente'      => conexionSiatUrl::AMBIENTE_ACTUAL,
 			'tokenDelegado'	=> $siat_tokenDelegado,
@@ -46,7 +47,7 @@ class SyncTest
 			$servCodigos = new ServicioFacturacionCodigos(null, null, $config->tokenDelegado);
 			$servCodigos->setConfig((array)$config);
 			$resCuis = $servCodigos->cuis();
-			//print_r($resCuis);
+			// print_r($resCuis);
 			$sync = new ServicioFacturacionSincronizacion($resCuis->RespuestaCuis->codigo, null, $config->tokenDelegado);
 			$sync->setConfig((array)$config);
 			$res = call_user_func([$sync, $action]);

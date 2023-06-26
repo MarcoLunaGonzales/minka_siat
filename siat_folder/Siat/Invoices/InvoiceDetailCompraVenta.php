@@ -3,7 +3,9 @@ namespace SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices;
 
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Message;
 
-class InvoiceDetail extends Message
+
+
+class InvoiceDetailCompraVenta extends Message
 {
 	public	$actividadEconomica;
 	public	$codigoProductoSin;
@@ -15,8 +17,8 @@ class InvoiceDetail extends Message
 	public	$montoDescuento;
 	public	$subTotal;
 	
-	// public	$numeroSerie;//se quito esto para educacion
-	// public	$numeroImei;//se quito esto para educacion
+	public	$numeroSerie;//se quito esto para educacion
+	public	$numeroImei;//se quito esto para educacion
 
 	public function __construct()
 	{
@@ -27,4 +29,3 @@ class InvoiceDetail extends Message
 		
 	}
 }
-
