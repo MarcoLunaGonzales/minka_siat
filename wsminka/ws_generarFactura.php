@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     // $NombreEstudiante=$datos['NombreEstudiante'];
                     // $periodoFacturado=$datos['periodoFacturado'];
 
-                    $cod_entidad=3;///codigo interno minka de empresa 
+                    $cod_entidad=1;///codigo interno minka de empresa 
 
                     $NombreEstudiante="";
                     $periodoFacturado="";

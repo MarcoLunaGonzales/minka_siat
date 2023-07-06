@@ -60,25 +60,6 @@ if ($num_filas != 0) {
 		}
 		
     }
-	// if($cod_tipofuncionario==2){
-	// 	   // funcionario Externo
-	// 	$sqlFunProv="select cod_proveedor from funcionarios_proveedores where codigo_funcionario=".$usuario;
-	// 	//echo $sqlFunProv;
-	// 	$respFunProv=mysqli_query($enlaceCon,$sqlFunProv);
-	// 	$numProv=mysqli_num_rows($respFunProv);
-	// 	//echo $numProv;
-	// 	if($numProv>0){
-	// 		header("location:indexProveedor.php");
-	// 	}else{
-	// 		 echo "<link href='stilos.css' rel='stylesheet' type='text/css'>
- //        <form action='problemas_ingreso.php' method='post' name='formulario'>
- //        <h1>Usted es un Usuario de Tipo Externo y debe estar vinculado a un Proveedor, por favor consulte con el Administrador.</h1>
- //        </form>";
-	// 	}
-	// }
-	
-		
-	
 
 } else {
     echo "<link href='stilos.css' rel='stylesheet' type='text/css'>

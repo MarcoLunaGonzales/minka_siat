@@ -17,11 +17,12 @@
 		$globalEntidad=$_SESSION['globalEntidadSes'];
 		//echo "ntro:".$globalEntidad;
 	}else{
-		$globalEntidad=3;//
+		$globalEntidad=1;//
 		//echo "nada";
 	}
 	require dirname(__DIR__). SB_DS ."../conexionmysqli2.php";
 	$consulta="select nombre_sistema,codigo_sistema,tipo_sistema,nit,razon_social,token_delegado,fecha_limite,modalidad from siat_credenciales where cod_estado=1 and cod_entidad=$globalEntidad";
+	//echo $consulta;
 	$respFactura = mysqli_query($enlaceCon,$consulta);
 	$dataFact = $respFactura->fetch_array(MYSQLI_ASSOC);			
 	$siat_nombreSistema = $dataFact['nombre_sistema'];			

@@ -6,11 +6,11 @@
 	// 	$globalEntidad=3;//
 	// }
 
-	if(isset($_SESSION['globalEntidadSes'])){
-		$globalEntidad=$_SESSION['globalEntidadSes'];
+	if(isset($_SESSION['globalIdEntidad'])){
+		$globalEntidad=$_SESSION['globalIdEntidad'];
 		// echo "ntro:".$globalEntidad;
 	}else{
-		$globalEntidad=3;//
+		$globalEntidad=1;//
 		// echo "nada";
 	}
 	require dirname(__DIR__). SB_DS ."../conexionmysqli2.php";

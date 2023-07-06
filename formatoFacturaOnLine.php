@@ -540,7 +540,7 @@ border-bottom: 1px solid #000;
 <div  style="height: 49.4%">
         <table  style="width: 100%;">
             <tr>
-                <td align="center" width="40%"><br><br>
+                <td align="center" width="35%"><br><br>
                     </small></small>
                 </td>
                 

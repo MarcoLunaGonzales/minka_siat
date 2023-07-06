@@ -82,7 +82,7 @@ $periodoFacturado="JULIO-2022";*/
 $sucursal=0;
 $tipoTabla="1";
 $idRecibo="311129";
-$fecha="2023-06-09";
+$fecha="2023-06-29";
 $idPersona="16178";
 $idPlan="36";
 $cuota="12";
@@ -91,11 +91,11 @@ $descuento=0;
 $monto_final="670";
 $gestion="2022";
 $id_usuario=11;
-$usuario="ALISON ALA";
-$nitCliente="9944085012";
-$nombreFactura="JUANX CARLOSX GUTIERREZX CALAMANIX";
-$NombreEstudiante="GUTIERREZ CALAMANI JUAN CARLOS (15343-5)";
-$Concepto="Pago cuota:11 Gestion:2022 Plan:36";
+$usuario="GUILLERMO SUAREZ";
+$nitCliente="4868422016";
+$nombreFactura="MARCO ANTONIO LUNA";
+$NombreEstudiante="LUNA";
+$Concepto="Cuota 1";
 $tipoPago="1";
 $nroTarjeta=0;
 $tipoDocumento="5";
@@ -133,7 +133,7 @@ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey,
            //***
        );  
     
-	$url="http://localhost:8080/minka_siat/wsminka/ws_generarFactura.php";
+	$url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
 	$jsons=callService($parametros, $url);
 	//print_r($jsons);
   

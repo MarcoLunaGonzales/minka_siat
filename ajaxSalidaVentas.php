@@ -53,7 +53,7 @@ $consulta = " SELECT s.cod_salida_almacenes, s.fecha, s.hora_salida, ts.nombre_t
     (select c.nombre_cliente from clientes c where c.cod_cliente = s.cod_cliente), s.cod_tipo_doc, razon_social, nit,
     (select t.nombre_tipopago from tipos_pago t where t.cod_tipopago=s.cod_tipopago)as tipopago,s.siat_estado_facturacion,s.siat_usuario
     FROM salida_almacenes s, tipos_salida ts 
-    WHERE s.cod_tiposalida = ts.cod_tiposalida and s.cod_tiposalida=1001 AND s.cod_almacen = '$global_almacen' ";
+    WHERE s.cod_tiposalida = ts.cod_tiposalida and s.cod_tiposalida=1001 ";
 
 // $nroProcesoBusqueda=$_GET['nroProcesoBusqueda'];
 // if($nroProcesoBusqueda!=0){
@@ -77,7 +77,7 @@ $consulta = " SELECT s.cod_salida_almacenes, s.fecha, s.hora_salida, ts.nombre_t
     }
 
 // }
-$consulta = $consulta."ORDER BY s.fecha desc, s.nro_correlativo DESC limit 0,20";
+$consulta = $consulta."ORDER BY s.fecha desc, s.nro_correlativo DESC limit 0,400";
 
 // echo $consulta;
 $resp = mysqli_query($enlaceCon,$consulta);
