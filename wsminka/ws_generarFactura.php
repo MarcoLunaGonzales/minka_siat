@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
             // $codPersonal=$datos['codPersonal'];//recibimos el codigo personal
             $estado=0;
             $mensaje="";
-            if($accion=="generarFacturaMinka"){//para facturacion computarizada rubro educacion
+            if($accion=="generarFacturaMinka"){//para facturacion computarizada rubro educacion caso loyola, solo se considera un item
                 require_once '../siat_folder/funciones_servicios.php';
                 if(isset($datos['sucursal']) && isset($datos['tipoTabla']) && isset($datos['idRecibo']) && isset($datos['fecha']) && isset($datos['idPersona']) && isset($datos['monto_total']) && isset($datos['descuento']) && isset($datos['monto_final']) && isset($datos['id_usuario']) && isset($datos['nitCliente']) && isset($datos['nombreFactura']) && isset($datos['NombreEstudiante']) && isset($datos['Concepto']) && isset($datos['tipoPago']) && isset($datos['nroTarjeta']) && isset($datos['tipoDocumento']) && isset($datos['complementoDocumento']) && isset($datos['periodoFacturado'])){
                     $sucursal=$datos['sucursal'];
@@ -67,9 +67,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                         $banderaTarjeta=2;
                     }
                     $modalidad=2;//modalidad computarizada en linea
-                    $cod_entidad=1;///codigo interno minka de empresa 
+                    if (isset($datos['cod_entidad'])) {
+                        $cod_entidad=$datos['cod_entidad'];
+                    }else{
+                        $cod_entidad=1;///codigo interno de entidad
+                    }
 
-                    $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$modalidad,$cod_entidad);
+                    //armamos array de items de factura
+                    $Objeto_detalle1 = new stdClass();
+                    $Objeto_detalle1->codDetalle = 1;
+                    $Objeto_detalle1->cantidad = 1;
+                    $Objeto_detalle1->precioUnitario = $monto_final;
+                    $Objeto_detalle1->descuentoProducto = 0;
+                    $Objeto_detalle1->detalle = $Concepto;  
+                    $items= array($Objeto_detalle1);
+
+                    $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$modalidad,$cod_entidad,$items);
 
                     $estado=$datosFactura[0];//estado
                     $mensaje=$datosFactura[1];//mensaje
@@ -121,7 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                 }
             }elseif($accion=="generarFacturaElectronica"){//para facturacion computarizada rubro normal
                 require_once '../siat_folder/funciones_servicios.php';
-                if(isset($datos['sucursal']) && isset($datos['fecha']) && isset($datos['idPersona']) && isset($datos['monto_total']) && isset($datos['descuento']) && isset($datos['monto_final']) && isset($datos['id_usuario']) && isset($datos['nitCliente']) && isset($datos['nombreFactura']) && isset($datos['Concepto']) && isset($datos['tipoPago']) && isset($datos['nroTarjeta']) && isset($datos['tipoDocumento']) && isset($datos['complementoDocumento']) ){
+                if(isset($datos['sucursal']) && isset($datos['fecha']) && isset($datos['idPersona']) && isset($datos['monto_total']) && isset($datos['descuento']) && isset($datos['monto_final']) && isset($datos['id_usuario']) && isset($datos['nitCliente']) && isset($datos['nombreFactura']) && isset($datos['tipoPago']) && isset($datos['nroTarjeta']) && isset($datos['tipoDocumento']) && isset($datos['complementoDocumento']) ){
+                    
                     $sucursal=$datos['sucursal'];
                     $tipoTabla=0;
                     $idRecibo=0;
@@ -134,15 +148,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     $usuario=$datos['usuario'];
                     $nitCliente=$datos['nitCliente'];
                     $nombreFactura=$datos['nombreFactura'];
-                    $Concepto=$datos['Concepto'];
+                    // $Concepto=$datos['Concepto'];
+                    $Concepto="";
                     $tipoPago=$datos['tipoPago'];
                     $nroTarjeta=$datos['nroTarjeta'];
                     $tipoDocumento=$datos['tipoDocumento'];
                     $complementoDocumento=$datos['complementoDocumento'];
-                    // $NombreEstudiante=$datos['NombreEstudiante'];
-                    // $periodoFacturado=$datos['periodoFacturado'];
-
-                    $cod_entidad=1;///codigo interno minka de empresa 
+                    
+                    // Recibimos array de detalle
+                    $items=$datos['items'];
+                    ///codigo interno minka
+                    if (isset($datos['cod_entidad'])) {
+                        $cod_entidad=$datos['cod_entidad'];
+                    }else{
+                        $cod_entidad=1;///codigo interno de entidad
+                    }
 
                     $NombreEstudiante="";
                     $periodoFacturado="";
@@ -151,15 +171,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     }else{
                         $correo_destino="";
                     }
-                    $banderaTarjeta=0;
-                    if($tipoPago==2){
-                        $banderaTarjeta=1;
-                    }
-                    if($tipoPago>2){
-                        $banderaTarjeta=2;
-                    }
                     $modalidad=1;//modalidad electronica en linea
-                    $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$modalidad,$cod_entidad);
+
+                    $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$modalidad,$cod_entidad,$items);
 
                     $estado=$datosFactura[0];//estado
                     $mensaje=$datosFactura[1];//mensaje
@@ -218,10 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
 
 
 
-
-
-
-function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$siat_usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$modalidad,$cod_entidad){
+function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$siat_usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$modalidad,$cod_entidad,$items){
 
     //iniciamos sesion, ya que la libreria para el siat la usa.
     $start_time_factura = microtime(true);
@@ -435,21 +446,39 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
             // echo $sqlInsertFactura;
             $respInsertFactura=mysqli_query($enlaceCon,$sqlInsertFactura);  
         }
-        $montoTotalVentaDetalle=0;
-        $cantidad_material=1;
-        for($i=1;$i<=$cantidad_material;$i++){       
-            $codMaterial=1;
-            if($codMaterial!=0){
+        //===cargando items de factura
+        // $montoTotalVentaDetalle=0;
+        // $cantidad_material=1;
+        // for($i=1;$i<=$cantidad_material;$i++){       
+        //     $codMaterial=1;
+        //     if($codMaterial!=0){
 
-                $cantidadUnitaria=1;
-                $precioUnitario=$monto_total; 
-                $descuentoProducto=$descuento;
-                //SE DEBE CALCULAR EL MONTO DEL MATERIAL POR CADA UNO PRECIO*CANTIDAD - EL DESCUENTO ES UN DATO ADICIONAL
-                $montoMaterial=$precioUnitario*$cantidadUnitaria;
-                // $montoMaterialConDescuento=($precioUnitario*$cantidadUnitaria)-$descuentoProducto;
-                //$montoTotalVentaDetalle=$montoTotalVentaDetalle+$montoMaterialConDescuento;
-                $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codMaterial,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$Concepto);
-            }           
+        //         $cantidadUnitaria=1;
+        //         $precioUnitario=$monto_total; 
+        //         $descuentoProducto=$descuento;
+        //         //SE DEBE CALCULAR EL MONTO DEL MATERIAL POR CADA UNO PRECIO*CANTIDAD - EL DESCUENTO ES UN DATO ADICIONAL
+        //         $montoMaterial=$precioUnitario*$cantidadUnitaria;
+        //         // $montoMaterialConDescuento=($precioUnitario*$cantidadUnitaria)-$descuentoProducto;
+        //         //$montoTotalVentaDetalle=$montoTotalVentaDetalle+$montoMaterialConDescuento;
+        //         $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codMaterial,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$Concepto);
+        //     }           
+        // }
+
+        // print_r($items);
+        $i=1;
+        foreach ($items as $valor) {
+            // echo $codDetalle;
+            $codDetalle=$valor['codDetalle'];
+            $cantidadUnitaria=$valor['cantidad'];
+            $precioUnitario=$valor['precioUnitario'];
+            $descuentoProducto=$valor['descuentoProducto'];
+            $conceptoProducto=$valor['detalle'];            
+            //SE DEBE CALCULAR EL MONTO DEL MATERIAL POR CADA UNO PRECIO*CANTIDAD - EL DESCUENTO ES UN DATO ADICIONAL
+            $montoMaterial=$precioUnitario*$cantidadUnitaria;
+            // $montoMaterialConDescuento=($precioUnitario*$cantidadUnitaria)-$descuentoProducto;
+            //$montoTotalVentaDetalle=$montoTotalVentaDetalle+$montoMaterialConDescuento;
+            $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codDetalle,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$conceptoProducto);
+            $i++;
         }
 
         $end_time_factura = microtime(true);

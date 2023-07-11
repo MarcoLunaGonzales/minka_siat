@@ -28,8 +28,12 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                       <th>Codigo Sis</th>
                       <th>Nit</th>
                       <th>Razon Social</th>
-                      <!-- <th>Token</th> -->
+                      <th>Empresa</th>
+                      <th>Modalidad</th>
+                      <!--th>Token</th-->
                       <th>Fecha Limite</th>
+                      <th>Llave Publica</th>
+                      <th>Llave Privada</th>
                       <th>Estado</th>
                       <th></th>
                     </tr>
@@ -38,9 +42,11 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                   <?php
                   $index=0;
                   $cod_tipoEmision=2;//tipo emision OFFLINE
-                   $sql="SELECT id,nombre_sistema,codigo_sistema,tipo_sistema,nit,razon_social,token_delegado,fecha_limite,cod_estado from siat_credenciales where cod_entidad=$globalEntidad
-                    order by fecha_limite";
-                  // echo $sql;
+                   $sql="SELECT s.id,s.nombre_sistema,s.codigo_sistema,s.tipo_sistema,s.nit,s.razon_social,s.token_delegado,s.fecha_limite,s.cod_estado, (select e.nombre from datos_empresa e where e.cod_empresa=s.cod_entidad)as empresa, (select mf.nombre from tipos_modalidadfacturacion mf where mf.codigo=s.modalidad)as modalidad, s.cert_publickey, s.cert_privatekey
+                    from siat_credenciales s where cod_estado=1 order by fecha_limite";
+                  
+                  //echo $sql;
+                  
                   $resp=mysqli_query($enlaceCon,$sql);
                   while($row=mysqli_fetch_array($resp)){ 
                     // echo "***";
@@ -53,6 +59,11 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                     $token_delegado=$row['token_delegado'];
                     $fecha_limite=$row['fecha_limite'];
                     $cod_estado=$row['cod_estado'];
+                    $nombreEmpresa=$row['empresa'];
+                    $nombreModalidad=$row['modalidad'];
+                    $llavePublica=$row['cert_publickey'];
+                    $llavePrivada=$row['cert_privatekey'];
+
                     switch ($cod_estado) {
                       case 1://activo
                       $nombre_estado="Activo";
@@ -75,8 +86,12 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                       <td class="text-left small"><?=$codigo_sistema;?></td>
                       <td class="text-center small"><?=$nit;?></td>
                       <td class="text-left small"><?=$razon_social;?></td>
+                      <td class="text-left small"><?=$nombreEmpresa;?></td>
+                      <td class="text-left small"><?=$nombreModalidad;?></td>
                       <!-- <td class="text-left small"><?=$token_delegado;?></td> -->
                       <td class="text-left small"><?=$fecha_limite;?></td>
+                      <td class="text-left small"><?=$llavePublica;?></td>
+                      <td class="text-left small"><?=$llavePrivada;?></td>
                       <td class="text-left small" <?=$label?>><b><?=$nombre_estado;?></b></td>
                       <td class="td-actions">                        
                         <a href='#' class="btn btn-warning btn-sm"><i class="material-icons">edit</i>Editar</a>
