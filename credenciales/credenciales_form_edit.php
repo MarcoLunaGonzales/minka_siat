@@ -1,5 +1,8 @@
 <?php
+require("../conexionmysqli.inc");
 require("../estilos_almacenes.inc");
+
+$codigo         = $_GET['codigo'];
 
 $nombre_sistema = "";
 $codigo_sistema = "";
@@ -8,19 +11,38 @@ $nit            = "";
 $token          = "";
 $fecha_limite   = "";
 $razon_social   = "";
+/**
+ * Se obtiene datos del registro para edición
+ */
+$sql = "SELECT sc.id,sc.id,sc.nombre_sistema,sc.codigo_sistema,sc.tipo_sistema,sc.nit,sc.razon_social,sc.token_delegado,
+                    sc.fecha_limite,sc.cod_estado,sc.cod_entidad,sc.modalidad,sc.cert_privatekey,sc.cert_publickey
+                FROM siat_credenciales sc WHERE sc.id='$codigo'";
+$resp = mysqli_query($enlaceCon, $sql);
+while($data=mysqli_fetch_assoc($resp)){
+    $nombre_sistema = $data['nombre_sistema'];
+    $codigo_sistema = $data['codigo_sistema'];
+    $tipo_sistema   = $data['tipo_sistema'];
+    $nit            = $data['nit'];
+    $token          = $data['token_delegado'];
+    $fecha_limite   = $data['fecha_limite'];
+    $razon_social   = $data['razon_social'];
+    $cod_entidad    = $data['cod_entidad'];
+    $modalidad      = $data['modalidad'];
+}
 ?>
 
 <div class="content">
   <div class="container-fluid">
     <div class="col-md-12">
-      <form id="form1" class="form-horizontal" action="credenciales_save.php" method="post" >
+      <form id="form1" class="form-horizontal" action="credenciales_update.php" method="post" >
       <div class="card" style="background:  #e8daef ">
         <div class="card-header  card-header-text">
         <div class="card-text">
-          <h4 class="card-title">Registro de Credenciales</h4>
+          <h4 class="card-title">Editar de Credenciales</h4>
         </div>
         </div>
         <div class="card-body ">
+            <input type="hidden" name="codigo" id="codigo" value="<?=$codigo;?>">
         <div class="row">
             <label style="color:#566573;" class="col-sm-2 col-form-label">Nombre Sistema (*)</label>
             <div class="col-sm-4">
@@ -71,7 +93,7 @@ $razon_social   = "";
                             $codigoX=$dat[0];
                             $nombreX=$dat[1];
                         ?>
-                        <option value="<?=$codigoX;?>"><?=$nombreX;?></option>  
+                        <option value="<?=$codigoX;?>" <?=$codigoX == $cod_entidad ? 'selected' : '';?>><?=$nombreX;?></option>  
                         <?php
                         }
                         ?>
@@ -98,7 +120,7 @@ $razon_social   = "";
                             $codigoX=$dat[0];
                             $nombreX=$dat[1];
                         ?>
-                        <option value="<?=$codigoX;?>"><?=$nombreX;?></option>  
+                        <option value="<?=$codigoX;?>" <?=$codigoX == $modalidad ? 'selected' : '';?>><?=$nombreX;?></option>  
                         <?php
                         }
                         ?>

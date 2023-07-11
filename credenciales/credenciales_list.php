@@ -94,8 +94,8 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                       <td class="text-left small"><?=$llavePrivada;?></td>
                       <td class="text-left small" <?=$label?>><b><?=$nombre_estado;?></b></td>
                       <td class="td-actions">                        
-                        <a href='#' class="btn btn-warning btn-sm"><i class="material-icons">edit</i>Editar</a>
-                        <a href='#' class="btn btn-danger btn-sm"><i class="material-icons">delete</i>Borrar</a>
+                        <a href='credenciales_form_edit.php?codigo=<?=$id?>' class="btn btn-warning btn-sm"><i class="material-icons">edit</i>Editar</a>
+                        <a href='#' class="btn btn-danger btn-sm estado_registro" data-codigo="<?=$id?>"><i class="material-icons">delete</i>Borrar</a>
                       </td>
                     </tr>
                     <?php   
@@ -114,3 +114,50 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
   </div>
 </div>
 
+<script>
+    /**
+     * Modificación de Estado
+     */
+    $('body').on('click','.estado_registro', function(){
+        let formData = new FormData();
+        formData.append('codigo', $(this).data('codigo'));
+        swal({
+            title: '¿Estas seguro de cambiar estado?',
+            text: "Se realizará modificará el estado.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url:"credenciales_estado.php",
+                    type:"POST",
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success:function(response){
+                    let resp = JSON.parse(response);
+                    if(resp.status){
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Correcto!',
+                            text: 'El proceso se completo correctamente!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        setTimeout(function(){
+                            location.reload()
+                        }, 2000);
+                    }else{
+                        Swal.fire('ERROR!','El proceso tuvo un problema!. Contacte con el administrador!','error'); 
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

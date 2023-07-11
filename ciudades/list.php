@@ -41,11 +41,15 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                   <?php
                   $index=0;
                   $cod_tipoEmision=2;//tipo emision OFFLINE
-                   $sql="SELECT c.cod_impuestos,c.cod_ciudad,c.descripcion,c.direccion,c.siat_codigoActividad from ciudades c where c.cod_entidad=$globalEntidad";
+                   $sql="SELECT c.codigo, c.cod_impuestos,c.cod_ciudad,c.descripcion,c.direccion,c.siat_codigoActividad 
+                        from ciudades c 
+                        where c.cod_entidad=$globalEntidad
+                        AND c.cod_estado = 1";
                   // echo $sql;
                   $resp=mysqli_query($enlaceCon,$sql);
                   while($row=mysqli_fetch_array($resp)){ 
                     // echo "***";
+                    $codigo = $row['codigo'];
                     $cod_ciudad=$row['cod_ciudad'];
                     $descripcion=$row['descripcion'];
                     $direccion=$row['direccion'];
@@ -63,8 +67,8 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                       <td class="text-center small"><?=$cod_impuestos;?></td>
                       <td class="text-left small"><?=$siat_codigoActividad;?></td>
                       <td class="td-actions">                        
-                        <a href='#' class="btn btn-warning btn-sm"><i class="material-icons">edit</i>Editar</a>
-                        <a href='#' class="btn btn-danger btn-sm"><i class="material-icons">delete</i>Borrar</a>
+                        <a href='#' class="btn btn-warning btn-sm" onClick="location.href='form_edit.php?codigo=<?=$codigo;?>'"><i class="material-icons">edit</i>Editar</a>
+                        <a href='#' class="btn btn-danger btn-sm estado_registro" data-codigo="<?=$codigo;?>"><i class="material-icons">delete</i>Borrar</a>
                       </td>
                     </tr>
                     <?php   
@@ -75,7 +79,8 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
             </div>
           </div>
           <div class="card-footer ">           
-            <button class="btn btn-sm btn-success">Sincronizar</button>
+            <!-- <button class="btn btn-sm btn-success">Sincronizar</button> -->
+            <button class="btn btn-sm btn-success" onClick="location.href='form_register.php'">Nuevo</button>
           </div>
         </div>
       </div>
@@ -92,4 +97,52 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
             $("#texto_ajax_titulo").html("Procesando datos..");
         return ok;
     }
+</script>
+
+<script>
+    /**
+     * Modificación de Estado
+     */
+    $('body').on('click','.estado_registro', function(){
+        let formData = new FormData();
+        formData.append('codigo', $(this).data('codigo'));
+        swal({
+            title: '¿Estas seguro de cambiar estado?',
+            text: "Se realizará modificará el estado.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url:"sucursal_estado.php",
+                    type:"POST",
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success:function(response){
+                    let resp = JSON.parse(response);
+                    if(resp.status){
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Correcto!',
+                            text: 'El proceso se completo correctamente!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        setTimeout(function(){
+                            location.reload()
+                        }, 2000);
+                    }else{
+                        Swal.fire('ERROR!','El proceso tuvo un problema!. Contacte con el administrador!','error'); 
+                        }
+                    }
+                });
+            }
+        });
+    });
 </script>
