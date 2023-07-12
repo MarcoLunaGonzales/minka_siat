@@ -38,7 +38,7 @@ const menuFarma = new Mmenu(
                         {
                             position: 'bottom',
                             content: [
-                                '<a href="" target="_blank">Sistema Comercial</a>',
+                                '<a href="" target="_blank">Minka Software</a>',
                             ],
                         },
                     ],

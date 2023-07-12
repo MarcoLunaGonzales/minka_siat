@@ -10,9 +10,11 @@
 </script>
 
 <?php //ESTADO FINALIZADO
+
 require("../conexionmysqli.inc");
 require("../estilos_almacenes.inc");
 $globalEntidad=$_COOKIE['globalIdEntidad'];
+
 ?>
 <div class="content">
   <div class="container-fluid">
@@ -23,7 +25,7 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
             <div class="card-icon">
               <i class="material-icons">account_balance</i>
             </div>
-            <h4 class="card-title"><b>MIS SUCURSALES</b></h4>            
+            <h4 class="card-title"><b>Mi Empresa</b></h4>            
           </div>
           <div class="card-body">  
             <div class="table-responsive">
@@ -31,46 +33,33 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                 <thead>                  
                     <tr class='bg-dark text-white'>
                       <th>Codigo</th>
-                      <th>Sucursal</th>
-                      <th>Dirección</th>
-                      <th>Cod Impuestos<br></th>
-                      <th>Actividad</th>
+                      <th>Nombre Empresa</th>
+                      <th>NIT</th>
+                      <th>Direccion</th>
                       <th></th></tr>
                 </thead>
                 <tbody>
                   <?php
                   $index=0;
                   $cod_tipoEmision=2;//tipo emision OFFLINE
-                   $sql="SELECT c.codigo, c.cod_impuestos,c.cod_ciudad,c.descripcion,c.direccion,c.siat_codigoActividad 
-                        from ciudades c 
-                        where c.cod_entidad=$globalEntidad
-                        AND c.cod_estado = 1";
-                  
-                  //echo $sql;
-                  
+                  $sql="SELECT e.cod_empresa, e.nombre, e.nit, e.direccion from datos_empresa e";
+                  // echo $sql;
                   $resp=mysqli_query($enlaceCon,$sql);
                   while($row=mysqli_fetch_array($resp)){ 
                     // echo "***";
-                    $codigo = $row['codigo'];
-                    $cod_ciudad=$row['cod_ciudad'];
-                    $descripcion=$row['descripcion'];
+                    $codigo = $row['cod_empresa'];
+                    $descripcion=$row['nombre'];
+                    $nit=$row['nit'];
                     $direccion=$row['direccion'];
-                    $cod_impuestos=$row['cod_impuestos'];
-                    $siat_codigoActividad=$row['siat_codigoActividad'];
                     $index++;
                       ?>
                     <tr>
-                      <!-- <td class="td-actions text-right">                      
-                        <input type="checkbox"  data-toggle="toggle" title="Seleccionar" id="input_seleccionado<?=$index?>" name="input_seleccionado<?=$index?>" >
-                      </td> -->
-                      <td class="text-center small"><?=$cod_ciudad;?></td>
+                      <td class="text-center small"><?=$codigo;?></td>
                       <td class="text-left small"><?=$descripcion;?></td>
-                      <td class="text-left small"><?=$direccion;?></td>
-                      <td class="text-center small"><?=$cod_impuestos;?></td>
-                      <td class="text-left small"><?=$siat_codigoActividad;?></td>
+                      <td class="text-left small"><?=$nit;?></td>
+                      <td class="text-center small"><?=$direccion;?></td>
                       <td class="td-actions">                        
-                        <a href='#' class="btn btn-warning btn-sm" onClick="location.href='form_edit.php?codigo=<?=$codigo;?>'"><i class="material-icons">edit</i>Editar</a>
-                        <a href='#' class="btn btn-danger btn-sm estado_registro" data-codigo="<?=$codigo;?>"><i class="material-icons">delete</i>Borrar</a>
+                        <a href='#' class="btn btn-warning btn-sm" onClick="location.href='form_edit_empresa.php?codigo=<?=$codigo;?>'"><i class="material-icons">edit</i>Editar</a>
                       </td>
                     </tr>
                     <?php   
@@ -79,10 +68,6 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                 </tbody>
               </table>              
             </div>
-          </div>
-          <div class="card-footer ">           
-            <!-- <button class="btn btn-sm btn-success">Sincronizar</button> -->
-            <button class="btn btn-sm btn-success" onClick="location.href='form_register.php'">Nuevo</button>
           </div>
         </div>
       </div>

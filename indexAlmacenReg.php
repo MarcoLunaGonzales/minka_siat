@@ -25,20 +25,7 @@
 </style>
      <link rel="stylesheet" href="dist/css/demo.css" />
      <link rel="stylesheet" href="dist/mmenu.css" />
-	 <link rel="stylesheet" href="dist/demo.css" />
-	<!--link type="text/css" rel="stylesheet" href="menuLibs/css/demo.css" />
-	<link type="text/css" rel="stylesheet" href="menuLibs/dist/jquery.mmenu.css" />
-    <link type="text/css" rel="stylesheet" href="stilos.css" />
-	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="menuLibs/dist/jquery.mmenu.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			$('nav#menu').mmenu();
-		});
-		
-</script--> 
-
-		
+	 <link rel="stylesheet" href="dist/demo.css" />		
 </head>
 <body>
 <?php
@@ -54,25 +41,11 @@ include("datosUsuario.php");
 		
 		
 		<div style="position:absolute; width:95%; height:50px; text-align:right; top:0px; font-size: 11px; font-weight: bold; color: #fff;">
-			<?php echo " ".$nombreUsuarioSesion?> [<?php echo $nombreAlmacenSesion;?>]&nbsp;&nbsp;&nbsp;<a href="reloj.php" target="contenedorPrincipal">[<?php echo $fechaSistemaSesion?>  <?php echo $horaSistemaSesion;?>]</a>
-			<a title="Cambiar Tipo de Agencia" style="color:#5A8A85; " href='cambiarAlmacenTipoSesion.php' target="contenedorPrincipal">[ MED ]</a>
+			<?php echo " ".$nombreUsuarioSesion?> <a href="reloj.php" target="contenedorPrincipal">[<?php echo $fechaSistemaSesion?>  <?php echo $horaSistemaSesion;?>]</a>
 			<button onclick="location.href='salir.php'" style="position:relative;z-index:99999;right:0px;" class="boton-azul">Salir</button>          
 		</div>
 	</div>
-<!-- 
-	<div class="header">
-		
-		<?php echo $nombreTiendaRopa;?>
-		<div style="position:absolute; width:95%; height:50px; text-align:right; top:0px; font-size: 11px; font-weight: bold; color: #fff;">
-			[<?php echo $fechaSistemaSesion?>][<?php echo $horaSistemaSesion;?>]
 
-			<a title="Cambiar Tipo de Agencia" style="color:#5A8A85; " href='cambiarAlmacenTipoSesion.php' target="contenedorPrincipal">[ MED ]</a>
-            <button onclick="location.href='salir.php'" style="position:relative;z-index:99999;right:0px;" class="boton-azul">Salir</button>
-		</div>
-		<div style="position:absolute; width:95%; height:50px; text-align:left; top:0px; font-size: 11px; font-weight: bold; color: #fff;">
-			[<?php echo $nombreUsuarioSesion?>][<?php echo $nombreAlmacenSesion;?>]
-		</div>
-	</div> -->	
 	<div class="content">
 		<iframe src="inicio_almacenes.php" name="contenedorPrincipal" id="mainFrame"  style="top:50px;" border="1"></iframe>	
 	</div>
@@ -81,10 +54,10 @@ include("datosUsuario.php");
 			<ul>
 				<li><span>Datos Generales</span>
 					<ul>
+						<li><a href="ciudades/empresas_list.php" target="contenedorPrincipal">Empresa</a></li>
 						<li><a href="credenciales/credenciales_list.php" target="contenedorPrincipal">Credenciales</a></li>
-						<li><a href="ciudades/list.php" target="contenedorPrincipal">Mis Sucursales</a></li>
-						<li><a href="productos/productos_list.php" target="contenedorPrincipal">Mis Productos</a></li>		
-												
+						<li><a href="ciudades/list.php" target="contenedorPrincipal">Sucursales</a></li>
+						<!--li><a href="productos/productos_list.php" target="contenedorPrincipal">Mis Productos</a></li-->	
 					</ul>	
 				</li>
 				<li><span>SIAT</span>
