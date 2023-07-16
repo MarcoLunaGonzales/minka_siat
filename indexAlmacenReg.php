@@ -57,7 +57,10 @@ include("datosUsuario.php");
 						<li><a href="ciudades/empresas_list.php" target="contenedorPrincipal">Empresa</a></li>
 						<li><a href="credenciales/credenciales_list.php" target="contenedorPrincipal">Credenciales</a></li>
 						<li><a href="ciudades/list.php" target="contenedorPrincipal">Sucursales</a></li>
-						<!--li><a href="productos/productos_list.php" target="contenedorPrincipal">Mis Productos</a></li-->	
+						<li><span>Adicionales</span>
+						<ul>
+							<li><a href="" target="contenedorPrincipal">Otras Configuraciones</a></li>
+						</ul>
 					</ul>	
 				</li>
 				<li><span>SIAT</span>

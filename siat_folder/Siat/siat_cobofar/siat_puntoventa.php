@@ -51,7 +51,7 @@ class PuntoVentaTest
 			$servCodigos = new ServicioFacturacionCodigos(null, null, $config->tokenDelegado);
 			$servCodigos->setConfig((array)$config);
 			$resCuis = $servCodigos->cuis($codigoPuntoVenta, $codigoSucursal);
-			// print_r($resCuis);
+			//print_r($resCuis);
 			$cuis=$resCuis->RespuestaCuis->codigo;
 			// echo "**".$cuis."**";
 
@@ -62,7 +62,9 @@ class PuntoVentaTest
 			$res = $service->registroPuntoVenta($codigoSucursal,$tipoPuntoVenta,$nombrePuntoVenta);
 
 			$codigoPuntoVentaNuevo=$res->RespuestaRegistroPuntoVenta->codigoPuntoVenta;
-			// print_r($res);
+		 	
+		 	//print_r($res);
+			
 			if((int)$codigoPuntoVentaNuevo>0){
 
 				require dirname(__DIR__). SB_DS ."../../conexionmysqli2.inc";
@@ -114,6 +116,8 @@ class PuntoVentaTest
 
 			$service->debug = true;			
 			$res = $service->consultaPuntoVenta($codigoSucursal);
+
+			print_r ($res);
 			
 			foreach ($res->RespuestaConsultaPuntoVenta->listaPuntosVentas as $lista) {
 				$codPuntoVen=$lista->codigoPuntoVenta;

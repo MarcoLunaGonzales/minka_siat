@@ -11,4 +11,5 @@ $cod_impuestos=$dat[0];
 $codigoPuntoVenta=$dat[1];
 generarCuis($ciudad,$cod_impuestos,$codigoPuntoVenta,$cod_entidad);
 ?>
-<script type="text/javascript">window.location.href='index.php'</script>
+
+<!---script type="text/javascript">window.location.href='index.php'</script-->

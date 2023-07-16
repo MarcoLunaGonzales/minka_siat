@@ -6,15 +6,15 @@ require_once("../funciones.php");
 require_once '../siat_folder/funciones_siat.php';
 
 
-$codCiudad=0;
+$codSucursal=0;
 $codigoSucursal=0;
 $codigoPuntoVenta=1;
 $cod_entidad=1;
 
-for($i=1;$i<=100;$i++){
-    generarCufd($codCiudad,$codigoSucursal,$codigoPuntoVenta,$cod_entidad);
-}
+/*$resp=abrirPuntoVenta(0,$codigoSucursal,5,"Punto 2",$cod_entidad);
+echo $resp;*/
 
-
+$resp=cerrarPuntoVenta(1, 0, 1);
+echo $resp;
 
 ?>

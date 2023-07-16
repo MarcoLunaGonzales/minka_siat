@@ -186,15 +186,15 @@ class FacturaOnline
 	{
 		try
 		{
+			//echo "entra test factura ";
 			//datosCompletosFactura
 			require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";
 
 			$consulta="SELECT s.cod_salida_almacenes,c.cod_ciudad,
 			s.siat_codigoPuntoVenta as codigoPuntoVenta,			
-			
 			(select cufd from siat_cufd where codigo=s.siat_codigocufd)cufd_generado,
 			(select codigo_control from siat_cufd where codigo=s.siat_codigocufd)codigoControl_generado,
-			(select cuis from siat_cuis where cod_ciudad=c.cod_ciudad and cod_gestion=YEAR(s.fecha) and estado=1)cuis,
+			(select cuis from siat_cuis where cod_ciudad=c.cod_ciudad and cod_gestion=YEAR(s.fecha) and estado=1 ORDER BY 1 desc limit 1)cuis,
 			(select valor from configuracion_facturas where cod_ciudad=c.cod_ciudad and id=5 limit 1)municipio,
 			(select valor from configuracion_facturas where cod_ciudad=c.cod_ciudad and id=4 limit 1)telefono,
 			s.nro_correlativo,
@@ -213,12 +213,13 @@ class FacturaOnline
 			 from salida_almacenes s join almacenes a on a.cod_almacen=s.cod_almacen
 			join ciudades c on c.cod_ciudad=a.cod_ciudad
 			where s.cod_salida_almacenes=$codSalidaFactura;";
-			 // echo $consulta;
+			
+			//echo $consulta;
+			
 			$respFactura = mysqli_query($enlaceCon,$consulta);	
 			$dataFact = $respFactura->fetch_array(MYSQLI_ASSOC);
-			//echo $consulta;
+			
 			//print_r($dataFact);
-
 
 			$config = self::buildConfig();
 			$config->validate();
@@ -226,18 +227,11 @@ class FacturaOnline
 			$codigoPuntoVenta = $dataFact['codigoPuntoVenta'];
 			$codigoSucursal = $dataFact['cod_impuestos'];
 			$modalidad=$config->modalidad;//modificacion para facturacion electronica
+			echo "modalidad: ".$modalidad;
 			if($modalidad==1){//eletronica en linea
-				// $privCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . 'privatekey.pem';
-				// $pubCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . 'CORPORACION_BOLIVIANA_DE_FARMACIAS_SA_CER.pem';
 				include dirname(__DIR__). SB_DS ."conexioncert.php";
-
-				// $privCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . 'private_key_2.pem';
-				// $pubCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . 'public_key_2.pem';
-
 				$privCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . $privatekey;
 				$pubCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . $publickey;
-
-
 			}
 			$serviceCodigos = new ServicioFacturacionCodigos(null, null, $config->tokenDelegado);
 			$serviceCodigos->setConfig((array)$config);

@@ -184,8 +184,7 @@ require("../funciones_siat.php");
       }
 
       if($error){
-
-        echo "<script language='Javascript'>
+        /*echo "<script language='Javascript'>
         Swal.fire({
           title: 'ERROR :(',
           html: '<table style=\"border:1px;font-size:14px\"><tr><td>".$descripcionError."</td></tr></table>',
@@ -193,7 +192,7 @@ require("../funciones_siat.php");
         }).then(function() {
             ".$url_retorno."
         });
-        </script>";  
+        </script>";  */
       }else{
         
         if($nuevo_cufd==1){

@@ -82,8 +82,11 @@ class SyncTest
 					if(count($lista)==1){
 						$lista=$res->RespuestaListaActividades;
 					}
-					// $lista=$res->RespuestaListaActividades;
-					// print_r($lista);
+					
+					//$lista=$res->RespuestaListaActividades;
+					
+					print_r($lista);
+					
 					$sqlDelete="DELETE FROM siat_sincronizaractividades where cod_entidad=$cod_entidad";
 					mysqli_query($enlaceCon,$sqlDelete);
 					foreach ($lista as $li) {

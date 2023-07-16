@@ -50,13 +50,19 @@ class CuisTest
 
 			//echo "DATOS:".$codigoPuntoVenta."_".$codigoSucursal;
 			$resCuis = $servCodigos->cuis($codigoPuntoVenta, $codigoSucursal);			
+			
+			print_r ($resCuis);
 
 			if(isset($resCuis->RespuestaCuis->mensajesList->descripcion)){
-				// echo $resCuis->RespuestaCuis->descripcion;
+				
+				echo $resCuis->RespuestaCuis->descripcion;
+				
 				print_r($resCuis->RespuestaCuis->mensajesList->descripcion);
 			}
 
 			$cuis=$resCuis->RespuestaCuis->codigo;
+
+			//print_r("CUIS: ".$cuis);
 
 			require dirname(__DIR__). SB_DS ."../../conexionmysqli2.inc";
 			$yearActual=date("Y");
