@@ -219,7 +219,7 @@ class FacturaOnline
 			$respFactura = mysqli_query($enlaceCon,$consulta);	
 			$dataFact = $respFactura->fetch_array(MYSQLI_ASSOC);
 			
-			//print_r($dataFact);
+			print_r($dataFact);
 
 			$config = self::buildConfig();
 			$config->validate();
