@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     if (isset($datos['cod_entidad'])) {
                         $cod_entidad=$datos['cod_entidad'];
                     }else{
-                        $cod_entidad=1;///codigo interno de entidad
+                        $cod_entidad=2;///codigo interno de entidad LOYOLA VER BD
                     }
 
                     //armamos array de items de factura
@@ -509,11 +509,11 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 // require_once "../siat_folder/funciones_siat.php";
                 $errorConexion=verificarConexion()[0];
                 //echo "error conexion: ".$errorConexion;
-                if($_POST['siat_error_valor']==0 && $_POST['tipo_documento']==5){
-                    $facturaImpuestos=generarFacturaVentaImpuestos($codigo,true,$errorConexion);            
-                }else{                  
+                // if($_POST['siat_error_valor']==0 && $_POST['tipo_documento']==5){
+                //     $facturaImpuestos=generarFacturaVentaImpuestos($codigo,true,$errorConexion);            
+                // }else{                  
                     $facturaImpuestos=generarFacturaVentaImpuestos($codigo,false,$errorConexion);   
-                }
+                // }
 
                 echo $facturaImpuestos."**";
                 

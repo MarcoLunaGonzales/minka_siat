@@ -17,6 +17,7 @@ use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\InvoiceDeta
 
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioOperaciones;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionSincronizacion;
+
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionElectronica;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaCompraVenta;
 
@@ -61,7 +62,7 @@ class FacturaOnline
 		}else{//computarizada en linea
 			$factura = new CompraVenta();//luego instanciar solo a educacion
 		}
-		// print_r($factura);
+		 print_r($factura);
 		$codigoSalida=$dataFact['cod_salida_almacenes'];
 		$descuentoVenta=$dataFact['descuento'];
 		require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";
@@ -105,12 +106,14 @@ class FacturaOnline
 		    $montoUnitProd=($cantUnit*$precioUnit);
 		    $montoUnitProd=self::redondear2($montoUnitProd-$descUnit);
 
-		    if($modalidad==1){//electronica en linea
+		    //$detalle = new InvoiceDetail();
+		    if($modalidad==2){//computarizada en linea sector educacion
+			 // 	unset($detalle->numeroSerie);
+				// unset($detalle->numeroImei);
 				$detalle = new InvoiceDetailCompraVenta();
-			}else{//computarizada en linea sector educacion
+			}else{
 				$detalle = new InvoiceDetail();
 			}
-
 		  
 		    // $detalle = new InvoiceDetail();
 			$detalle->cantidad				= $cantUnit;
@@ -124,6 +127,8 @@ class FacturaOnline
 			$detalle->subTotal				= $montoUnitProd;
 			
 			$subTotal += $detalle->subTotal;
+
+
 			$factura->detalle[$filaIndice] = $detalle;
 			$filaIndice++;
 		    $montoTotal=$montoTotal+$montoUnitProd; 
@@ -150,8 +155,8 @@ class FacturaOnline
 		$factura->cabecera->codigoTipoDocumentoIdentidad	= $dataFact['siat_codigotipodocumentoidentidad']; //CI - CEDULA DE IDENTIDAD
 		$factura->cabecera->numeroDocumento		= $dataFact['nit'];
 		$factura->cabecera->codigoCliente		= $dataFact['cod_cliente'];
-		// $factura->cabecera->nombreEstudiante	= $dataFact['siat_nombreEstudiante'];
-		// $factura->cabecera->periodoFacturado	= $dataFact['siat_periodoFacturado'];
+		
+
 
 		$factura->cabecera->codigoMetodoPago	= $dataFact['codigoMetodoPago'];
 
@@ -176,6 +181,8 @@ class FacturaOnline
 			$factura->cabecera->codigoDocumentoSector= 1;//factura compra venta
 		}else{//computarizada en linea
 			$factura->cabecera->codigoDocumentoSector= 11;//factura sectores educativo
+			$factura->cabecera->nombreEstudiante	= $dataFact['siat_nombreEstudiante'];
+		 	$factura->cabecera->periodoFacturado	= $dataFact['siat_periodoFacturado'];
 		}
 		// $solicitud->codigoDocumentoSector 	= DocumentTypes::FACTURA_COMPRA_VENTA; //instanciar
 		//print_r($factura);
@@ -219,7 +226,7 @@ class FacturaOnline
 			$respFactura = mysqli_query($enlaceCon,$consulta);	
 			$dataFact = $respFactura->fetch_array(MYSQLI_ASSOC);
 			
-			print_r($dataFact);
+			//print_r($dataFact);
 
 			$config = self::buildConfig();
 			$config->validate();
@@ -241,7 +248,9 @@ class FacturaOnline
 				$tipoFactura=SiatInvoice::FACTURA_DERECHO_CREDITO_FISCAL;
 				$tipoEmision = SiatInvoice::TIPO_EMISION_OFFLINE;
 				$fechaemision=$dataFact['siat_fechaemision'];
+
 				$factura = self::buildInvoice($codigoPuntoVenta, $codigoSucursal, $config->modalidad,$dataFact,$fechaemision);
+				// print_r($factura);
 				$factura->cabecera->razonSocialEmisor	= $config->razonSocial;
 				$factura->cabecera->nitEmisor 	= $config->nit;
 				$factura->cabecera->cufd		= $dataFact['cufd_generado'];
@@ -324,6 +333,7 @@ class FacturaOnline
 					$factura = self::buildInvoice($codigoPuntoVenta, $codigoSucursal, $config->modalidad,$dataFact,$fechaemision);
 					// print_r($factura);
 				}
+				// print_r($factura);
 
 				$factura->cabecera->codigoExcepcion=$dataFact['siat_excepcion'];
 				// $factura->cabecera->leyenda=$leyenda;
@@ -335,7 +345,10 @@ class FacturaOnline
 				// 	$factura->cabecera->codigoExcepcion=0;
 				// }
 				// echo "<br>FACTURA1:<br>";
-				// print_r($factura);
+				 //print_r($factura);
+				
+				//print_r($factura);
+
 				if($online_siat==2){
 					$res = $service->recepcionFactura($factura,$online_siat);	
 				}else{
@@ -366,14 +379,19 @@ class FacturaOnline
 	}
 
 
-	public static function anularFacturaEnviada($codigoPuntoVenta,$codigoSucursal,$cuis,$cufd,$cuf)
+	public static function anularFacturaEnviada($codigoPuntoVenta,$codigoSucursal,$cuis,$cufd,$cuf,$modalidad=1)
 	{				
 		
 		  // echo "aqui cuf".$cuf;
 		$config = self::buildConfig();
 		$config->validate();	
 		// echo $cuis."->>>>".$cufd;
-		$service = new ServicioFacturacionComputarizada($cuis, $cufd, $config->tokenDelegado);
+		
+		if($modalidad==1){//electronica en linea
+			$service = new ServicioFacturacionElectronica($cuis, $cufd, $config->tokenDelegado);
+		}else{//computarizada en linea
+			$service = new ServicioFacturacionComputarizada($cuis, $cufd, $config->tokenDelegado);
+		}
 		// print_r($config);
 		$service->setConfig((array)$config);
 		// $service->codigoControl = $codigoControl;
@@ -444,13 +462,15 @@ class FacturaOnline
 			$global_agencia=$_COOKIE["global_agencia"];
 		}
 		$fechaActual=date("Y-m-d");
-		$consulta="SELECT s.cuis,c.cod_impuestos,(SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad limit 1) as punto_venta,(SELECT cufd from siat_cufd where fecha='$fechaActual' and cod_ciudad=c.cod_ciudad and s.cuis=cuis   and estado=1 order by fecha limit 1)as siat_cufd from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1";		
+		$consulta="SELECT s.cuis,c.cod_impuestos,(SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad limit 1) as punto_venta,(SELECT cufd from siat_cufd where fecha='$fechaActual' and cod_ciudad=c.cod_ciudad and s.cuis=cuis   and estado=1 order by fecha limit 1)as siat_cufd,(select sc.modalidad from siat_credenciales sc where sc.cod_entidad in (select cc.cod_entidad from ciudades cc where cc.cod_ciudad=c.cod_ciudad)) as modalidad 
+			from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1";		
 		// echo $consulta;
 		$resp = mysqli_query($enlaceCon,$consulta);	
 		$dataList = $resp->fetch_array(MYSQLI_ASSOC);
 		$cuis = $dataList['cuis'];
 		$codigoPuntoVenta = $dataList['punto_venta'];
 		$cufd = $dataList['siat_cufd'];
+		$modalidad=$dataList['modalidad'];
 
 		$sql="SELECT s.siat_cuf from salida_almacenes s where s.cod_salida_almacenes='$codVenta' ";		
 		$resp = mysqli_query($enlaceCon,$sql);	
@@ -462,8 +482,13 @@ class FacturaOnline
 		$codigoSucursal = $dataList['cod_impuestos'];
 
 		$config = self::buildConfig();
-		$config->validate();			
-		$service = new ServicioFacturacionComputarizada($cuis, $cufd, $config->tokenDelegado);		
+		$config->validate();
+		if($modalidad==1){//electronica en linea
+			$service = new ServicioFacturacionElectronica($cuis, $cufd, $config->tokenDelegado);		
+		}else{//computarizada en linea
+			$service = new ServicioFacturacionComputarizada($cuis, $cufd, $config->tokenDelegado);		
+		}
+		
 		$service->setConfig((array)$config);
 		$service->debug = true;
 

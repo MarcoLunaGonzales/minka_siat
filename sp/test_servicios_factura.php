@@ -26,22 +26,22 @@ $arrayDetalle= array($Objeto_detalle1,$Objeto_detalle2);
 
 
 $sucursal=0;
-$tipoTabla="1";
-$idRecibo="311129";
+//$tipoTabla="1";
+//$idRecibo="311129";
 $fecha="2023-06-29";
 $idPersona="16178";
-$idPlan="36";
-$cuota="12";
+//$idPlan="36";
+//$cuota="12";
 $monto_total="670";
 $descuento=0;
 $monto_final="670";
-$gestion="2022";
+//$gestion="2022";
 $id_usuario=11;
 $usuario="GUILLERMO SUAREZ";
 $nitCliente="4868422016";
 $nombreFactura="MARCO ANTONIO LUNA";
-$NombreEstudiante="LUNA";
-$Concepto="Cuota 1";
+//$NombreEstudiante="LUNA";
+//$Concepto="Cuota 1";
 
 
 $tipoPago="1";
@@ -72,7 +72,7 @@ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey,
    // "periodoFacturado"=>$periodoFacturado
 );  
     
-	$url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
+	$url="http://localhost:8080/minka_siat/wsminka/ws_generarFactura.php";
 	$jsons=callService($parametros, $url);
 	//print_r($jsons);
   

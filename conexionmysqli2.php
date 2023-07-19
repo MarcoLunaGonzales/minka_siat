@@ -8,11 +8,14 @@ error_reporting(0);
 if(isset($cod_entidad)){
 	// echo "si:".$cod_entidad;
 	if (!isset($_SESSION['globalEntidadSes'])) {
-		$_SESSION['globalEntidadSes']=$cod_entidad;
-		
+		$_SESSION['globalEntidadSes']=$cod_entidad;		
 	}
-	
+	if (!isset($_SESSION['modalidadSes'])) {
+		$_SESSION['modalidadSes']=$modalidad;		
+	}
 }
+
+
 
 $enlaceCon=mysqli_connect(DATABASE_HOST,DATABASE_USER,DATABASE_PASSWORD,DATABASE_NAME);
 

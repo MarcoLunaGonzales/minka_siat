@@ -36,9 +36,8 @@ class ServicioFacturacion extends ServicioSiat
 		$factura->validate();
 
 		$facturaXml = $this->buildInvoiceXml($factura);		
-		//print_r($facturaXml);
-		$this->debug($facturaXml, 1);
-		//print_r($factura);
+		
+		$this->debug($facturaXml, 1);		
 		// file_put_contents('factura.xml', $facturaXml);
 		// file_put_contents('siat_folder/Siat/temp/Facturas-XML/'.$factura->cabecera->cuf.".xml", $facturaXml);
 		// var_dump($facturaXml);die;
@@ -80,9 +79,14 @@ class ServicioFacturacion extends ServicioSiat
 				//$this->debug($factura->toArray(), 0);
 				//$this->debug($solicitud->toArray(), 0);
 				// $this->wsdl = $factura->getEndpoint($this->modalidad, $this->ambiente);
-				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+				if($this->modalidad==1){//electronica
+					$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+				}else{//computarizada
+					$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+				}
+				
 				// echo "<br><br>";
-				// var_dump($data);
+				//var_dump($solicitud);
 				$res = $this->callAction('recepcionFactura', $data);			
 				//print_r($res);
 				return array($res,$factura->cabecera->fechaEmision,$factura->cabecera->cuf,$facturaXml,$solicitud);
@@ -145,7 +149,12 @@ class ServicioFacturacion extends ServicioSiat
 			echo "CONTADORES:".$conta."<br>";
 
 			// $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
-			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			
+			if($this->modalidad==1){//electronica
+				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			}else{//computarizada
+				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+			}
 
 			$solicitud->codigoPuntoVenta 		= $factura->cabecera->codigoPuntoVenta;// PARA COMPLETAR CON LA 
 			$solicitud->codigoDocumentoSector 	= $factura->cabecera->codigoDocumentoSector; //
@@ -201,7 +210,11 @@ class ServicioFacturacion extends ServicioSiat
 				$xmlInvoices[$cont] = $this->buildInvoiceXml($factura);
 				$cont++;
 			}
-			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			if($this->modalidad==1){//electronica
+				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			}else{//computarizada
+				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+			}
 			 // print_r($xmlInvoices);
 			
 			$solicitud = new SolicitudServicioRecepcionPaquete();
@@ -241,6 +254,7 @@ class ServicioFacturacion extends ServicioSiat
 			$data = [
 				$solicitud->toArray()
 			];
+			echo "<br><br>llego";
 			// print_r($data);
 			$res = $this->callAction('recepcionPaqueteFactura', $data);
 
@@ -300,7 +314,12 @@ class ServicioFacturacion extends ServicioSiat
 			
 			$solicitud = new SolicitudServicioValidacionRecepcionMasiva();
 			// $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
-			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			
+			if($this->modalidad==1){//electronica
+				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			}else{//computarizada
+				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+			}
 			$solicitud->codigoPuntoVenta 		= 1;// PARA COMPLETAR CON LA 
 
 			// $solicitud->codigoDocumentoSector 	= 11; //
@@ -344,7 +363,12 @@ class ServicioFacturacion extends ServicioSiat
 			// echo "aqui";
 			$solicitud = new SolicitudServicioAnulacionFactura();
 			// $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
-			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			
+			if($this->modalidad==1){//electronica
+				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			}else{//computarizada
+				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+			}
 			
 
 			$solicitud->codigoPuntoVenta 		= $codigoPuntoVenta;// PARA COMPLETAR CON LA
@@ -386,7 +410,12 @@ class ServicioFacturacion extends ServicioSiat
 	public function verificacionEstadoFactura($codigoSucursal = 0,$codigoPuntoVenta = 0,$cufd,$cuf)
 	{
 		 // $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
-		$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+		
+		if($this->modalidad==1){//electronica
+			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+		}else{//computarizada
+			$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+		}
 		list(,$action) = explode('::', __METHOD__);
 		$data = [
 			[
