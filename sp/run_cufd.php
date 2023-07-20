@@ -6,9 +6,9 @@ require_once("../funciones.php");
 require_once '../siat_folder/funciones_siat.php';
 
 
-$codCiudad=0;
+$codCiudad=1;
 $codigoSucursal=0;
-$codigoPuntoVenta=1;
+$codigoPuntoVenta=0;
 $cod_entidad=1;
 
 for($i=1;$i<=100;$i++){
