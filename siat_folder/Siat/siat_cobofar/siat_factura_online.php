@@ -62,6 +62,10 @@ class FacturaOnline
 		}else{//computarizada en linea
 			$factura = new CompraVenta();//luego instanciar solo a educacion
 		}
+
+		
+		//print_r($factura);
+		
 		$codigoSalida=$dataFact['cod_salida_almacenes'];
 		$descuentoVenta=$dataFact['descuento'];
 		require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";
@@ -235,7 +239,7 @@ class FacturaOnline
 			$codigoPuntoVenta = $dataFact['codigoPuntoVenta'];
 			$codigoSucursal = $dataFact['cod_impuestos'];
 			$modalidad=$config->modalidad;//modificacion para facturacion electronica
-			echo "modalidad: ".$modalidad;
+			//echo "modalidad: ".$modalidad;
 			if($modalidad==1){//eletronica en linea
 				include dirname(__DIR__). SB_DS ."conexioncert.php";
 				$privCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . $privatekey;
@@ -310,7 +314,6 @@ class FacturaOnline
 				return $facturaXml;
 				
 			}else{
-
 				if($modalidad==1){//facturacion eletronica en linea
 					$service = new ServicioFacturacionElectronica($dataFact['cuis'], $dataFact['cufd_generado'], $config->tokenDelegado);
 					$service->wsdl=conexionSiatUrl::wsdlFacturacionElectronica;

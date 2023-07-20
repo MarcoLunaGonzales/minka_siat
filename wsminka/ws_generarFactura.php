@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     if (isset($datos['cod_entidad'])) {
                         $cod_entidad=$datos['cod_entidad'];
                     }else{
-                        $cod_entidad=2;///codigo interno de entidad LOYOLA VER BD
+                        $cod_entidad=1;///codigo interno de entidad LOYOLA VER BD
                     }
 
                     //armamos array de items de factura
@@ -453,42 +453,50 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         }
         //===cargando items de factura
         //echo "entro Detalle 2";        
-        $montoTotalVentaDetalle=0;
-        $cantidad_material=1;
-        for($i=1;$i<=$cantidad_material;$i++){       
-            //echo "entro DETALLE 3";
-            $codMaterial=1;
-            if($codMaterial!=0){
+        
+        /*  Cuando la modalidad es computarizada en linea y 1 solo item en la factura CASO LOYOLA */
+        if($modalidad==2){
+            $montoTotalVentaDetalle=0;
+            $cantidad_material=1;
+            for($i=1;$i<=$cantidad_material;$i++){       
+                //echo "entro DETALLE 3";
+                $codMaterial=1;
+                if($codMaterial!=0){
 
-                $cantidadUnitaria=1;
-                $precioUnitario=$monto_total; 
-                $descuentoProducto=$descuento;
+                    $cantidadUnitaria=1;
+                    $precioUnitario=$monto_total; 
+                    $descuentoProducto=$descuento;
+                    //SE DEBE CALCULAR EL MONTO DEL MATERIAL POR CADA UNO PRECIO*CANTIDAD - EL DESCUENTO ES UN DATO ADICIONAL
+                    $montoMaterial=$precioUnitario*$cantidadUnitaria;
+                    // $montoMaterialConDescuento=($precioUnitario*$cantidadUnitaria)-$descuentoProducto;
+                    //$montoTotalVentaDetalle=$montoTotalVentaDetalle+$montoMaterialConDescuento;
+                    $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codMaterial,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$Concepto);
+                }           
+            }
+        }                
+        /* Fin Items Facturacion Computarizada en Linea  */
+
+
+        // print_r($items);
+        /* Cuando la modalidad es Electronica con Firma */
+        if($modalidad==1){
+            $i=1;
+            foreach ($items as $valor) {
+                // echo $codDetalle;
+                $codDetalle=$valor['codDetalle'];
+                $cantidadUnitaria=$valor['cantidad'];
+                $precioUnitario=$valor['precioUnitario'];
+                $descuentoProducto=$valor['descuentoProducto'];
+                $conceptoProducto=$valor['detalle'];            
                 //SE DEBE CALCULAR EL MONTO DEL MATERIAL POR CADA UNO PRECIO*CANTIDAD - EL DESCUENTO ES UN DATO ADICIONAL
                 $montoMaterial=$precioUnitario*$cantidadUnitaria;
                 // $montoMaterialConDescuento=($precioUnitario*$cantidadUnitaria)-$descuentoProducto;
                 //$montoTotalVentaDetalle=$montoTotalVentaDetalle+$montoMaterialConDescuento;
-                $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codMaterial,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$Concepto);
-            }           
+                $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codDetalle,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$conceptoProducto);
+                $i++;
+            }
         }
-
-        // print_r($items);
-        /*ULTIMA MODIFICACION DE ISMA*/
-        /*$i=1;
-        foreach ($items as $valor) {
-            // echo $codDetalle;
-            $codDetalle=$valor['codDetalle'];
-            $cantidadUnitaria=$valor['cantidad'];
-            $precioUnitario=$valor['precioUnitario'];
-            $descuentoProducto=$valor['descuentoProducto'];
-            $conceptoProducto=$valor['detalle'];            
-            //SE DEBE CALCULAR EL MONTO DEL MATERIAL POR CADA UNO PRECIO*CANTIDAD - EL DESCUENTO ES UN DATO ADICIONAL
-            $montoMaterial=$precioUnitario*$cantidadUnitaria;
-            // $montoMaterialConDescuento=($precioUnitario*$cantidadUnitaria)-$descuentoProducto;
-            //$montoTotalVentaDetalle=$montoTotalVentaDetalle+$montoMaterialConDescuento;
-            $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codDetalle,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$conceptoProducto);
-            $i++;
-        }*/
-        /*FIN ULTIMA MODIFICACION ISMA*/
+        /* FIN Cuando la modalidad es Electronica con Firma */
 
         $end_time_factura = microtime(true);
         $duration_factura=$end_time_factura-$start_time_factura;
