@@ -453,6 +453,8 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         }
         //===cargando items de factura
         //echo "entro Detalle 2";        
+        
+        /*
         $montoTotalVentaDetalle=0;
         $cantidad_material=1;
         for($i=1;$i<=$cantidad_material;$i++){       
@@ -470,10 +472,11 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codMaterial,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$Concepto);
             }           
         }
-
+        */
+        
         // print_r($items);
         /*ULTIMA MODIFICACION DE ISMA*/
-        /*$i=1;
+        $i=1;
         foreach ($items as $valor) {
             // echo $codDetalle;
             $codDetalle=$valor['codDetalle'];
@@ -487,7 +490,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
             //$montoTotalVentaDetalle=$montoTotalVentaDetalle+$montoMaterialConDescuento;
             $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codDetalle,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$conceptoProducto);
             $i++;
-        }*/
+        }
         /*FIN ULTIMA MODIFICACION ISMA*/
 
         $end_time_factura = microtime(true);
