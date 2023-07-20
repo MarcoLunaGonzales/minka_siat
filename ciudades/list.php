@@ -33,17 +33,23 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                       <th>Codigo</th>
                       <th>Sucursal</th>
                       <th>Dirección</th>
+                      <th>Ciudad</th>
+                      <th>Entidad</th>
                       <th>Cod Impuestos<br></th>
                       <th>Actividad</th>
+                      <th>Producto</th>
+                      <th>Unidad</th>
                       <th></th></tr>
                 </thead>
                 <tbody>
                   <?php
                   $index=0;
                   $cod_tipoEmision=2;//tipo emision OFFLINE
-                   $sql="SELECT c.codigo, c.cod_impuestos,c.cod_ciudad,c.descripcion,c.direccion,c.siat_codigoActividad 
-                        from ciudades c 
-                        where c.cod_entidad=$globalEntidad
+                   $sql="SELECT c.codigo, c.cod_impuestos,c.cod_ciudad,c.descripcion,c.direccion,c.siat_codigoActividad,c.nombre_ciudad as ciudad,
+                            de.nombre as entidad, c.siat_codigoProducto, c.siat_unidadProducto
+                        FROM ciudades c 
+                        LEFT JOIN datos_empresa de ON de.cod_empresa = c.cod_entidad
+                        WHERE c.cod_entidad=$globalEntidad
                         AND c.cod_estado = 1";
                   
                   //echo $sql;
@@ -55,8 +61,13 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                     $cod_ciudad=$row['cod_ciudad'];
                     $descripcion=$row['descripcion'];
                     $direccion=$row['direccion'];
+                    $ciudad=$row['ciudad'];
+                    $entidad=$row['entidad'];
                     $cod_impuestos=$row['cod_impuestos'];
                     $siat_codigoActividad=$row['siat_codigoActividad'];
+                    $entidad=$row['entidad'];
+                    $siat_codigoProducto=$row['siat_codigoProducto'];
+                    $siat_unidadProducto=$row['siat_unidadProducto'];
                     $index++;
                       ?>
                     <tr>
@@ -66,9 +77,14 @@ $globalEntidad=$_COOKIE['globalIdEntidad'];
                       <td class="text-center small"><?=$cod_ciudad;?></td>
                       <td class="text-left small"><?=$descripcion;?></td>
                       <td class="text-left small"><?=$direccion;?></td>
+                      <td class="text-left small"><?=$ciudad;?></td>
+                      <td class="text-left small"><?=$entidad;?></td>
                       <td class="text-center small"><?=$cod_impuestos;?></td>
-                      <td class="text-left small"><?=$siat_codigoActividad;?></td>
-                      <td class="td-actions">                        
+                      <td class="text-center small"><?=$siat_codigoActividad;?></td>
+                      <td class="text-center small"><?=$siat_codigoProducto;?></td>
+                      <td class="text-center small"><?=$siat_unidadProducto;?></td>
+                      <td class="td-actions">                       
+                        <a href='#' class="btn btn-info btn-sm" onClick="location.href='config_form_edit.php?codigo=<?=$codigo;?>'"><i class="material-icons">settings</i>Config.</a>                       
                         <a href='#' class="btn btn-warning btn-sm" onClick="location.href='form_edit.php?codigo=<?=$codigo;?>'"><i class="material-icons">edit</i>Editar</a>
                         <a href='#' class="btn btn-danger btn-sm estado_registro" data-codigo="<?=$codigo;?>"><i class="material-icons">delete</i>Borrar</a>
                       </td>
