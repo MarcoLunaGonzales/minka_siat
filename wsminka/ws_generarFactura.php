@@ -77,6 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                         $cod_entidad=1;///codigo interno de entidad LOYOLA VER BD
                     }
 
+                    //echo "entidad>> ".$cod_entidad;
                     //armamos array de items de factura
                     $Objeto_detalle1 = new stdClass();
                     $Objeto_detalle1->codDetalle = 1;
@@ -263,6 +264,8 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     $almacenOrigen=$datosCiudad[1];
     $cod_impuestos=$datosCiudad[2];
     
+    //var_dump($datosCiudad);
+
     // $cod_entidad=$datosCiudad[3];
     $errorProducto="";
     $totalFacturaMonto=0;
@@ -387,6 +390,9 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
             $controlCodigo=$datCufd[2];
         }
         
+        //echo "DATOS FACS CUIS, CUFD, PUNTO, ETC.>>>>> ".$cuis." ".$codigoPuntoVenta." ".$codigoCufd." ".$cufd;
+
+
         $vectorNroCorrelativo=numeroCorrelativoCUFD($enlaceCon,$tipoDoc,$globalSucursal,$almacenOrigen);
         $nro_correlativo=$vectorNroCorrelativo[0];      
         $cod_dosificacion=0;    
