@@ -62,7 +62,6 @@ class FacturaOnline
 		}else{//computarizada en linea
 			$factura = new CompraVenta();//luego instanciar solo a educacion
 		}
-		 print_r($factura);
 		$codigoSalida=$dataFact['cod_salida_almacenes'];
 		$descuentoVenta=$dataFact['descuento'];
 		require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";
@@ -179,13 +178,15 @@ class FacturaOnline
 
 		if($modalidad==1){//electronica en linea
 			$factura->cabecera->codigoDocumentoSector= 1;//factura compra venta
+			unset($factura->cabecera->nombreEstudiante);
+			unset($factura->cabecera->periodoFacturado);
 		}else{//computarizada en linea
 			$factura->cabecera->codigoDocumentoSector= 11;//factura sectores educativo
 			$factura->cabecera->nombreEstudiante	= $dataFact['siat_nombreEstudiante'];
 		 	$factura->cabecera->periodoFacturado	= $dataFact['siat_periodoFacturado'];
 		}
 		// $solicitud->codigoDocumentoSector 	= DocumentTypes::FACTURA_COMPRA_VENTA; //instanciar
-		//print_r($factura);
+		// print_r($factura);
 		return $factura;
 	}
 
@@ -250,7 +251,6 @@ class FacturaOnline
 				$fechaemision=$dataFact['siat_fechaemision'];
 
 				$factura = self::buildInvoice($codigoPuntoVenta, $codigoSucursal, $config->modalidad,$dataFact,$fechaemision);
-				// print_r($factura);
 				$factura->cabecera->razonSocialEmisor	= $config->razonSocial;
 				$factura->cabecera->nitEmisor 	= $config->nit;
 				$factura->cabecera->cufd		= $dataFact['cufd_generado'];

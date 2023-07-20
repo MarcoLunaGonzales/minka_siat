@@ -109,10 +109,12 @@ class FacturacionOffLine
 				$privCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . $privatekey;
 				$pubCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . $publickey;
 				$service = new ServicioFacturacionElectronica($cuis, $cufd, $config->tokenDelegado);
-				$service->wsdl=conexionSiatUrl::wsdlFacturacionElectronica;
+				// $service->wsdl=conexionSiatUrl::wsdlFacturacionElectronica;
 				$service->setConfig((array)$config);
+				//$service->codigoControl = $dataFact['codigoControl_generado'];
 				$service->setPrivateCertificateFile($privCert);
-					$service->setPublicCertificateFile($pubCert);
+				$service->setPublicCertificateFile($pubCert);
+
 			}else{//computarizada
 				$service = new ServicioFacturacionComputarizada($cuis, $cufd, $config->tokenDelegado);
 				$service->setConfig((array)$config);

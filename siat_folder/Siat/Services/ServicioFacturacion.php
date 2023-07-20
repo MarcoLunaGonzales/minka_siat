@@ -79,16 +79,16 @@ class ServicioFacturacion extends ServicioSiat
 				//$this->debug($factura->toArray(), 0);
 				//$this->debug($solicitud->toArray(), 0);
 				// $this->wsdl = $factura->getEndpoint($this->modalidad, $this->ambiente);
+				
 				if($this->modalidad==1){//electronica
 					$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-				}else{//computarizada
+				}else{
 					$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
 				}
-				
 				// echo "<br><br>";
 				//var_dump($solicitud);
 				$res = $this->callAction('recepcionFactura', $data);			
-				//print_r($res);
+				// print_r($res);
 				return array($res,$factura->cabecera->fechaEmision,$factura->cabecera->cuf,$facturaXml,$solicitud);
 			}
 			catch(\SoapFault $e)
@@ -152,7 +152,7 @@ class ServicioFacturacion extends ServicioSiat
 			
 			if($this->modalidad==1){//electronica
 				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-			}else{//computarizada
+			}else{
 				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
 			}
 
@@ -210,11 +210,12 @@ class ServicioFacturacion extends ServicioSiat
 				$xmlInvoices[$cont] = $this->buildInvoiceXml($factura);
 				$cont++;
 			}
-			if($this->modalidad==1){//electronica
+			if($this->modalidad==1){//electronica en linea
 				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-			}else{//computarizada
-				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+			}else{
+				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;	
 			}
+			
 			 // print_r($xmlInvoices);
 			
 			$solicitud = new SolicitudServicioRecepcionPaquete();
@@ -254,7 +255,6 @@ class ServicioFacturacion extends ServicioSiat
 			$data = [
 				$solicitud->toArray()
 			];
-			echo "<br><br>llego";
 			// print_r($data);
 			$res = $this->callAction('recepcionPaqueteFactura', $data);
 
@@ -314,10 +314,9 @@ class ServicioFacturacion extends ServicioSiat
 			
 			$solicitud = new SolicitudServicioValidacionRecepcionMasiva();
 			// $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
-			
 			if($this->modalidad==1){//electronica
 				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-			}else{//computarizada
+			}else{
 				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
 			}
 			$solicitud->codigoPuntoVenta 		= 1;// PARA COMPLETAR CON LA 
@@ -366,7 +365,7 @@ class ServicioFacturacion extends ServicioSiat
 			
 			if($this->modalidad==1){//electronica
 				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-			}else{//computarizada
+			}else{
 				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
 			}
 			
@@ -413,7 +412,7 @@ class ServicioFacturacion extends ServicioSiat
 		
 		if($this->modalidad==1){//electronica
 			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-		}else{//computarizada
+		}else{
 			$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
 		}
 		list(,$action) = explode('::', __METHOD__);
