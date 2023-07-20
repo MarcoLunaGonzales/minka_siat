@@ -50,7 +50,7 @@ $tipoDocumento="5";
 $complementoDocumento="";
 $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
    "accion"=>"generarFacturaElectronica", //
-   "idEmpresa"=>1, //ID de empresa, otorgado por minkasoftware
+   "cod_entidad"=>1, //ID de empresa, otorgado por minkasoftware
    "sucursal"=>$sucursal,   
    "idRecibo"=>0,
    "fecha"=>$fecha,
