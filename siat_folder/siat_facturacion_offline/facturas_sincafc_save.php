@@ -46,12 +46,13 @@ require("../funciones_siat.php");
       });
       </script>"; 
   }else{
+    echo "aqui";
     $descripcionError="";
     $DatosConexion=verificarConexion();
     if($DatosConexion[0]==1){
       $string_codigos=trim($string_codigos,",");
       $cod_tipoEmision=2;//tipo emision OFFLINE
-      $sql="SELECT DATE_FORMAT(s.siat_fechaemision,'%Y-%m-%d')as fecha2,s.cod_almacen,a.nombre_almacen,(select cod_impuestos from ciudades where cod_ciudad= a.cod_ciudad)as cod_impuestos,a.cod_ciudad,sc.cufd,s.siat_codigocufd
+      $sql="SELECT DATE_FORMAT(s.siat_fechaemision,'%Y-%m-%d')as fecha2,s.cod_almacen,a.nombre_almacen,(select cod_impuestos from ciudades where cod_ciudad= a.cod_ciudad)as cod_impuestos,a.cod_ciudad,sc.cufd,s.siat_codigocufd,(select cc.cod_entidad from ciudades cc where cc.cod_ciudad=a.cod_ciudad) as cod_entidad
         FROM salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen join siat_cufd sc on s.siat_codigocufd=sc.codigo
         WHERE s.cod_salida_almacenes in ($string_codigos)
         GROUP BY s.cod_almacen,s.fecha,s.siat_codigocufd
@@ -66,6 +67,7 @@ require("../funciones_siat.php");
         $nombre_almacen=$row['nombre_almacen'];
         $cod_impuestos=$row['cod_impuestos'];
         $cod_ciudad=$row['cod_ciudad'];
+        $cod_entidad=$row['cod_entidad'];
         $siat_codigocufd=$row['siat_codigocufd'];
         // $cod_ciudad=85;
         $cod_impuestos=intval($cod_impuestos);
@@ -79,10 +81,12 @@ require("../funciones_siat.php");
         // echo  $cuis;
         if($cufd=="0"){
           echo "<br> * CUFD VIGENTE NO ENCONTRADO EL DIA DE HOY.<br>";
-          // $descripcionError.="CUFD VIGENTE NO ENCONTRADO EL DIA DE HOY.<br>";
-          deshabilitarCufd($cod_ciudad,$cuis,$fecha_X);
-          $cufdNuevo=generarCufd($cod_ciudad,$cod_impuestos,$codigoPuntoVenta);
-          $cufd=obtenerCufd_Vigente_BD($cod_ciudad,$fecha_X,$cuis);
+            // $cod_entidad=2;
+            // echo $cod_ciudad."-".$cuis."-".$fecha_X;
+            deshabilitarCufd($cod_ciudad,$cuis,$fecha_X,$cod_entidad);
+            // echo $cod_ciudad."-".$cod_ciudad."-".$fecha_X;
+            $cufdNuevo=generarCufd($cod_ciudad,$cod_impuestos,$codigoPuntoVenta,$cod_entidad);
+            $cufd=obtenerCufd_Vigente_BD($cod_ciudad,$fecha_X,$cuis);
           // $descripcionError.="NUEVO CUFD OBTENIDO.<br>";
           echo "<br> * NUEVO CUFD OBTENIDO.<br>";
         }
@@ -196,7 +200,7 @@ require("../funciones_siat.php");
       }else{
         
         if($nuevo_cufd==1){
-          $cod_entidad=2;
+          // $cod_entidad=2;
           // echo $cod_ciudad."-".$cuis."-".$fecha_X;
           deshabilitarCufd($cod_ciudad,$cuis,$fecha_X,$cod_entidad);
           // echo $cod_ciudad."-".$cod_ciudad."-".$fecha_X;

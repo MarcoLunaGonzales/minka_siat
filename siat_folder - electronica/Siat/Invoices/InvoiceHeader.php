@@ -4,7 +4,7 @@ namespace SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Message;
 use Exception;
 
-class InvoiceHeaderEducacion extends Message
+class InvoiceHeader extends Message
 {
 	public	$nitEmisor;
 	public	$razonSocialEmisor;
@@ -22,10 +22,8 @@ class InvoiceHeaderEducacion extends Message
 	public	$numeroDocumento;
 	public	$complemento;
 	public	$codigoCliente;
-
 	public  $nombreEstudiante;//se adicionó esto para educacion
 	public  $periodoFacturado;//se adicionó esto para educacion
-
 	public	$codigoMetodoPago;
 	public	$numeroTarjeta;
 	public	$montoTotal;
@@ -48,7 +46,7 @@ class InvoiceHeaderEducacion extends Message
 			'complemento' 		=> [['attr' => 'xsi:nil', 'value' => 'true', 'ns' => 'http://www.w3.org/2001/XMLSchema-instance']],
 			'numeroTarjeta' 	=> [['attr' => 'xsi:nil', 'value' => 'true', 'ns' => 'http://www.w3.org/2001/XMLSchema-instance']],
 			'montoGiftCard'		=> [['attr' => 'xsi:nil', 'value' => 'true', 'ns' => 'http://www.w3.org/2001/XMLSchema-instance']],
-			// 'codigoExcepcion' 	=> [['attr' => 'xsi:nil', 'value' => 'true', 'ns' => 'http://www.w3.org/2001/XMLSchema-instance']],
+			//'codigoExcepcion' 	=> [['attr' => 'xsi:nil', 'value' => 'true', 'ns' => 'http://www.w3.org/2001/XMLSchema-instance']],
 			'cafc' 				=> [['attr' => 'xsi:nil', 'value' => 'true', 'ns' => 'http://www.w3.org/2001/XMLSchema-instance']],
 		];
 	}
