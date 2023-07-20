@@ -169,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     if (isset($datos['cod_entidad'])) {
                         $cod_entidad=$datos['cod_entidad'];
                     }else{
-                        $cod_entidad=1;///codigo interno de entidad
+                        $cod_entidad=0;///codigo interno de entidad
                     }
 
                     $NombreEstudiante="";
