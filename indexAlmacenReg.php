@@ -59,7 +59,7 @@ include("datosUsuario.php");
 						<li><a href="ciudades/list.php" target="contenedorPrincipal">Sucursales</a></li>
 						<li><span>Adicionales</span>
 						<ul>
-							<li><a href="" target="contenedorPrincipal">Otras Configuraciones</a></li>
+							<li><a href="configuracion/list.php" target="contenedorPrincipal">Otras Configuraciones</a></li>
 						</ul>
 					</ul>	
 				</li>
