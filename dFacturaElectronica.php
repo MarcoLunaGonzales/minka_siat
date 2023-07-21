@@ -59,7 +59,7 @@ if(isset($_GET['r'])){
         $errorFacturaXml=0; $mens="";
         if($recepcion==""){
             $anio=date("Y");
-            $sqlCuis="select cuis FROM siat_cuis where cod_ciudad='$globalSucursal' and estado=1 and cod_gestion='$anio' LIMIT 1";
+            $sqlCuis="select cuis FROM siat_cuis where cod_ciudad='$globalSucursal' and estado=1 and cod_gestion='$anio' order by codigo desc LIMIT 1";
             $respCuis=mysqli_query($enlaceCon,$sqlCuis);
             $cuis=mysqli_result($respCuis,0,0);
 

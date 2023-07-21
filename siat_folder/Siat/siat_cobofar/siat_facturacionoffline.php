@@ -274,7 +274,7 @@ class FacturacionOffLine
 		}
 		
 		$fechaActual=date("Y-m-d");
-		$consulta="SELECT s.cuis,c.cod_impuestos,(SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad limit 1) as punto_venta,(SELECT cufd from siat_cufd where fecha='$fechaActual' and cod_ciudad=c.cod_ciudad and s.cuis=cuis and estado=1 order by fecha limit 1)as siat_cufd from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1";		
+		$consulta="SELECT s.cuis,c.cod_impuestos,(SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad limit 1) as punto_venta,(SELECT cufd from siat_cufd where fecha='$fechaActual' and cod_ciudad=c.cod_ciudad and s.cuis=cuis and estado=1 order by fecha limit 1)as siat_cufd from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1 order by s.codigo desc limit 1";		
 		$resp = mysqli_query($enlaceCon,$consulta);	
 		$dataList = $resp->fetch_array(MYSQLI_ASSOC);
 		$cuis = $dataList['cuis'];

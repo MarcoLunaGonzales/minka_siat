@@ -66,7 +66,7 @@ class CuisTest
 
 			require dirname(__DIR__). SB_DS ."../../conexionmysqli2.inc";
 			$yearActual=date("Y");
-			$sql="select cuis from siat_cuis where cod_ciudad='$ciudad' and cod_entidad='$cod_entidad' and cod_gestion='$yearActual' and estado=1";
+			$sql="select cuis from siat_cuis where cod_ciudad='$ciudad' and cod_entidad='$cod_entidad' and cod_gestion='$yearActual' and estado=1 order by codigo desc limit 1";
 			$resp=mysqli_query($enlaceCon,$sql);
 			$dat=mysqli_fetch_array($resp);
 			$cuisAnt=$dat[0];

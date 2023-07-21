@@ -40,7 +40,7 @@ function numeroCorrelativoCUFD($enlaceCon,$tipoDoc,$globalCiudad,$globalAlmacen)
   $bandera=1;
 
   $anioActual=date("Y");
-  $sqlCuis="select cuis FROM siat_cuis where cod_ciudad='$globalCiudad' and estado=1 and cod_gestion='$anioActual'";  
+  $sqlCuis="select cuis FROM siat_cuis where cod_ciudad='$globalCiudad' and estado=1 and cod_gestion='$anioActual' order by codigo desc limit 1";  
   $respCuis=mysqli_query($enlaceCon,$sqlCuis);
   $datCuis=mysqli_fetch_array($respCuis);
   $cuis=$datCuis[0];//$cuis=mysqli_result($respCuis,0,0);
@@ -73,7 +73,7 @@ function numeroCorrelativoCUFD2($tipoDoc){
   $nro_correlativo="CUFD INCORRECTO / VENCIDO";$bandera=1;
 
   $anioActual=date("Y");
-	$sqlCuis="select cuis FROM siat_cuis where cod_ciudad='$globalCiudad' and estado=1 and cod_gestion='$anioActual'";
+	$sqlCuis="select cuis FROM siat_cuis where cod_ciudad='$globalCiudad' and estado=1 and cod_gestion='$anioActual' order by codigo desc limit 1";
   $respCuis=mysqli_query($enlaceCon,$sqlCuis);
   $cuis=mysqli_result($respCuis,0,0);
   if($cuis==""){

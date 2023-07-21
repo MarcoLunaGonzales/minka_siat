@@ -206,7 +206,7 @@ class FacturaOnline
 			s.siat_codigoPuntoVenta as codigoPuntoVenta,			
 			(select cufd from siat_cufd where codigo=s.siat_codigocufd)cufd_generado,
 			(select codigo_control from siat_cufd where codigo=s.siat_codigocufd)codigoControl_generado,
-			(select cuis from siat_cuis where cod_ciudad=c.cod_ciudad and cod_gestion=YEAR(s.fecha) and estado=1 ORDER BY 1 desc limit 1)cuis,
+			(select cuis from siat_cuis where cod_ciudad=c.cod_ciudad and cod_gestion=YEAR(s.fecha) and estado=1 ORDER BY codigo desc limit 1)cuis,
 			(select valor from configuracion_facturas where cod_ciudad=c.cod_ciudad and id=5 limit 1)municipio,
 			(select valor from configuracion_facturas where cod_ciudad=c.cod_ciudad and id=4 limit 1)telefono,
 			s.nro_correlativo,
@@ -434,7 +434,7 @@ class FacturaOnline
 			//$global_agencia=$_COOKIE["global_agencia"];
 			
 			$global_agencia=$cod_ciduad;
-			$consulta="SELECT s.cuis,c.cod_impuestos from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1";		
+			$consulta="SELECT s.cuis,c.cod_impuestos from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1 order by s.codigo desc limit 1";		
 			$resp = mysqli_query($enlaceCon,$consulta);	
 			// echo $consulta;
 			$dataList = $resp->fetch_array(MYSQLI_ASSOC);
@@ -466,7 +466,7 @@ class FacturaOnline
 		}
 		$fechaActual=date("Y-m-d");
 		$consulta="SELECT s.cuis,c.cod_impuestos,(SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad limit 1) as punto_venta,(SELECT cufd from siat_cufd where fecha='$fechaActual' and cod_ciudad=c.cod_ciudad and s.cuis=cuis   and estado=1 order by fecha limit 1)as siat_cufd,(select sc.modalidad from siat_credenciales sc where sc.cod_entidad in (select cc.cod_entidad from ciudades cc where cc.cod_ciudad=c.cod_ciudad)) as modalidad 
-			from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1";		
+			from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1 order by s.codigo desc limit 1";		
 		// echo $consulta;
 		$resp = mysqli_query($enlaceCon,$consulta);	
 		$dataList = $resp->fetch_array(MYSQLI_ASSOC);

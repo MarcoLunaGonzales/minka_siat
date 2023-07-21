@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     if (isset($datos['cod_entidad'])) {
                         $cod_entidad=$datos['cod_entidad'];
                     }else{
-                        $cod_entidad=1;///codigo interno de entidad LOYOLA VER BD
+                        $cod_entidad=obtenerEntidadDesdeCiudad($sucursal);///codigo interno de entidad LOYOLA VER BD
                     }
 
                     //echo "entidad>> ".$cod_entidad;
@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     if (isset($datos['cod_entidad'])) {
                         $cod_entidad=$datos['cod_entidad'];
                     }else{
-                        $cod_entidad=0;///codigo interno de entidad
+                        $cod_entidad=obtenerEntidadDesdeCiudad($sucursal);;///codigo interno de entidad
                     }
 
                     $NombreEstudiante="";
@@ -365,10 +365,8 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         $datCodSalida=mysqli_fetch_array($resp);
         $codigo=$datCodSalida[0];
         
-        $sqlCuis="SELECT cuis FROM siat_cuis where cod_ciudad='$globalSucursal' and estado=1 and cod_gestion='$anio' and cod_entidad=$cod_entidad LIMIT 1";
-        $respCuis=mysqli_query($enlaceCon,$sqlCuis);
-        $datConf=mysqli_fetch_array($respCuis);
-        $cuis=$datConf[0];    
+        $cuis=obtenerCuis_vigente_BD($globalSucursal,$cod_entidad);
+
         $sqlPV="SELECT codigoPuntoVenta FROM siat_puntoventa where cod_ciudad='$globalSucursal' and cod_entidad=$cod_entidad LIMIT 1";
         $respPV=mysqli_query($enlaceCon,$sqlPV);
         $datPV=mysqli_fetch_array($respPV);
@@ -529,7 +527,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                     $facturaImpuestos=generarFacturaVentaImpuestos($codigo,false,$errorConexion);   
                 // }
 
-                echo $facturaImpuestos."**";
+                //echo $facturaImpuestos."**";
                 
                 $fechaEmision=$facturaImpuestos[1];
                 $cuf=$facturaImpuestos[2];      
@@ -605,6 +603,7 @@ function obtenerAlmacen($cod_ciudad_externo,$enlaceCon,$cod_entidad){
     $sql="SELECT c.cod_ciudad,a.cod_almacen,c.cod_impuestos,c.cod_entidad
         from ciudades c join almacenes a on c.cod_ciudad=a.cod_ciudad
         where c.cod_externo=$cod_ciudad_externo and c.cod_entidad=$cod_entidad";
+    //echo $sql;
     $resp=mysqli_query($enlaceCon,$sql);
     $cod_ciudad=0;
     $cod_almacen=0;
