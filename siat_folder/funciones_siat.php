@@ -55,8 +55,8 @@ function obtenerCufd_vigente_BD($cod_ciudad,$fecha,$cuis){
   // echo $valor;
   return $valor;
 }
-function obtenerEventosignificativo_BD($codigoMotivoEvento,$codigoPuntoVenta,$cod_impuestos,$fecha_fin,$fecha_inicio){
-  $sql="select codigoRecepcionEventoSignificativo from siat_eventos where codigoMotivoEvento='$codigoMotivoEvento' and codigoPuntoVenta='$codigoPuntoVenta' and codigoSucursal='$cod_impuestos' and fechaHoraInicioEvento <= '$fecha_inicio' and  '$fecha_fin'<=fechaHoraFinEvento ";//and codigoRecepcionPaquete is null
+function obtenerEventosignificativo_BD($codigoMotivoEvento,$codigoPuntoVenta,$cod_impuestos,$fecha_fin,$fecha_inicio,$cuis=0){
+  $sql="select codigoRecepcionEventoSignificativo from siat_eventos where codigoMotivoEvento='$codigoMotivoEvento' and codigoPuntoVenta='$codigoPuntoVenta' and cod_cuis='$cuis' and fechaHoraInicioEvento <= '$fecha_inicio' and  '$fecha_fin'<=fechaHoraFinEvento ";//and codigoRecepcionPaquete is null
         // echo $sql;
   $valor="-1";
   $sw=0;

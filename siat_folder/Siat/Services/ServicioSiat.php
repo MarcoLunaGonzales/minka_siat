@@ -99,7 +99,7 @@ class ServicioSiat
 				'header' => implode("\r\n", $headers),
 			]
 		];
-		$stream_context = stream_context_create($context);
+		$stream_context = stream_context_create($context);		
 		ini_set("default_socket_timeout", 7);
 		$client = new \SoapClient($this->wsdl, ['trace' => 1, 'stream_context' => $stream_context]);
 		try

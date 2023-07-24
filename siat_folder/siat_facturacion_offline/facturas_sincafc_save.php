@@ -69,7 +69,6 @@ require("../funciones_siat.php");
         $cod_ciudad=$row['cod_ciudad'];
         $cod_entidad=$row['cod_entidad'];
         $siat_codigocufd=$row['siat_codigocufd'];
-        // $cod_ciudad=85;
         $cod_impuestos=intval($cod_impuestos);
         $codigoPuntoVenta=obtenerPuntoVenta_BD($cod_ciudad);
         $cuis=obtenerCuis_siat($codigoPuntoVenta,$cod_impuestos);
@@ -97,7 +96,7 @@ require("../funciones_siat.php");
           $fecha_fin=$fecha."T".$datos_hora[1];
           $sw=0;
           //buscamos algun evento disponible en ese rango de fechas
-          $codigoEvento_datos=obtenerEventosignificativo_BD($codigoMotivoEvento,$codigoPuntoVenta,$cod_impuestos,$fecha_fin,$fecha_inicio);
+          $codigoEvento_datos=obtenerEventosignificativo_BD($codigoMotivoEvento,$codigoPuntoVenta,$cod_impuestos,$fecha_fin,$fecha_inicio,$cuis);
           $codigoEvento=$codigoEvento_datos[0];
           // echo "eveto:".$codigoEvento;
           $sw=$codigoEvento_datos[1];
@@ -106,7 +105,6 @@ require("../funciones_siat.php");
             if($fecha_inicio==$fecha_fin){//solo es una factura
               $fecha_z=$fecha." ".$datos_hora[1]; 
               $fechanueva = new DateTime($fecha_z); 
-
               switch ($addminute) {
                 case 0://una hora
                   $fechanueva->modify('60 minute');
@@ -152,7 +150,7 @@ require("../funciones_siat.php");
           if($codigoEvento<>-1){
             //registamos el evento
            if($sw==0){
-              $sql="INSERT INTO siat_eventos(codigoMotivoEvento,codigoPuntoVenta,codigoSucursal,cufd,cufdEvento,descripcion,fechaHoraInicioEvento,fechaHoraFinEvento,codigoRecepcionEventoSignificativo) values('$codigoMotivoEvento','$codigoPuntoVenta','$cod_impuestos','$cufd','$cufdEvento','$descripcionX','$fecha_inicio','$fecha_fin','$codigoEvento')";
+              $sql="INSERT INTO siat_eventos(codigoMotivoEvento,codigoPuntoVenta,codigoSucursal,cufd,cufdEvento,descripcion,fechaHoraInicioEvento,fechaHoraFinEvento,codigoRecepcionEventoSignificativo,cod_cuis) values('$codigoMotivoEvento','$codigoPuntoVenta','$cod_impuestos','$cufd','$cufdEvento','$descripcionX','$fecha_inicio','$fecha_fin','$codigoEvento','$cuis')";
                // echo $sql;
               $sql_inserta = mysqli_query($enlaceCon,$sql);
             }
@@ -167,12 +165,12 @@ require("../funciones_siat.php");
             }else{
               $error=true;
               $descripcionError="<b>Evento:</b> ".$descripcionEvento."<br> <b>Paquete: <br>Paso 1.-</b> ".$descripcionPaquete."<br><b>Paso 2.-</b> ".$descripcionValidacion;
-              break;
+              // break;
             }
           }else{
             $error=true;
             $descripcionError="<b>Evento:</b> ".$descripcionEvento;
-            break;
+            //break;
           }
         }else{
           $descripcionError="";
@@ -183,12 +181,12 @@ require("../funciones_siat.php");
             $descripcionError.=" NO ENCONTRADO CUFD de FECHA: $fecha<br>";
           }
           $error=true;
-          break;
+          // break;
         }
       }
 
       if($error){
-        /*echo "<script language='Javascript'>
+        echo "<script language='Javascript'>
         Swal.fire({
           title: 'ERROR :(',
           html: '<table style=\"border:1px;font-size:14px\"><tr><td>".$descripcionError."</td></tr></table>',
@@ -196,7 +194,7 @@ require("../funciones_siat.php");
         }).then(function() {
             ".$url_retorno."
         });
-        </script>";  */
+        </script>";  
       }else{
         
         if($nuevo_cufd==1){

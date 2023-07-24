@@ -5,6 +5,13 @@ require_once 'config.php';
 if(!isset($_COOKIE["global_usuario"])){
   ?><!-- <script type="text/javascript">$( document ).ready(function() {Swal.fire("ERROR!", "Inicie Sesion!", "error");/*window.close();*/});</script> --><?php
 }
+
+if (!isset($_SESSION['globalEntidadSes'])) {
+  if(isset($_COOKIE['globalIdEntidad'])){
+    $_SESSION['globalEntidadSes']=$_COOKIE['globalIdEntidad'];
+  }
+}
+
 set_time_limit(0);
 error_reporting(0);
 date_default_timezone_set('America/La_Paz');

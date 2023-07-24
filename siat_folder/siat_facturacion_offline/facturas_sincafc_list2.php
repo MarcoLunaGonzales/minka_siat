@@ -104,7 +104,12 @@ if(isset($_GET['rpt_territorio'])){
   $sqladd=" and a.cod_ciudad in ($rpt_territorio)"; 
 }else{
   $rpt_territorio=0;
-  $sqladd=" "; 
+  if(isset($_COOKIE['globalIdEntidad'])){
+    $entidad=$_COOKIE['globalIdEntidad'];
+    $sqladd=" and a.cod_ciudad in (select cod_ciudad from ciudades where cod_entidad='$entidad')"; 
+  }else{
+    $sqladd=" ";   
+  }
 }
 
 $add_check="checked";

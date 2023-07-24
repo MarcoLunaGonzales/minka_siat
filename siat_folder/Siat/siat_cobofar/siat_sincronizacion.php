@@ -133,9 +133,9 @@ class SyncTest
 				case 'sincronizarListaProductosServicios':
 					$lista=$res->RespuestaListaProductos->listaCodigos;
 					
-					print_r("res:".$res);
-					print_r("respuesta: ".$lista);
-					print_r("lista: ".$lista);
+					// print_r("res:".$res);
+					// print_r("respuesta: ".$lista);
+					// print_r("lista: ".$lista);
 					
 					$sqlDelete="DELETE FROM siat_sincronizarlistaproductosservicios where cod_entidad=$cod_entidad";
 					mysqli_query($enlaceCon,$sqlDelete);
