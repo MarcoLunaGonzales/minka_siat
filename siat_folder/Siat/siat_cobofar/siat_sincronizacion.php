@@ -132,12 +132,15 @@ class SyncTest
 				break;
 				case 'sincronizarListaProductosServicios':
 					$lista=$res->RespuestaListaProductos->listaCodigos;
+
 					
 					// print_r("res:".$res);
 					// print_r("respuesta: ".$lista);
 					// print_r("lista: ".$lista);
-					
+					// print_r($lista);
+
 					$sqlDelete="DELETE FROM siat_sincronizarlistaproductosservicios where cod_entidad=$cod_entidad";
+					//echo $sqlDelete;
 					mysqli_query($enlaceCon,$sqlDelete);
 					foreach ($lista as $li) {
 						$sqlInsert="INSERT INTO siat_sincronizarlistaproductosservicios (codigoActividad,codigoProducto,descripcionProducto,created_at,cod_entidad) VALUES ('$li->codigoActividad','$li->codigoProducto','$li->descripcionProducto',NOW(),'$cod_entidad')";

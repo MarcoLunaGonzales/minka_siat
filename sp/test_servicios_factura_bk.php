@@ -135,7 +135,8 @@ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey,
     
 	$url="http://localhost:8080/minka_siat/wsminka/ws_generarFactura.php";
 	$jsons=callService($parametros, $url);
-	//print_r($jsons);
+	
+    //print_r($jsons);
   
 $obj=json_decode($jsons);//decodificando json
 header('Content-type: application/json');  

@@ -73,6 +73,6 @@
 <?php
 include("datosUsuario.php");
 	echo " <div class='centrarimagen'>
-		<center><img src='imagenes/".$logoTiendaRopa."'  width='80%' heigth='80%'></center>
+		<center><img src='imagenes/".$logoTiendaRopa."'  width='60%' heigth='60%'></center>
 	</div>";
 ?>

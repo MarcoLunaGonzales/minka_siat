@@ -29,8 +29,8 @@ function solicitudEventoSignificativo($codigoClasificador,$descripcion,$codigoPu
 }
 
 function obtenerCuis_vigente_BD($cod_ciudad,$cod_entidad){
-	$sql="SELECT cuis from siat_cuis where cod_ciudad=$cod_ciudad and estado=1";
-	 // echo $sql;
+	$sql="SELECT cuis from siat_cuis where cod_ciudad=$cod_ciudad and estado=1 order by codigo desc limit 1";
+  //echo "sql CUIS VIGENTE: ".$sql;    
   $valor="0";
   // require("../../conexionmysqli2.php");
   require dirname(__DIR__)."/conexionmysqli2.php";
@@ -261,4 +261,5 @@ function consultaEventoSignificativo($fechaEvento,$global_agencia=null){
   $eventoSignificativo= new FacturacionOffLine();
   return $eventoSignificativo::consultaEventoSignificativo($fechaEvento,$global_agencia);  
 }
+
 ?>

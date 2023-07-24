@@ -8,18 +8,22 @@ require("consultaEvento.php");
  ini_set('display_errors', '1');
 
 
-$DatosConexion=verificarConexion();
-if($DatosConexion[0]==1){
+// $DatosConexion=verificarConexion();
+// if($DatosConexion[0]==1){
+
+if(isset($_GET['cod_entidad'])){
+  $cod_entidad=$_GET['cod_entidad'];
+  $_SESSION['globalEntidadSes']=$cod_entidad;
   $cod_tipoEmision=2;//tipo emision OFFLINE
+  $sqladd=" and a.cod_ciudad in (select cod_ciudad from ciudades where cod_entidad='$cod_entidad')"; 
   $sql="SELECT DATE_FORMAT(s.siat_fechaemision,'%Y-%m-%d')as fecha2,a.cod_ciudad,GROUP_CONCAT(s.cod_salida_almacenes) as  string_salida
   FROM salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen
   WHERE s.cod_tiposalida=1001 and s.salida_anulada=0 and s.cod_tipo_doc=1
-  and s.siat_codigotipoemision=2 and s.siat_codigoRecepcion is null
+  and s.siat_codigotipoemision=2 and s.siat_codigoRecepcion is null $sqladd
   GROUP BY fecha2,a.cod_ciudad
   order by fecha2,a.cod_ciudad";
-  
   //echo $sql;
-  
+
   $resp=mysqli_query($enlaceCon,$sql);
   $string_codigos="";
   while($row=mysqli_fetch_array($resp)){
@@ -36,10 +40,15 @@ if($DatosConexion[0]==1){
   }else{
     enviarFacturasOffline($string_codigos,$enlaceCon);
   }
-  
 }else{
-  echo "ERROR EN CONEXION.<BR>".$DatosConexion[1];
+  echo "CODIGO ENTIDAD NO ENCONTRADO";
+
 }
+
+  
+// }else{
+//   echo "ERROR EN CONEXION.<BR>".$DatosConexion[1];
+// }
 
 function enviarFacturasOffline($string_codigos,$enlaceCon){
   $entidadDefecto=0;
@@ -77,13 +86,11 @@ function enviarFacturasOffline($string_codigos,$enlaceCon){
     }
     
     $cod_impuestos=intval($cod_impuestos);
-    // $codigoPuntoVenta=obtenerPuntoVenta_BD($cod_ciudad);
     // $cuis=obtenerCuis_siat($codigoPuntoVenta,$cod_impuestos);
-    $cuis=obtenerCuis_vigente_BD($cod_ciudad,$entidadDefecto);
+    // $cuis=obtenerCuis_vigente_BD($cod_ciudad,$entidadDefecto);
+    $cuis=obtenerCuis_siat($codigoPuntoVenta,$cod_impuestos);
     //echo "aqui cuis";
     $cufd=obtenerCufd_Vigente_BD($cod_ciudad,$fecha_X,$cuis);
-
-    
     //echo "llego 2";
     if($cufd<>"0"){      
       $descripcioNuevo.=" *** CUFD VIGENTE CORRECTO <BR>";
@@ -166,7 +173,7 @@ function enviarFacturasOffline($string_codigos,$enlaceCon){
       if($codigoEvento<>-1){
         //registamos el evento
        if($sw==0){
-          $sql="INSERT INTO siat_eventos(codigoMotivoEvento,codigoPuntoVenta,codigoSucursal,cufd,cufdEvento,descripcion,fechaHoraInicioEvento,fechaHoraFinEvento,codigoRecepcionEventoSignificativo) values('$codigoMotivoEvento','$codigoPuntoVenta','$cod_impuestos','$cufd','$cufdEvento','$descripcionX','$fecha_inicio','$fecha_fin','$codigoEvento')";
+          $sql="INSERT INTO siat_eventos(codigoMotivoEvento,codigoPuntoVenta,codigoSucursal,cufd,cufdEvento,descripcion,fechaHoraInicioEvento,fechaHoraFinEvento,codigoRecepcionEventoSignificativo,cod_cuis) values('$codigoMotivoEvento','$codigoPuntoVenta','$cod_impuestos','$cufd','$cufdEvento','$descripcionX','$fecha_inicio','$fecha_fin','$codigoEvento','$cuis')";
            // echo $sql;
           $sql_inserta = mysqli_query($enlaceCon,$sql);
         }
