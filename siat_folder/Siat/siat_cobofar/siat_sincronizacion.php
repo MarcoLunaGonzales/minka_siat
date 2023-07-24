@@ -73,6 +73,8 @@ class SyncTest
 			$servCodigos->setConfig((array)$config);
 			$resCuis = $servCodigos->cuis();			
 			$sync = new ServicioFacturacionSincronizacion($resCuis->RespuestaCuis->codigo, null, $config->tokenDelegado);
+			//$sync = new ServicioFacturacionSincronizacion('CB97C1F1', null, $config->tokenDelegado);
+			
 			$sync->setConfig((array)$config);
 			$res = call_user_func([$sync, $action]);			
 			require dirname(__DIR__). SB_DS ."../../conexionmysqli2.inc";

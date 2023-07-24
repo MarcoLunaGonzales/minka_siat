@@ -14,7 +14,7 @@ $cod_entidad=1;
 /*$resp=abrirPuntoVenta(0,$codigoSucursal,5,"Punto 2",$cod_entidad);
 echo $resp;*/
 
-$resp=cerrarPuntoVenta(1, 0, 1);
+//$resp=cerrarPuntoVenta(1, 0, 1);
 echo $resp;
 
 ?>
