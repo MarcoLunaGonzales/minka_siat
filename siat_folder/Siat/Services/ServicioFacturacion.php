@@ -345,7 +345,7 @@ class ServicioFacturacion extends ServicioSiat
 				$solicitud->toArray()
 			];
 
-			print_r($data);
+			//print_r($data);
 			$res = $this->callAction('validacionRecepcionMasivaFactura', $data);
 			return $res;
 		}
@@ -416,6 +416,11 @@ class ServicioFacturacion extends ServicioSiat
 			$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
 		}
 		list(,$action) = explode('::', __METHOD__);
+		if($this->modalidad==1){//electronica en linea
+		 	$codigoDocumentoSector=1; //compra venta
+		 }else{//sector educacion
+		 	$codigoDocumentoSector=11; // educacion
+		 }
 		$data = [
 			[
 				'SolicitudServicioVerificacionEstadoFactura'  => [
@@ -427,7 +432,7 @@ class ServicioFacturacion extends ServicioSiat
 					'cuis'				 => $this->cuis,
 					'nit'				 => $this->nit,					
 					'tipoFacturaDocumento'=>self::TIPO_FACTURA_CREDITO_FISCAL,
-					'codigoDocumentoSector'=>11,
+					'codigoDocumentoSector'=>$codigoDocumentoSector,
 					'codigoEmision'=>self::TIPO_EMISION_ONLINE,
 					'cufd'=>$cufd,
 					'cuf'=>$cuf

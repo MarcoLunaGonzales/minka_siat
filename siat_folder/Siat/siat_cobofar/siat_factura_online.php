@@ -465,8 +465,10 @@ class FacturaOnline
 		}
 		$fechaActual=date("Y-m-d");
 		$consulta="SELECT s.cuis,c.cod_impuestos,(SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad limit 1) as punto_venta,(SELECT cufd from siat_cufd where fecha='$fechaActual' and cod_ciudad=c.cod_ciudad and s.cuis=cuis   and estado=1 order by fecha limit 1)as siat_cufd,(select sc.modalidad from siat_credenciales sc where sc.cod_entidad in (select cc.cod_entidad from ciudades cc where cc.cod_ciudad=c.cod_ciudad)) as modalidad 
+
 			from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1 order by s.codigo desc limit 1";		
 		// echo $consulta;
+
 		$resp = mysqli_query($enlaceCon,$consulta);	
 		$dataList = $resp->fetch_array(MYSQLI_ASSOC);
 		$cuis = $dataList['cuis'];

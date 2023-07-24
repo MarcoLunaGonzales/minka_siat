@@ -104,7 +104,7 @@ class FacturacionOffLine
 			$config = self::buildConfig();
 			$config->validate();
 			
-			if($config->siat_modalidad==1){//electronica
+			if($config->modalidad==1){//electronica
 				include dirname(__DIR__). SB_DS ."conexioncert.php";
 				$privCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . $privatekey;
 				$pubCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . $publickey;

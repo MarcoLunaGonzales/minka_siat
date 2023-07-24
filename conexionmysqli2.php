@@ -9,10 +9,14 @@ if(isset($cod_entidad)){
 	// echo "si:".$cod_entidad;
 	if (!isset($_SESSION['globalEntidadSes'])) {
 		$_SESSION['globalEntidadSes']=$cod_entidad;		
+	}else{
+		if(isset($_COOKIE['globalIdEntidad'])){
+			$_SESSION['globalEntidadSes']=$_COOKIE['globalIdEntidad'];
+		}
 	}
-	if (!isset($_SESSION['modalidadSes'])) {
-		$_SESSION['modalidadSes']=$modalidad;		
-	}
+	// if (!isset($_SESSION['modalidadSes'])) {
+	// 	$_SESSION['modalidadSes']=$modalidad;		
+	// }
 }
 
 

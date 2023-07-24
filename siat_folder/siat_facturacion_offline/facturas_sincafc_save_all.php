@@ -97,7 +97,7 @@ require("../funciones_siat.php");
           $fecha_fin=$fecha."T".$datos_hora[1];
           $sw=0;
           //buscamos algun evento disponible en ese rango de fechas
-          $codigoEvento_datos=obtenerEventosignificativo_BD($codigoMotivoEvento,$codigoPuntoVenta,$cod_impuestos,$fecha_fin,$fecha_inicio);
+          $codigoEvento_datos=obtenerEventosignificativo_BD($codigoMotivoEvento,$codigoPuntoVenta,$cod_impuestos,$fecha_fin,$fecha_inicio,$cuis);
           $codigoEvento=$codigoEvento_datos[0];
           // echo "eveto:".$codigoEvento;
           $sw=$codigoEvento_datos[1];

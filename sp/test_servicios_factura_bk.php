@@ -110,7 +110,7 @@ $sKey="rrf656nb2396k6g6x44434h56jzx5g6";
 //Lista de Tipos documento
 $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
            "accion"=>"generarFacturaMinka", //
-           // "cod_entidad"=1, //ID de empresa, otorgado por minkasoftware
+            "cod_entidad"=>1, //ID de empresa, otorgado por minkasoftware
            // "nitEmpresa"=>'10916889016', //Nit de empresa
            "sucursal"=>$sucursal,
            "tipoTabla"=>$tipoTabla,
@@ -133,7 +133,7 @@ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey,
            "periodoFacturado"=>$periodoFacturado//***
        );  
     
-	$url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
+	$url="http://localhost:8080/minka_siat/wsminka/ws_generarFactura.php";
 	$jsons=callService($parametros, $url);
 	
     //print_r($jsons);

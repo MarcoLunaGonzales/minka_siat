@@ -170,7 +170,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     if (isset($datos['cod_entidad'])) {
                         $cod_entidad=$datos['cod_entidad'];
                     }else{
-                        $cod_entidad=obtenerEntidadDesdeCiudad($sucursal);;///codigo interno de entidad
+                        //$cod_entidad=2;///codigo interno de entidad
+                        $cod_entidad=obtenerEntidadDesdeCiudad($sucursal);///codigo interno de entidad
                     }
 
                     $NombreEstudiante="";

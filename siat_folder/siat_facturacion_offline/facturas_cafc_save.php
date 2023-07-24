@@ -101,7 +101,7 @@ echo ".";//sin este echo no muestra el primer error
           $fecha_fin=$fecha."T".$datos_hora[1];
           //buscamos algun evento disponible en ese rango de fechas
           $sw=0;
-          $codigoEvento_datos=obtenerEventosignificativo_BD($codigoMotivoEvento,$codigoPuntoVenta,$cod_impuestos,$fecha_fin,$fecha_inicio);
+          $codigoEvento_datos=obtenerEventosignificativo_BD($codigoMotivoEvento,$codigoPuntoVenta,$cod_impuestos,$fecha_fin,$fecha_inicio,$cuis);
           $codigoEvento=$codigoEvento_datos[0];
           $sw=$codigoEvento_datos[1];
           $descripcionEvento=" SELECCIONADO ";

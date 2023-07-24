@@ -6,12 +6,11 @@
 	// 	$globalEntidad=3;//
 	// }
 
-	if(isset($_SESSION['globalIdEntidad'])){
-		$globalEntidad=$_SESSION['globalIdEntidad'];
-		// echo "ntro:".$globalEntidad;
+	if(isset($_SESSION['globalEntidadSes'])){
+		$globalEntidad=$_SESSION['globalEntidadSes'];
+		//echo "ntro:".$globalEntidad;
 	}else{
-		$globalEntidad=1;//
-		// echo "nada";
+		$globalEntidad=1;		
 	}
 	require dirname(__DIR__). SB_DS ."../conexionmysqli2.php";
 	$consulta="select cert_privatekey,cert_publickey from siat_credenciales where cod_estado=1 and cod_entidad=$globalEntidad";
