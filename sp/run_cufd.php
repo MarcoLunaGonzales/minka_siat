@@ -8,7 +8,7 @@ require_once '../siat_folder/funciones_siat.php';
 
 $codCiudad=1;
 $codigoSucursal=0;
-$codigoPuntoVenta=0;
+$codigoPuntoVenta=1;
 $cod_entidad=1;
 
 for($i=1;$i<=1;$i++){
