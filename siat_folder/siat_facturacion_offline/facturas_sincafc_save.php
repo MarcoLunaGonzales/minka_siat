@@ -130,23 +130,17 @@ require("../funciones_siat.php");
                   $seconds=".001";
                 break;
               }
-              
-              // $fechanueva->modify('+10 second'); 
-              // $fechanueva->modify('-30 second'); 
               $fecha_fin=$fechanueva->format('Y-m-d H:i:s');
               $fecha_fin_datos=explode(" ", $fecha_fin);
               $fecha_fin=$fecha_fin_datos[0]."T".$fecha_fin_datos[1].$seconds;//agregamos milisegundos 
             }
-            // if($nuevo_cufd==1){
-            //   deshabilitarCufd($cod_ciudad,$cuis,$fecha_X);
-            //   $cufdNuevo=generarCufd($cod_ciudad,$cod_impuestos,$codigoPuntoVenta);
-            //   $cufd=obtenerCufd_Vigente_BD($cod_ciudad,$fecha_X,$cuis);
-            // }
             $respEvento=solicitudEventoSignificativo($codigoMotivoEvento,$descripcion,$codigoPuntoVenta,$cod_impuestos,$cufd,$cufdEvento,$fecha_fin,$fecha_inicio,$cuis);
             // echo "<br>**".print_r($respEvento)."**<br>";
             $codigoEvento=$respEvento[0];
             $descripcionEvento=$respEvento[1];
           }
+
+
           if($codigoEvento<>-1){
             //registamos el evento
            if($sw==0){

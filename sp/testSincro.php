@@ -6,7 +6,7 @@ require_once("../funciones.php");
 require_once '../siat_folder/funciones_siat.php';
 
 
-$codSucursal=0;
+$codSucursal=1;
 $codigoSucursal=0;
 $codigoPuntoVenta=0;
 $cod_entidad=1;
@@ -18,7 +18,7 @@ $cod_entidad=1;
 }*/
 
 
-for($i=1;$i<=30;$i++){
+for($i=1;$i<=100;$i++){
   $response=sincronizarParametrosSiat('',0);
   echo $response."<br>";
 }

@@ -384,7 +384,6 @@ class FacturaOnline
 
 	public static function anularFacturaEnviada($codigoPuntoVenta,$codigoSucursal,$cuis,$cufd,$cuf,$modalidad=1)
 	{				
-		
 		  // echo "aqui cuf".$cuf;
 		$config = self::buildConfig();
 		$config->validate();	
@@ -404,7 +403,7 @@ class FacturaOnline
 		// print_r($service);
 
 		 $res2 = $service->anularFacturaEnviada($cuf,$codigoPuntoVenta,$codigoSucursal);
-		 // print_r($res2);
+		 print_r($res2);
 		 if(isset($res2->RespuestaServicioFacturacion->codigoEstado)){
 		 	if($res2->RespuestaServicioFacturacion->codigoEstado==905) {
 		 		$codigo=1;
