@@ -46,10 +46,11 @@ require("../funciones_siat.php");
       });
       </script>"; 
   }else{
-    echo "aqui";
+    //echo "aqui";
     $descripcionError="";
     $DatosConexion=verificarConexion();
     if($DatosConexion[0]==1){
+
       $string_codigos=trim($string_codigos,",");
       $cod_tipoEmision=2;//tipo emision OFFLINE
       $sql="SELECT DATE_FORMAT(s.siat_fechaemision,'%Y-%m-%d')as fecha2,s.cod_almacen,a.nombre_almacen,(select cod_impuestos from ciudades where cod_ciudad= a.cod_ciudad)as cod_impuestos,a.cod_ciudad,sc.cufd,s.siat_codigocufd,(select cc.cod_entidad from ciudades cc where cc.cod_ciudad=a.cod_ciudad) as cod_entidad
@@ -57,7 +58,7 @@ require("../funciones_siat.php");
         WHERE s.cod_salida_almacenes in ($string_codigos)
         GROUP BY s.cod_almacen,s.fecha,s.siat_codigocufd
         ORDER BY a.nombre_almacen,fecha2";
-        // echo $sql;
+      //echo $sql;
         $fecha_X=date('Y-m-d');
         // $fecha_X=date('2022-07-02');
       $resp1=mysqli_query($enlaceCon,$sql);
@@ -81,7 +82,9 @@ require("../funciones_siat.php");
         if($cufd=="0"){
           echo "<br> * CUFD VIGENTE NO ENCONTRADO EL DIA DE HOY.<br>";
             // $cod_entidad=2;
-            // echo $cod_ciudad."-".$cuis."-".$fecha_X;
+            
+            //echo $cod_ciudad."-".$cuis."-".$fecha_X;
+            
             deshabilitarCufd($cod_ciudad,$cuis,$fecha_X,$cod_entidad);
             // echo $cod_ciudad."-".$cod_ciudad."-".$fecha_X;
             $cufdNuevo=generarCufd($cod_ciudad,$cod_impuestos,$codigoPuntoVenta,$cod_entidad);
