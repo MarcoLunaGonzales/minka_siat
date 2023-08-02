@@ -116,6 +116,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     "mensaje"=>"ERROR. Variables incompletas");
                 }
 
+            }elseif($accion=="generarCufdMinka"){
+                require_once '../conexionmysqli2.php';
+                require_once '../siat_folder/funciones_siat.php';
+                if( isset($datos['idEmpresa']) && 
+                    isset($datos['nitEmpresa']) && 
+                    isset($datos['codSucursal']) ){                    
+                    $idEmpresa   = $datos['idEmpresa'];
+                    $nitEmpresa  = $datos['nitEmpresa'];
+                    $codSucursal = $datos['codSucursal'];
+                    // Generamos CUFD
+                    $codigoSucursal   = 0;    
+                    $codigoPuntoVenta = 0;
+                    generarCufd($codSucursal,$codigoSucursal,$codigoPuntoVenta,$idEmpresa);
+                    // Limpiamos Respuesta
+                    ob_clean();
+                    $banderaCUFD = verificarCUFDEmpresa($idEmpresa,$enlaceCon);
+                    if($banderaCUFD==1){
+                        $resultado=array("estado"=>1,
+                            "mensaje"=>"Correcto. CUFD generado existosamente.");
+                    }
+                    if($banderaCUFD==0){
+                        $resultado=array("estado"=>2,
+                            "mensaje"=>"Error: No se generó el CUFD.");
+                    }
+                }else{
+                    $resultado=array("estado"=>4,
+                    "mensaje"=>"ERROR. Variables incompletas");
+                }
+
             }
             else{
                 $resultado=array("estado"=>4,
