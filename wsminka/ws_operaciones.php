@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     // $nitEmpresa=$datos['nitEmpresa'];//
                     $codSucursal=$datos['codSucursal'];//
                     $banderaCUFD=verificarCUFDEmpresa($codSucursal,$enlaceCon);
-                    if($banderaCUFD==1){
+                    if($banderaCUFD > 0){
                         $resultado=array("estado"=>1,
                             "mensaje"=>"Correcto. CUFD Valido para la sucursal.");
                     }
