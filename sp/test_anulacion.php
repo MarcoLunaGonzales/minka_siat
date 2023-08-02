@@ -11,7 +11,7 @@
 
 $codSucursal=0;
 $codigoSucursal=0;
-$codigoPuntoVenta=1;
+$codigoPuntoVenta=0;
 $cod_entidad=1;
 
 /*$cuis="4A005D14";
@@ -20,7 +20,7 @@ $cuf="20E0644AD405F2D0AAD7ED61A3B2260DEE2CEA06AB65B1C4C7C54FD74";
 */
 
 $sql="select s.cod_salida_almacenes, s.siat_cuis, sc.cufd, s.siat_cuf from salida_almacenes s, siat_cufd sc 
-where s.siat_codigocufd=sc.codigo and s.salida_anulada=0 and s.cod_salida_almacenes between 238 and 500;";
+where s.siat_codigocufd=sc.codigo and s.salida_anulada=0 and s.cod_salida_almacenes between 1 and 500;";
 echo $sql;
 $resp=mysqli_query($enlaceCon, $sql);
 while($dat=mysqli_fetch_array($resp)){
