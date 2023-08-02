@@ -272,9 +272,15 @@ $txtLeyendaFin=mysqli_result($respConf,0,1);
 		<td width="30%">SubTotal</td></tr></table>
 <label class="arial-12"><?="======================================"?></label><br>
 <?php
-$sqlDetalle="select m.codigo_material, sum(s.`cantidad_unitaria`), m.`descripcion_material`, s.`precio_unitario`, 
-		sum(s.`descuento_unitario`), sum(s.`monto_unitario`) from `salida_detalle_almacenes` s, `material_apoyo` m where 
-		m.`codigo_material`=s.`cod_material` and s.`cod_salida_almacen`=$codigoVenta 
+// $sqlDetalle="select m.codigo_material, sum(s.`cantidad_unitaria`), m.`descripcion_material`, s.`precio_unitario`, 
+// 		sum(s.`descuento_unitario`), sum(s.`monto_unitario`) from `salida_detalle_almacenes` s, `material_apoyo` m where 
+// 		m.`codigo_material`=s.`cod_material` and s.`cod_salida_almacen`=$codigoVenta 
+// 		group by s.cod_material
+// 		order by s.orden_detalle";
+$sqlDetalle="SELECT s.cod_material, sum(s.`cantidad_unitaria`), s.`observaciones`, s.`precio_unitario`, 
+		sum(s.`descuento_unitario`), sum(s.`monto_unitario`) 
+		FROM `salida_detalle_almacenes` s 
+		WHERE s.`cod_salida_almacen`=$codigoVenta 
 		group by s.cod_material
 		order by s.orden_detalle";
 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
