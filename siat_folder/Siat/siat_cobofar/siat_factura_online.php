@@ -70,11 +70,17 @@ class FacturaOnline
 		$descuentoVenta=$dataFact['descuento'];
 		require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";
 
-        $sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
+        /*$sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
         sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
         from salida_detalle_almacenes s, material_apoyo m 
         where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoSalida
         group by m.codigo_material, s.orden_detalle,m.descripcion_material,s.observaciones,s.precio_unitario
+        order by s.orden_detalle;";*/
+        $sqlDetalle="SELECT s.cod_material as codigo_material, s.orden_detalle, '' as descripcion_material, s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
+        sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
+        from salida_detalle_almacenes s 
+        where s.cod_salida_almacen=$codigoSalida
+        group by s.cod_material,s.orden_detalle,descripcion_material,s.observaciones,s.precio_unitario
         order by s.orden_detalle;";
 
         //print_r($enlaceCon);
