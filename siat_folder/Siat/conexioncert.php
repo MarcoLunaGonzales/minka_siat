@@ -10,7 +10,12 @@
 		$globalEntidad=$_SESSION['globalEntidadSes'];
 		//echo "ntro:".$globalEntidad;
 	}else{
-		$globalEntidad=1;		
+		if(isset($_COOKIE['globalIdEntidad'])){
+	    	$globalEntidad=$_COOKIE['globalIdEntidad'];
+	  	}else{
+	  		$globalEntidad=1;
+	  	}
+		
 	}
 	require dirname(__DIR__). SB_DS ."../conexionmysqli2.php";
 	$consulta="select cert_privatekey,cert_publickey from siat_credenciales where cod_estado=1 and cod_entidad=$globalEntidad";
