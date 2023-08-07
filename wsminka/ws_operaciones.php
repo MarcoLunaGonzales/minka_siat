@@ -126,8 +126,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     $nitEmpresa  = $datos['nitEmpresa'];
                     $codSucursal = $datos['codSucursal'];
                     // Generamos CUFD
-                    //$codigoSucursal   = 0;    
-                    //$codigoPuntoVenta = 0;
+                    $codigoSucursal   = 0;
+                    $sqlPV="SELECT codigoPuntoVenta FROM siat_puntoventa where cod_ciudad='$codSucursal' and cod_entidad='$idEmpresa' LIMIT 1";
+                    $respPV = mysqli_query($enlaceCon,$sqlPV);
+                    $datPV  = mysqli_fetch_array($respPV);
+                    $codigoPuntoVenta = $datPV[0];
+
                     generarCufd($codSucursal,$codigoSucursal,$codigoPuntoVenta,$idEmpresa);
                     // Limpiamos Respuesta
                     ob_clean();
