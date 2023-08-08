@@ -4,7 +4,7 @@ require('conexionmysqli.inc');
 
 $codAnio  	 = $_POST['cod_anio'];
 $codMes   	 = $_POST['cod_mes'];
-$codSucursal = $_POST['rpt_territorio'];
+$rpt_territorio = $_POST['rpt_territorio'];
 // Sucursal
 $filtrar_sucursal = '';
 foreach ($codSucursal as $opcion) {
@@ -64,7 +64,8 @@ $query = "SELECT s.id_carrera,
 		LEFT JOIN tipos_pago tp ON tp.cod_tipopago = s.cod_tipopago
 		LEFT JOIN configuraciones_tablas_carreras a ON a.idEspecialidad = s.id_carrera
 		WHERE s.salida_anulada=0 
-		AND s.fecha BETWEEN '$fecha_inicio' AND '$fecha_fin' 
+		AND s.fecha BETWEEN '$fecha_inicio' AND '$fecha_fin'
+		AND s.cod_almacen in (select a.cod_almacen from almacenes a where a.cod_ciudad in ($rpt_territorio))
 		AND s.idtabla=1
 		GROUP BY s.id_carrera, s.cod_tipopago, periodoFacturado";
 
@@ -112,6 +113,7 @@ $query = "SELECT s.id_carrera,
 		LEFT JOIN configuraciones_tablas_carreras a ON a.idEspecialidad = s.id_carrera
 		WHERE s.salida_anulada=0 
 		AND s.fecha BETWEEN '$fecha_inicio' AND '$fecha_fin' 
+		AND s.cod_almacen in (select a.cod_almacen from almacenes a where a.cod_ciudad in ($rpt_territorio))
 		AND s.idtabla=2 
 		GROUP BY s.id_carrera, s.cod_tipopago";
 
@@ -158,6 +160,7 @@ $query = "SELECT s.id_carrera,
 		LEFT JOIN configuraciones_tablas_carreras a ON a.idEspecialidad = s.id_carrera
 		WHERE s.salida_anulada=0 
 		AND s.fecha BETWEEN '$fecha_inicio' AND '$fecha_fin' 
+		AND s.cod_almacen in (select a.cod_almacen from almacenes a where a.cod_ciudad in ($rpt_territorio))
 		AND s.idtabla=3
 		GROUP BY s.id_carrera, s.cod_tipopago";
 
