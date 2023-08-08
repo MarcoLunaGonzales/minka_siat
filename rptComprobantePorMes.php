@@ -68,7 +68,7 @@ $query = "SELECT s.id_carrera,
 		AND s.idtabla=1
 		GROUP BY s.id_carrera, s.cod_tipopago, periodoFacturado";
 
-echo "<tr>
+echo "<tr style='background-color: #CCCCC8;'>
 		<td colspan='5'>CUOTAS Y MATRICULAS</td>
 	</tr>";
 
@@ -115,8 +115,8 @@ $query = "SELECT s.id_carrera,
 		AND s.idtabla=2 
 		GROUP BY s.id_carrera, s.cod_tipopago";
 
-echo "<tr colspan='5'>
-		<td>OTROS INGRESOS POR CARRERAS</td>
+echo "<tr style='background-color: #CCCCC8;'>
+		<td colspan='5'>OTROS INGRESOS POR CARRERAS</td>
 	</tr>";
 $resp=mysqli_query($enlaceCon,$query);
 $indice=1;
@@ -161,8 +161,8 @@ $query = "SELECT s.id_carrera,
 		AND s.idtabla=3
 		GROUP BY s.id_carrera, s.cod_tipopago";
 
-echo "<tr>
-		<td> INGRESOS GENERAL 
+echo "<tr style='background-color: #CCCCC8;'>
+		<td colspan='5'> INGRESOS GENERAL 
 		</td>
 	</tr>";
 $resp=mysqli_query($enlaceCon,$query);
