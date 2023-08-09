@@ -45,6 +45,7 @@ echo "<table align='center' class='table table-condensed' width='70%'>
 <th class='bg-primary text-white'><small><small>#</small></small></th>
 	<th class='bg-primary text-white'><small><small>Tipo Pago</small></small></th>
 	<th class='bg-primary text-white'><small><small>Carrera</small></small></th>
+	<th class='bg-primary text-white'><small><small>Tipo</small></small></th>
 	<th class='bg-primary text-white'><small><small>MES Concepto</small></small></th>
 	<th class='bg-primary text-white'><small><small>Monto</small></small></th>
 </tr></thead><tbody>";
@@ -70,21 +71,24 @@ $query = "SELECT s.id_carrera,
 		GROUP BY s.id_carrera, s.cod_tipopago, periodoFacturado";
 
 echo "<tr style='background-color: #CCCCC8;'>
-		<td colspan='5'>CUOTAS Y MATRICULAS</td>
+		<td colspan='6'>CUOTAS Y MATRICULAS</td>
 	</tr>";
 
 $resp=mysqli_query($enlaceCon,$query);
 $indice=1;
 $suma_total = 0;
+$tipo 		= '';
 while($datos=mysqli_fetch_array($resp)){
 	$nombre_carrera = $datos[5];
 	$nombre_pago 	= $datos[4];
 	$monto 			= number_format($datos[3], 2);
 	$nombre_mes  	= obtenerNombreMes($codMes);
+	$tipo 			= ($datos[2]==1) ? 'Pensión' : 'Matrícula';
 	echo "<tr>
 		<td>$indice</td>
 		<td>$nombre_pago</td>
 		<td style='text-align: left;'>$nombre_carrera</td>
+		<td>$tipo</td>
 		<td>$nombre_mes</td>
 		<td style='text-align: left;'>$monto</td>
 	</tr>";
@@ -95,8 +99,8 @@ while($datos=mysqli_fetch_array($resp)){
 	$suma_total_global += $monto;
 }
 echo "<tr style='backgnumber_format-color: #f2f2f2;'>
-		<td colspan='4' style='text-align: right;color:red;'>Total:</td>
-		<td style='text-align: left;'".(number_format($suma_total, 2))."/td>
+		<td colspan='5' style='text-align: right;color:red;'>Total:</td>
+		<td style='text-align: left;'>".(number_format($suma_total, 2))."</td>
 	</tr>
 </tbody></br>";
 
@@ -118,7 +122,7 @@ $query = "SELECT s.id_carrera,
 		GROUP BY s.id_carrera, s.cod_tipopago";
 
 echo "<tr style='background-color: #CCCCC8;'>
-		<td colspan='5'>OTROS INGRESOS POR CARRERAS</td>
+		<td colspan='6'>OTROS INGRESOS POR CARRERAS</td>
 	</tr>";
 $resp=mysqli_query($enlaceCon,$query);
 $indice=1;
@@ -132,6 +136,7 @@ while($datos=mysqli_fetch_array($resp)){
 		<td>$indice</td>
 		<td>$nombre_pago</td>
 		<td style='text-align: left;'>$nombre_carrera</td>
+		<td></td>
 		<td>$nombre_mes</td>
 		<td style='text-align: left;'>$monto</td>
 	</tr>";
@@ -142,8 +147,8 @@ while($datos=mysqli_fetch_array($resp)){
 	$suma_total_global += $monto;
 }
 echo "<tr style='backgnumber_format-color: #f2f2f2;'  colspan='5'>
-		<td colspan='4' style='text-align: right;color:red;'>Total:</td>
-		<td style='text-align: left;'".(number_format($suma_total, 2))."/td>
+		<td colspan='5' style='text-align: right;color:red;'>Total:</td>
+		<td style='text-align: left;'>".(number_format($suma_total, 2))."</td>
 	</tr>
 </tbody></br>";
 
@@ -165,7 +170,7 @@ $query = "SELECT s.id_carrera,
 		GROUP BY s.id_carrera, s.cod_tipopago";
 
 echo "<tr style='background-color: #CCCCC8;'>
-		<td colspan='5'> INGRESOS GENERAL 
+		<td colspan='6'> INGRESOS GENERAL 
 		</td>
 	</tr>";
 $resp=mysqli_query($enlaceCon,$query);
@@ -180,6 +185,7 @@ while($datos=mysqli_fetch_array($resp)){
 		<td>$indice</td>
 		<td>$nombre_pago</td>
 		<td style='text-align: left;'>$nombre_carrera</td>
+		<td></td>
 		<td>$nombre_mes</td>
 		<td style='text-align: left;'>$monto</td>
 	</tr>";
@@ -190,14 +196,14 @@ while($datos=mysqli_fetch_array($resp)){
 	$suma_total_global += $monto;
 }
 echo "<tr style='backgnumber_format-color: #f2f2f2;'>
-		<td colspan='4' style='text-align: right;color:red;'>Total:</td>
-		<td style='text-align: left;'".(number_format($suma_total, 2))."/td>
+		<td colspan='5' style='text-align: right;color:red;'>Total:</td>
+		<td style='text-align: left;'>".(number_format($suma_total, 2))."</td>
 	</tr>
 </tbody></br>";
 // Sumatoria Total Global
 echo "<tfoot style='backgnumber_format-color: #E6F7FF;'>
 	<tr>
-		<td colspan='4' style='text-align: right;color:red;'>Suma Total:</td>
+		<td colspan='5' style='text-align: right;color:red;'>Suma Total:</td>
 		<td style='text-align: left;'>".number_format($suma_total_global, 2)."</td>
 	</tr>
 </tfoot></table>";
