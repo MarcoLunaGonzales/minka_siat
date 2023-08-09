@@ -81,6 +81,7 @@ $tipo 		= '';
 while($datos=mysqli_fetch_array($resp)){
 	$nombre_carrera = $datos[5];
 	$nombre_pago 	= $datos[4];
+	$monto_original		= $datos[3];
 	$monto 			= number_format($datos[3], 2);
 	$nombre_mes  	= obtenerNombreMes($codMes);
 	$tipo 			= ($datos[2]==1) ? 'Pensión' : 'Matrícula';
@@ -93,16 +94,15 @@ while($datos=mysqli_fetch_array($resp)){
 		<td style='text-align: left;'>$monto</td>
 	</tr>";
 	$indice++;
-	$suma_total += $monto;
-
-	// Suma Global
-	$suma_total_global += $monto;
+	$suma_total += $monto_original;
 }
 echo "<tr style='backgnumber_format-color: #f2f2f2;'>
 		<td colspan='5' style='text-align: right;color:red;'>Total:</td>
 		<td style='text-align: left;'>".(number_format($suma_total, 2))."</td>
 	</tr>
 </tbody></br>";
+// Suma Global
+$suma_total_global += $suma_total;
 
 /***************************************************
  REGISTRO DE COMPROBANTE | OTROS INGRESOS POR CARRERAS 
@@ -130,6 +130,7 @@ $suma_total = 0;
 while($datos=mysqli_fetch_array($resp)){
 	$nombre_carrera = $datos[4];
 	$nombre_pago 	= $datos[3];
+	$monto_original		= $datos[2];
 	$monto 			= number_format($datos[2], 2);
 	$nombre_mes  	= obtenerNombreMes($codMes);
 	echo "<tr>
@@ -141,16 +142,15 @@ while($datos=mysqli_fetch_array($resp)){
 		<td style='text-align: left;'>$monto</td>
 	</tr>";
 	$indice++;
-	$suma_total += $monto;
-
-	// Suma Global
-	$suma_total_global += $monto;
+	$suma_total += $monto_original;
 }
 echo "<tr style='backgnumber_format-color: #f2f2f2;'  colspan='5'>
 		<td colspan='5' style='text-align: right;color:red;'>Total:</td>
 		<td style='text-align: left;'>".(number_format($suma_total, 2))."</td>
 	</tr>
 </tbody></br>";
+// Suma Global
+$suma_total_global += $suma_total;
 
 /*************************************************
  REGISTRO DE COMPROBANTE | OTROS INGRESOS GENERAL 
@@ -179,6 +179,7 @@ $suma_total = 0;
 while($datos=mysqli_fetch_array($resp)){
 	$nombre_carrera = $datos[4];
 	$nombre_pago 	= $datos[3];
+	$monto_original		= $datos[2];
 	$monto 			= number_format($datos[2], 2);
 	$nombre_mes  	= obtenerNombreMes($codMes);
 	echo "<tr>
@@ -190,16 +191,15 @@ while($datos=mysqli_fetch_array($resp)){
 		<td style='text-align: left;'>$monto</td>
 	</tr>";
 	$indice++;
-	$suma_total += $monto;
-
-	// Suma Global
-	$suma_total_global += $monto;
+	$suma_total += $monto_original;
 }
 echo "<tr style='backgnumber_format-color: #f2f2f2;'>
 		<td colspan='5' style='text-align: right;color:red;'>Total:</td>
 		<td style='text-align: left;'>".(number_format($suma_total, 2))."</td>
 	</tr>
 </tbody></br>";
+// Suma Global
+$suma_total_global += $suma_total;
 // Sumatoria Total Global
 echo "<tfoot style='backgnumber_format-color: #E6F7FF;'>
 	<tr>
