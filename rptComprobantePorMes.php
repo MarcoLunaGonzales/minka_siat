@@ -65,7 +65,7 @@ $query = "SELECT s.id_carrera,
 		AND s.cod_almacen in (select a.cod_almacen from almacenes a where a.cod_ciudad in ($rpt_territorio))
 		AND s.idtabla=1
 		GROUP BY s.id_carrera, s.cod_tipopago, periodoFacturado";
-echo $query;
+// echo $query;
 echo "<tr style='background-color: #CCCCC8;'>
 		<td colspan='6'>CUOTAS Y MATRICULAS</td>
 	</tr>";
