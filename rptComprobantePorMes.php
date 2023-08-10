@@ -4,12 +4,8 @@ require('conexionmysqli.inc');
 
 $codAnio  	 = $_POST['cod_anio'];
 $codMes   	 = $_POST['cod_mes'];
-$rpt_territorio = $_POST['rpt_territorio'];
-// Sucursal
-$filtrar_sucursal = '';
-foreach ($codSucursal as $opcion) {
-	$filtrar_sucursal .= ' AND cod_sucursal = '.$opcion;
-}
+$rpt_territorio = implode(',',$_POST['rpt_territorio']);
+
 
 $fecha_inicio = date("Y-m-d", strtotime("$codAnio-$codMes-01"));
 $fecha_fin    = date("Y-m-t", strtotime("$codAnio-$codMes-01"));
@@ -72,7 +68,7 @@ $query = "SELECT s.id_carrera,
 		AND s.cod_almacen in (select a.cod_almacen from almacenes a where a.cod_ciudad in ($rpt_territorio))
 		AND s.idtabla=1
 		GROUP BY s.id_carrera, s.cod_tipopago, periodoFacturado";
-
+// echo $query;
 echo "<tr style='background-color: #CCCCC8;'>
 		<td colspan='6'>CUOTAS Y MATRICULAS</td>
 	</tr>";

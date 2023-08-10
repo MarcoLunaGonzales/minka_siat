@@ -35,7 +35,7 @@ for ($i=0; $i < count($meses); $i++) {
 	}
 }
 echo "</select></td>";
-echo "<td width='50%'><select name='rpt_territorio' data-live-search='true' title='-- Elija una sucursal --'  id='rpt_territorio' multiple data-actions-box='true' data-style='select-with-transition' data-actions-box='true' data-size='10' class='selectpicker form-control' required>";	
+echo "<td width='50%'><select name='rpt_territorio[]' data-live-search='true' title='-- Elija una sucursal --'  id='rpt_territorio' multiple data-actions-box='true' data-style='select-with-transition' data-actions-box='true' data-size='10' class='selectpicker form-control' required>";	
 	$globalAgencia=$_COOKIE["global_agencia"];
    	
    	$sql="select cod_ciudad, descripcion from ciudades where cod_ciudad>0 order by descripcion";    
