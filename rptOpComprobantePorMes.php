@@ -3,9 +3,9 @@
 require("conexionmysqli.inc");
 require("estilos_administracion.inc");
 
-echo "<form action='rptComprobantePorMes.php' method='post'>";
+echo "<form action='rptComprobantePorMes.php' method='post' target='_blank'>";
 
-echo "<h1>Comprobantes por Mes</h1>";
+echo "<h6 align='center'>Reporte Ventas x Tipo de Pago (Verificación para Contabilización)</h6>";
 
 echo "<center><table class='table table-bordered'>";
 

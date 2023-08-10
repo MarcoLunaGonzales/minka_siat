@@ -39,6 +39,9 @@ function obtenerNombreMes($numeroMes) {
     }
 }
 
+echo "<h1>Reporte Ventas x Tipo de Pago (Verificación para Contabilización)</h1>";
+
+
 echo "<table align='center' class='table table-condensed' width='70%'>
 <thead style='position: sticky; top: 0; backgnumber_format-color: #333 !important; color: white;'>
 <tr class='bg-primary text-white'>

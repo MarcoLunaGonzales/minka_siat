@@ -29,7 +29,8 @@
 </head>
 <body>
 <?php
-include("datosUsuario.php");
+require("datosUsuario.php");
+
 ?>
 
 <div id="page">
@@ -80,7 +81,7 @@ include("datosUsuario.php");
 				</ul>
 				<li><span>Reportes SIAT</span>
 				<ul>
-					<li><a href="rptOpComprobantePorMes.php" target="contenedorPrincipal">Comprobantes</a></li>
+					<li><a href="rptOpComprobantePorMes.php" target="contenedorPrincipal">Ventas x Tipo de Pago</a></li>
 					<!-- Ventas -->
 					<li><a href="rptOpLibroVentas.php" target="contenedorPrincipal">Libro de Ventas</a></li>
 					<!-- <li><a href="registrar_salidaventas_manuales.php" target="_blank">Factura Manual de Contigencia</a></li> -->
