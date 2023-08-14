@@ -208,6 +208,9 @@ class FacturaOnline
 			//datosCompletosFactura
 			require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";
 
+			 error_reporting(E_ALL);
+			 ini_set('display_errors', '1');
+
 			$consulta="SELECT s.cod_salida_almacenes,c.cod_ciudad,
 			s.siat_codigoPuntoVenta as codigoPuntoVenta,			
 			(select cufd from siat_cufd where codigo=s.siat_codigocufd)cufd_generado,
@@ -245,12 +248,16 @@ class FacturaOnline
 			$codigoPuntoVenta = $dataFact['codigoPuntoVenta'];
 			$codigoSucursal = $dataFact['cod_impuestos'];
 			$modalidad=$config->modalidad;//modificacion para facturacion electronica
+			
 			//echo "modalidad: ".$modalidad;
+			
 			if($modalidad==1){//eletronica en linea
 				include dirname(__DIR__). SB_DS ."conexioncert.php";
 				$privCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . $privatekey;
 				$pubCert = MOD_SIAT_DIR . SB_DS . 'certs' . SB_DS . $publickey;
 			}
+
+			//echo "despues de modalidad";
 			$serviceCodigos = new ServicioFacturacionCodigos(null, null, $config->tokenDelegado);
 			$serviceCodigos->setConfig((array)$config);
 			$serviceCodigos->cuis = $dataFact['cuis'];
@@ -265,7 +272,9 @@ class FacturaOnline
 				$factura->cabecera->nitEmisor 	= $config->nit;
 				$factura->cabecera->cufd		= $dataFact['cufd_generado'];
 				// $factura->cabecera->codigoDocumentoSector		= 1;
-				// echo "***aquui***".$factura->cabecera->cufd;
+				
+				//echo "***aquui***".$factura->cabecera->cufd;
+				
 				//$sucursalNro, $modalidad, $tipoEmision, $tipoFactura, $codigoControl
 				$factura->cabecera->codigoExcepcion=$dataFact['siat_excepcion'];
 				// $factura->cabecera->leyenda=$leyenda;
@@ -280,6 +289,9 @@ class FacturaOnline
 				$factura->validate();
 				return $factura;
 			}elseif($tipoEmision==-1){
+				
+				//echo "entra descargar XML";
+				
 				$tipoFactura=SiatInvoice::FACTURA_DERECHO_CREDITO_FISCAL;
 				if($dataFact['siat_codigoRecepcion']=="1"){
 					$tipoEmision = SiatInvoice::TIPO_EMISION_OFFLINE;	
@@ -289,6 +301,10 @@ class FacturaOnline
 				
 				$fechaemision=$dataFact['siat_fechaemision'];
 				$factura = self::buildInvoice($codigoPuntoVenta, $codigoSucursal, $config->modalidad,$dataFact,$fechaemision);
+				
+				//print_r($factura);
+				//hasta aqui todo ok el xml
+
 				$factura->cabecera->razonSocialEmisor	= $config->razonSocial;
 				$factura->cabecera->nitEmisor 	= $config->nit;
 				
@@ -304,7 +320,11 @@ class FacturaOnline
 				$factura->cabecera->cuf=$dataFact['siat_cuf'];
 				$factura->cabecera->leyenda=$dataFact['leyenda'];
 				$factura->validate();
+				
+				//echo "validadda";
+
 				if($modalidad==1){//facturacion eletronica en linea
+					//echo "entro modalidad electronica";
 					$service = new ServicioFacturacionElectronica($dataFact['cuis'], $dataFact['cufd_generado'], $config->tokenDelegado);
 					$service->setConfig((array)$config);
 					$service->codigoControl = $dataFact['codigoControl_generado'];
@@ -318,9 +338,9 @@ class FacturaOnline
 				$service->debug = true;
 				$facturaXml = $service->buildInvoiceXml($factura);
 				return $facturaXml;
-				
 			}else{
 				if($modalidad==1){//facturacion eletronica en linea
+					//echo "xml modalidad 1";
 					$service = new ServicioFacturacionElectronica($dataFact['cuis'], $dataFact['cufd_generado'], $config->tokenDelegado);
 					$service->wsdl=conexionSiatUrl::wsdlFacturacionElectronica;
 					$service->setConfig((array)$config);				
@@ -328,6 +348,7 @@ class FacturaOnline
 					$service->setPrivateCertificateFile($privCert);
 					$service->setPublicCertificateFile($pubCert);
 				}else{
+					//echo "xml modalidad <> 1";
 					$service = new ServicioFacturacionComputarizada($dataFact['cuis'], $dataFact['cufd_generado'], $config->tokenDelegado);		
 					$service->setConfig((array)$config);			
 					$service->codigoControl = $dataFact['codigoControl_generado'];

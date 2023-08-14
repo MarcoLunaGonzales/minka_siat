@@ -1,6 +1,7 @@
 <?php
 
 require('conexionmysqli.inc');
+require("estilos_administracion.inc");
 
 $codAnio  	 = $_POST['cod_anio'];
 $codMes   	 = $_POST['cod_mes'];
@@ -169,7 +170,7 @@ $query = "SELECT s.id_carrera,
 		GROUP BY s.id_carrera, s.cod_tipopago";
 
 echo "<tr style='background-color: #CCCCC8;'>
-		<td colspan='6'> INGRESOS GENERAL 
+		<td colspan='6'> OTROS INGRESOS GENERALES 
 		</td>
 	</tr>";
 $resp=mysqli_query($enlaceCon,$query);
