@@ -324,7 +324,8 @@ class FacturaOnline
 				//echo "validadda";
 
 				if($modalidad==1){//facturacion eletronica en linea
-					//echo "entro modalidad electronica";
+					echo "entro modalidad electronica ronald";
+					
 					$service = new ServicioFacturacionElectronica($dataFact['cuis'], $dataFact['cufd_generado'], $config->tokenDelegado);
 					$service->setConfig((array)$config);
 					$service->codigoControl = $dataFact['codigoControl_generado'];
@@ -340,7 +341,9 @@ class FacturaOnline
 				return $facturaXml;
 			}else{
 				if($modalidad==1){//facturacion eletronica en linea
+					
 					//echo "xml modalidad 1";
+					
 					$service = new ServicioFacturacionElectronica($dataFact['cuis'], $dataFact['cufd_generado'], $config->tokenDelegado);
 					$service->wsdl=conexionSiatUrl::wsdlFacturacionElectronica;
 					$service->setConfig((array)$config);				
