@@ -363,14 +363,15 @@ footer p {
         <div class="p-5">
             <section class="top-content bb d-flex justify-content-between">
                 
-            <table>
-                <tr><td><div class="logo">
+            <table border="0" width="100%">
+                <tr><td width="20%" align="center"><div class="logo">
                     <img src="<?=__DIR__?>/imagenes/<?=$logoEnvioEmail;?>" alt="" class="img-fluid" style="width: 100px;height: 100px;">
                 </div></td>
-                    <td><div class="top-left">
+                    <td align="center"><div class="top-left">
                     <div class="position-relative">
                         <div style="font-size: 15px;width:100%;background:#14AF91;color:#fff;padding: 5px;"><p>FACTURA <br><small><small>(Con Derecho a Crédito Fiscal)</small></small></p></div>                        
-                        <p style="width:300px !important;hyphens: auto;word-wrap: break-word;word-break: break-word;font-size: 10px;">Código Autorización: <span><?=$cuf?></span></p><p style='font-size: 14px;'>Factura No. <span><?=$nroDocVenta?></span></p>
+                        <p style="width:100%;!important;hyphens: auto;word-wrap: break-word;word-break: break-word;font-size: 12px;">Código Autorización: <span><?=$cuf?></span></p><p style='font-size: 16px;'>Factura No. <span><?=$nroDocVenta?></span></p><br>
+                        <p style="width:100%;font-size: 12px;">Fecha de Factura: <span><?=$fechaFactura?></span></p>
                     </div>
                 </div></td>
                 </tr>
@@ -380,41 +381,37 @@ footer p {
             <section class="store-user mt-5">
                 <div class="col-10">
                     <div class="row bb pb-3">
-                        <table style="width: 100%;font-size: 12px;">
-                            <tr><td width="40%"><div class="col-7">
-                            <p><?=$nombreTxt?></p>
-                            <h4 style="color:#14AF91"><?=$sucursalTxt?></h4>
-                            <div class="txn mt-2">Punto de Venta: <?=$siat_codigopuntoventa?></div>
-                            <div class="txn mt-2">NIT: <?=$nitTxt?></div>
-                            <p class="address"> <?=$direccionTxt?></p>
-                            <div class="txn mt-2">Tel: <?=$telefonoTxt?></div>
-                            <div class="txn mt-2">La Paz - Bolivia</div>
-                            </div></td><td width="60%" valign="top"><div class="col-5">
-                            <p>Nombre/Razón Social</p>
-                            <h4 style="color:#14AF91"><?=$razonSocialCliente?></h4>
-                            
-                            
-                            <p class="address">Nombre Estudiante: <?=$nombreEstudiante?></p>                            
-                            <p class="address">Periodo Facturado: <?=$periodoFacturado?></p>
-                            
-                            <p class="address">NIT/CI/CEX: <?=$nitCliente." ".$siat_complemento?></p>
-                            <p class="address">Cod. Cliente: <?=$cod_cliente?></p>
-                            
-                            <!-- <p class="address">Tel:</p> -->
-                        </div></td></tr>
+                        <table style="width: 100%;font-size: 12px;" border="0" width="100%">
+                            <tr>
+                                <td width="73%">
+                                    <div class="col-9">
+                                        <p><?=$nombreTxt?></p>
+                                        <h4 style="color:#14AF91"><?=$sucursalTxt?></h4>
+                                        <div class="txn mt-2"><b>Punto de Venta: </b><?=$siat_codigopuntoventa?></div>
+                                        <div class="txn mt-2"><b>NIT: </b><?=$nitTxt?></div>
+                                    </div>
+                                </td>
+                                <td valign="top">
+                                    <div class="col-3">
+                                        <p>Nombre/Razón Social</p>
+                                        <h4 style="color:#14AF91"><?=$razonSocialCliente?></h4>
+                                        <!--p class="address">Nombre Estudiante: <?=$nombreEstudiante?></p>                            
+                                        <p class="address">Periodo Facturado: <?=$periodoFacturado?></p-->                            
+                                        <p class="address"><b>NIT/CI/CEX:</b> <?=$nitCliente." ".$siat_complemento?></p>
+                                        <p class="address"><b>Cod. Cliente:</b> <?=$cod_cliente?></p>
+                                        <!-- <p class="address">Tel:</p> -->
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="address"><b>Dirección: </b><?=$direccionTxt?></p>
+                                    <div class="txn mt-2"><b>Teléfono: </b><?=$telefonoTxt?></div>
+                                    <div class="txn mt-2"><b>Ciudad: </b><?=$ciudadTxt?></div>     
+                                    <div class="txn mt-2"><b>Tipo de Pago: </b><?=$nombrePago;?></div>     
+                                </td>
+                            </tr>
                         </table>
-                        
-                        
-                    </div>
-                    <div class="row extra-info pt-3" style="font-size: 12px;">
-                        <div class="col-7">
-                            <p>Tipo de Pago: <span><?=$nombrePago?></span></p>
-                            
-                            
-                        </div>
-                        <div class="col-5">
-                            <p>Fecha de Factura: <span><?=$fechaFactura?></span></p>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -440,11 +437,11 @@ footer p {
 //         group by s.cod_material
 //         order by s.orden_detalle";
 
-$sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
+$sqlDetalle="SELECT s.cod_material, s.orden_detalle, s.observaciones, s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
         sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
-        from salida_detalle_almacenes s, material_apoyo m 
-        where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoVenta
-        group by m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario
+        from salida_detalle_almacenes s 
+        where s.cod_salida_almacen=$codigoVenta
+        group by s.orden_detalle, s.observaciones,s.precio_unitario
         order by s.orden_detalle;";
 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 
@@ -456,9 +453,9 @@ while($datDetalle=mysqli_fetch_array($respDetalle)){
     if($datDetalle['observaciones']==null){
         $observaciones="";
     }
-    $codInterno=$datDetalle['codigo_material'];
+    $codInterno=$datDetalle['cod_material'];
     $cantUnit=$datDetalle['cantidad_unitario'];
-    $nombreMat=$datDetalle['descripcion_material']." ".$observaciones;;
+    $nombreMat=$datDetalle['observaciones'];
     $precioUnit=$datDetalle['precio_unitario'];
     $descUnit=$datDetalle['descuento_unitario'];
     //$montoUnit=$datDetalle[5];

@@ -21,8 +21,8 @@ function InsertlogFacturas_salida($cod_error,$detalle_error,$json,$enlaceCon){
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
     require_once '../conexionmysqli2.php';
 
-     error_reporting(E_ALL);
-     ini_set('display_errors', '1');
+    // error_reporting(E_ALL);
+    // ini_set('display_errors', '1');
 
     // $datos = json_decode(file_get_contents("php://input"), true); 
     $json=file_get_contents("php://input");
@@ -299,8 +299,8 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     $observaciones="";
     $cuf="";
 
-    $totalVenta=$monto_final;
-    $descuentoVenta=0;
+    $totalVenta=$monto_total;
+    $descuentoVenta=$descuento;
     $totalFinal=$monto_final;
 
     $totalEfectivo=0;

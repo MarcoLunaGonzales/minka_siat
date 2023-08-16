@@ -8,7 +8,7 @@ $codigo=$_GET["codigo"];
 // $cod_sucursal=$_GET["cod_sucursal"];
 //
 //echo "ddd:$codigo<br>";
-$sqlFecha="select DAY(s.fecha), MONTH(s.fecha), YEAR(s.fecha), HOUR(s.hora_salida), MINUTE(s.hora_salida),s.cod_chofer,(select c.email_cliente from clientes c where c.cod_cliente=s.cod_cliente)as correo_destino
+$sqlFecha="select DAY(s.fecha), MONTH(s.fecha), YEAR(s.fecha), HOUR(s.hora_salida), MINUTE(s.hora_salida),s.cod_chofer,(select c.email_cliente from clientes c where c.cod_cliente=s.cod_cliente)as correo_destino, s.siat_usuario
 from salida_almacenes s where s.cod_salida_almacenes='$codigo'";
 // echo $sqlFecha;
 $respFecha=mysqli_query($enlaceCon,$sqlFecha);
@@ -21,15 +21,9 @@ $mm=$datConf[4];
 
 $chofer=$datConf[5];
 $correo_destino=$datConf[6];
-// $dia=mysqli_result($respFecha,0,0);
-// $mes=mysqli_result($respFecha,0,1);
-// $ano=mysqli_result($respFecha,0,2);
-// $hh=mysqli_result($respFecha,0,3);
-// $mm=mysqli_result($respFecha,0,4);
-// $chofer=mysqli_result($respFecha,0,5);
-// $correo_destino=mysqli_result($respFecha,0,6);
+$nombreUsuario=$datConf[7];
 
-$nombreCajero=nombreFuncionarioReal($enlaceCon,$chofer);
+$nombreCajero=$nombreUsuario;
 //generamos el codigo de confirmacion
 $codigoGenerado=$codigo+$dia+$mes+$ano+$hh+$mm;
 //

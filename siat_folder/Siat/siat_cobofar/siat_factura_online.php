@@ -324,7 +324,7 @@ class FacturaOnline
 				//echo "validadda";
 
 				if($modalidad==1){//facturacion eletronica en linea
-					echo "entro modalidad electronica ronald";
+					//echo "entro modalidad electronica ronald";
 					
 					$service = new ServicioFacturacionElectronica($dataFact['cuis'], $dataFact['cufd_generado'], $config->tokenDelegado);
 					$service->setConfig((array)$config);
