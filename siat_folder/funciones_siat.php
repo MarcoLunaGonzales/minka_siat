@@ -228,7 +228,6 @@ function verificarNitClienteSiat($nit,$cod_ciduad=1){
   return $factura::verificarNitCliente($nit,$cod_ciduad);
 }
 function verificarEstadoFactura($codVenta,$global_agencia=null){
-  
   require_once "Siat/siat_cobofar/siat_factura_online.php";   
   $factura= new FacturaOnline();
   return $factura::verificarEstadoFactura($codVenta,$global_agencia);  

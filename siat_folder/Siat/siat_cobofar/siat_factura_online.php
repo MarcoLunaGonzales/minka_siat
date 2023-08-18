@@ -497,7 +497,8 @@ class FacturaOnline
 		$consulta="SELECT s.cuis,c.cod_impuestos,(SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad limit 1) as punto_venta,(SELECT cufd from siat_cufd where fecha='$fechaActual' and cod_ciudad=c.cod_ciudad and s.cuis=cuis   and estado=1 order by fecha limit 1)as siat_cufd,(select sc.modalidad from siat_credenciales sc where sc.cod_entidad in (select cc.cod_entidad from ciudades cc where cc.cod_ciudad=c.cod_ciudad)) as modalidad 
 
 			from siat_cuis s join ciudades c on c.cod_ciudad=s.cod_ciudad where s.cod_ciudad='$global_agencia' and cod_gestion=YEAR(NOW()) and estado=1 order by s.codigo desc limit 1";		
-		// echo $consulta;
+		
+		//echo $consulta;
 
 		$resp = mysqli_query($enlaceCon,$consulta);	
 		$dataList = $resp->fetch_array(MYSQLI_ASSOC);
@@ -510,24 +511,24 @@ class FacturaOnline
 		$resp = mysqli_query($enlaceCon,$sql);	
 		$dataCuf = $resp->fetch_array(MYSQLI_ASSOC);
 		$cuf = $dataCuf['siat_cuf'];
-		
 		//echo "CUFD:".$cufd;
-
 		$codigoSucursal = $dataList['cod_impuestos'];
-
 		$config = self::buildConfig();
 		$config->validate();
 		if($modalidad==1){//electronica en linea
 			$service = new ServicioFacturacionElectronica($cuis, $cufd, $config->tokenDelegado);		
 		}else{//computarizada en linea
+			//echo "entro 2";
 			$service = new ServicioFacturacionComputarizada($cuis, $cufd, $config->tokenDelegado);		
 		}
-		
+		//echo "salio del ()";
+		//print_r($config);
 		$service->setConfig((array)$config);
 		$service->debug = true;
 
-		 $res2 = $service->verificacionEstadoFactura($codigoSucursal,$codigoPuntoVenta,$cufd,$cuf);		 
-		 return $res2;
+		$res2 = $service->verificacionEstadoFactura($codigoSucursal,$codigoPuntoVenta,$cufd,$cuf);		 
+		
+		return $res2;
 
 	}
 

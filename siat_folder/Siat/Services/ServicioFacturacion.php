@@ -408,11 +408,13 @@ class ServicioFacturacion extends ServicioSiat
 
 	public function verificacionEstadoFactura($codigoSucursal = 0,$codigoPuntoVenta = 0,$cufd,$cuf)
 	{
-		 // $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
-		
+		// $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
+		//echo "cualquier cosa";		
+		//echo "modalidad".$this->modalidad;
 		if($this->modalidad==1){//electronica
 			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
 		}else{
+			//echo "aqui entro mod 2";
 			$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
 		}
 		list(,$action) = explode('::', __METHOD__);

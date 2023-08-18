@@ -1,6 +1,10 @@
-
 <?php
 require "conexionmysqli.inc";
+
+ error_reporting(E_ALL);
+ ini_set('display_errors', '1');
+
+
 $codSalida=$_GET['codigo_salida'];
 
 if(isset($_GET['admin'])){
@@ -12,7 +16,9 @@ if(isset($_GET['admin'])){
 $sql="SELECT a.cod_ciudad,s.nro_correlativo,s.razon_social,s.fecha 
 from salida_almacenes s join almacenes a on s.cod_almacen=a.cod_almacen 
 where s.cod_salida_almacenes='$codSalida'";
-// echo $sql;
+
+//echo $sql;
+
 $respq=mysqli_query($enlaceCon,$sql);
 $globalSucursal=mysqli_result($respq,0,0);
 $nro_correlativo=mysqli_result($respq,0,1);
@@ -35,7 +41,7 @@ $fecha_factura=mysqli_result($respq,0,3);
 $stringXml="";
 $codigoError="";
 
-if(isset($_GET['nit'])&&(int)$_GET['nit']>0){
+/*if(isset($_GET['nit'])&&(int)$_GET['nit']>0){
     $nitOrigen=$_GET['nit'];
     $tipo_docOrigen=$_GET['tipo_doc'];
     $complementoOrigen=$_GET['complemento'];
@@ -45,77 +51,9 @@ if(isset($_GET['nit'])&&(int)$_GET['nit']>0){
 
     $sqlRecep="UPDATE facturas_venta SET nit='$nitOrigen' where cod_venta='$codSalida' and cod_sucursal='".$_COOKIE['global_agencia']."'";
     mysqli_query($enlaceCon,$sqlRecep);
-}
+}*/
 
-if(isset($_GET['r'])){
-        $sqlRecep="select siat_codigoRecepcion,fecha,nit,siat_codigotipodocumentoidentidad,siat_complemento from salida_almacenes where cod_salida_almacenes='$codSalida'";
-        $respRecep=mysqli_query($enlaceCon,$sqlRecep);
-        $recepcion=mysqli_result($respRecep,0,0);
-        $fecha=mysqli_result($respRecep,0,1);
-        $nitCliente=mysqli_result($respRecep,0,2);
-        $tipoDoc=mysqli_result($respRecep,0,3);
-        $complemento=mysqli_result($respRecep,0,4);
-
-        $errorFacturaXml=0; $mens="";
-        if($recepcion==""){
-            $anio=date("Y");
-            $sqlCuis="select cuis FROM siat_cuis where cod_ciudad='$globalSucursal' and estado=1 and cod_gestion='$anio' order by codigo desc LIMIT 1";
-            $respCuis=mysqli_query($enlaceCon,$sqlCuis);
-            $cuis=mysqli_result($respCuis,0,0);
-
-            $sqlCufd="select codigo,cufd,codigo_control FROM siat_cufd where cod_ciudad='$globalSucursal' and estado=1 and fecha='$fecha' and cuis='$cuis' LIMIT 1"; 
-            //echo $sqlCufd;
-            $respCufd=mysqli_query($enlaceCon,$sqlCufd);
-            $cufd=mysqli_result($respCufd,0,1);
-            $controlCodigo=mysqli_result($respCufd,0,2);
-            $codigoCufd=mysqli_result($respCufd,0,0);
-
-            require_once "siat_folder/funciones_siat.php"; 
-            $errorConexion=verificarConexion()[0];
-            if(isset($_GET['ex'])&&$_GET['ex']==1){
-                $facturaImpuestos=generarFacturaVentaImpuestos($codSalida,true,$errorConexion);
-            }else{
-                $facturaImpuestos=generarFacturaVentaImpuestos($codSalida,false,$errorConexion);
-            }            
-            //print_r($facturaImpuestos);
-            $fechaEmision=$facturaImpuestos[1];
-            $cuf=$facturaImpuestos[2];            
-
-            $codigoEstadoDevol=0;
-            if(isset($facturaImpuestos[0]->RespuestaServicioFacturacion->codigoEstado)){
-                $codigoEstadoDevol=$facturaImpuestos[0]->RespuestaServicioFacturacion->codigoEstado;
-            }
-
-            
-            if(isset($facturaImpuestos[0]->RespuestaServicioFacturacion->codigoRecepcion)){
-                $sqlExcepcionAlmacenes="";
-                if(isset($_GET['ex'])&&$_GET['ex']==1){
-                    $sqlExcepcionAlmacenes=" ,siat_excepcion=1 ";
-                }                
-                $codigoRecepcion=$facturaImpuestos[0]->RespuestaServicioFacturacion->codigoRecepcion;
-                $sqlUpdMonto="update salida_almacenes set siat_fechaemision='$fechaEmision',siat_estado_facturacion='1',siat_codigoRecepcion='$codigoRecepcion',siat_cuf='$cuf',siat_codigocufd='$codigoCufd',siat_codigotipoemision='1',siat_codigoEstado='$codigoEstadoDevol' $sqlExcepcionAlmacenes 
-                        where cod_salida_almacenes='$codSalida' ";
-                $respUpdMonto=mysqli_query($enlaceCon,$sqlUpdMonto);
-
-                 // AGREGAR UN TEMP DEL XML
-                // $archivo = fopen("temp_xml/$cuf.xml","w+b");
-                // fwrite($archivo, $facturaImpuestos[3]);
-                // fclose($archivo);
-
-
-                ?><script type="text/javascript">window.location.href='formatoFacturaOnLine.php?codVenta=<?=$codSalida?>'</script><?php
-            }else{
-                $codigoError=$facturaImpuestos[0]->RespuestaServicioFacturacion->mensajesList->codigo;
-                $mens="<b>(".$facturaImpuestos[0]->RespuestaServicioFacturacion->mensajesList->codigo.") ".$facturaImpuestos[0]->RespuestaServicioFacturacion->mensajesList->descripcion."</b>";
-                $stringXml=$facturaImpuestos[3];
-                $sqlUpdMonto="update salida_almacenes set siat_codigotipoemision=2,siat_codigocufd='$codigoCufd',siat_estado_facturacion='3',siat_codigoEstado='$codigoEstadoDevol'
-                        where cod_salida_almacenes='$codSalida' "; //,siat_fechaemision='$fechaEmision',
-                $respUpdMonto=mysqli_query($enlaceCon,$sqlUpdMonto);
-                $errorFacturaXml=1;
-            }
-        }
-    $stringEstado="";
-}else{
+    //echo "antes del if";
     require_once "siat_folder/funciones_siat.php";     
     try {
       $resEstado=verificarEstadoFactura($codSalida,$globalSucursal);
@@ -124,7 +62,10 @@ if(isset($_GET['r'])){
     }
     
     $estiloTitulo='';
-    // var_dump($resEstado);
+    
+    //var_dump($resEstado);
+    //echo "despues del var dump";
+    
     if($resEstado->RespuestaServicioFacturacion->codigoEstado==690){
         $estiloTitulo='style="color:green"';
     }elseif($resEstado->RespuestaServicioFacturacion->codigoEstado==691){
@@ -132,7 +73,6 @@ if(isset($_GET['r'])){
     }
     $stringEstado='<center><span style="font-weight:bold">ESTADO SIAT</span><h2 '.$estiloTitulo.'> FACTURA '.$resEstado->RespuestaServicioFacturacion->codigoDescripcion.'</h2></center>';
     //print_r($resEstado);
-}
 
 
 $sqlEst="select siat_estado_facturacion from salida_almacenes where cod_salida_almacenes='$codSalida'";

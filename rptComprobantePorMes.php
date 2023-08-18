@@ -3,6 +3,10 @@
 require('conexionmysqli.inc');
 require("estilos_administracion.inc");
 
+ error_reporting(E_ALL);
+ ini_set('display_errors', '1');
+
+
 $codAnio  	 = $_POST['cod_anio'];
 $codMes   	 = $_POST['cod_mes'];
 $rpt_territorio = implode(',',$_POST['rpt_territorio']);
@@ -68,8 +72,10 @@ $query = "SELECT s.id_carrera,
 		AND s.fecha BETWEEN '$fecha_inicio' AND '$fecha_fin'
 		AND s.cod_almacen in (select a.cod_almacen from almacenes a where a.cod_ciudad in ($rpt_territorio))
 		AND s.idtabla=1
-		GROUP BY s.id_carrera, s.cod_tipopago, periodoFacturado";
-// echo $query;
+		GROUP BY s.id_carrera, s.cod_tipopago, periodoFacturado, a.Especialidad";
+
+//echo $query;
+
 echo "<tr style='background-color: #CCCCC8;'>
 		<td colspan='6'>CUOTAS Y MATRICULAS</td>
 	</tr>";
@@ -119,7 +125,7 @@ $query = "SELECT s.id_carrera,
 		AND s.fecha BETWEEN '$fecha_inicio' AND '$fecha_fin' 
 		AND s.cod_almacen in (select a.cod_almacen from almacenes a where a.cod_ciudad in ($rpt_territorio))
 		AND s.idtabla=2 
-		GROUP BY s.id_carrera, s.cod_tipopago";
+		GROUP BY s.id_carrera, s.cod_tipopago, a.Especialidad";
 
 echo "<tr style='background-color: #CCCCC8;'>
 		<td colspan='6'>OTROS INGRESOS POR CARRERAS</td>
@@ -167,7 +173,7 @@ $query = "SELECT s.id_carrera,
 		AND s.fecha BETWEEN '$fecha_inicio' AND '$fecha_fin' 
 		AND s.cod_almacen in (select a.cod_almacen from almacenes a where a.cod_ciudad in ($rpt_territorio))
 		AND s.idtabla=3
-		GROUP BY s.id_carrera, s.cod_tipopago";
+		GROUP BY s.id_carrera, s.cod_tipopago, a.Especialidad";
 
 echo "<tr style='background-color: #CCCCC8;'>
 		<td colspan='6'> OTROS INGRESOS GENERALES 
