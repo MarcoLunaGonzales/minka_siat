@@ -58,7 +58,7 @@ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey,
            "nroTarjeta"=>$nroTarjeta,
            "tipoDocumento"=>$tipoDocumento,
            "complementoDocumento"=>$complementoDocumento,
-           "periodoFacturado"=>$periodoFacturado//***
+           "periodoFacturado"=>$periodoFacturado
        );  
     
 	$url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
