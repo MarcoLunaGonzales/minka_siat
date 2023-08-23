@@ -15,7 +15,7 @@ if($variableAdmin!=1){
 }
 echo "<h1>Reporte Ventas x Sucursal</h1><br>";
 
-echo"<form method='post' action='rptVentasCarreras.php'>";
+echo"<form method='post' action='rptVentasCarreras.php' target='_blank'>";
 
 	echo"\n<table class='texto' align='center' cellSpacing='0' width='50%'>\n";
 	
