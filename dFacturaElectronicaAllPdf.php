@@ -361,60 +361,68 @@ footer p {
 <body>
     <div class="my-5 page" size="A4">
         <div class="p-5">
-            <section class="top-content bb d-flex justify-content-between">
-                
-            <table border="0" width="100%">
-                <tr><td width="20%" align="center"><div class="logo">
-                    <img src="<?=__DIR__?>/imagenes/<?=$logoEnvioEmail;?>" alt="" class="img-fluid" style="width: 100px;height: 100px;">
-                </div></td>
-                    <td align="center"><div class="top-left">
-                    <div class="position-relative">
-                        <div style="font-size: 15px;width:100%;background:#14AF91;color:#fff;padding: 5px;"><p>FACTURA XXX <br><small><small>(Con Derecho a Crédito Fiscal)</small></small></p></div>                        
-                        <p style="width:100%;!important;hyphens: auto;word-wrap: break-word;word-break: break-word;font-size: 12px;">Código Autorización: <span><?=$cuf?></span></p><p style='font-size: 16px;'>Factura No. <span><?=$nroDocVenta?></span></p><br>
-                        <p style="width:100%;font-size: 12px;">Fecha de Factura: <span><?=$fechaFactura?></span></p>
-                    </div>
-                </div></td>
-                </tr>
-            </table>
-                
-            </section>
-            <section class="store-user mt-5">
-                <div class="col-10">
-                    <div class="row bb pb-3">
+            <!-- NUEVA SECCIÓN SIAT -->
+            <section class="store-user">
+                <div class="col-12">
+                    <div class="row bb">
                         <table style="width: 100%;font-size: 12px;" border="0" width="100%">
                             <tr>
-                                <td width="73%">
+                                <td valign="20%">
+                                    <div class="logo">
+                                        <img src="<?=__DIR__?>/imagenes/<?=$logoEnvioEmail;?>" style="width: 100px;height: 100px;">
+                                    </div>
+                                </td>
+                                <td width="50%">
                                     <div class="col-9">
-                                        <p><?=$nombreTxt?></p>
-                                        <h4 style="color:#14AF91"><?=$sucursalTxt?></h4>
-                                        <div class="txn mt-2"><b>Punto de Venta: </b><?=$siat_codigopuntoventa?></div>
-                                        <div class="txn mt-2"><b>NIT: </b><?=$nitTxt?></div>
+                                        <div class="txn mt-2"><b><?=$nombreTxt?></b></div>
+                                        <div class="txn mt-2"><b><?=$sucursalTxt?></b></div>
+                                        <div class="txn mt-2"><b>Nro. Punto de Venta: </b><?=$siat_codigopuntoventa ?></div>
+                                        <div class="txn mt-2" style="max-width: 100%; word-wrap: break-word;"><b>Dirección: </b><?=$direccionTxt ?></div>
+                                        <div class="txn mt-2"><b>Teléfono: </b><?=$telefonoTxt ?></div>
+                                        <div class="txn mt-2"><b><?=$ciudadTxt?></b></div>
                                     </div>
                                 </td>
-                                <td valign="top">
-                                    <div class="col-3">
-                                        <p>Nombre/Razón Social</p>
-                                        <h4 style="color:#14AF91"><?=$razonSocialCliente?></h4>
-                                        <!--p class="address">Nombre Estudiante: <?=$nombreEstudiante?></p>                            
-                                        <p class="address">Periodo Facturado: <?=$periodoFacturado?></p-->                            
-                                        <p class="address"><b>NIT/CI/CEX:</b> <?=$nitCliente." ".$siat_complemento?></p>
-                                        <p class="address"><b>Cod. Cliente:</b> <?=$cod_cliente?></p>
-                                        <!-- <p class="address">Tel:</p> -->
+                                <td width="30%">
+                                    <div class="col-3">                     
+                                        <p class="address"><b>NIT: </b> <?=$nitTxt?></p>
+                                        <p class="address"><b>Factura N°:</b> <?=$nroDocVenta?></p>
+                                        <p class="address" style="max-width: 100%; word-wrap: break-word;"><b>Código Autorización:</b> <?=$cuf?></p>
                                     </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p class="address"><b>Dirección: </b><?=$direccionTxt?></p>
-                                    <div class="txn mt-2"><b>Teléfono: </b><?=$telefonoTxt?></div>
-                                    <div class="txn mt-2"><b>Ciudad: </b><?=$ciudadTxt?></div>     
-                                    <div class="txn mt-2"><b>Tipo de Pago: </b><?=$nombrePago;?></div>     
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
             </section>
+            <section class="store-user" style="text-align: center;">
+                <div class="txn" style="font-size: 16px;">
+                    <b>FACTURA</b> <br><small>(Con Derecho a Crédito Fiscal)</small>
+                </div>
+            </section>
+            <section class="store-user">
+                <div class="row">
+                    <table style="width: 100%;font-size: 12px;" border="0" width="100%">
+                        <tr>
+                            <td width="43%">
+                                <div class="col-9">
+                                    <div class="txn mt-2"><b>Fecha de Factura: </b><?=$fechaFactura ?></div>
+                                    <div class="txn mt-2"><b>Nombre/Razón Social: </b><?=$razonSocialCliente ?></div>
+                                    <div class="txn mt-2"><b>Tipo de Pago: </b><?=$nombrePago;?></div>     
+                                </div>
+                            </td>
+                            <td width="33%">
+                            </td>
+                            <td valign="top">
+                                <div class="col-3">                     
+                                    <p class="address"><b>NIT/CI/CEX:</b> <?=$nitCliente." ".$siat_complemento?></p>
+                                    <p class="address"><b>Cod. Cliente:</b> <?=$cod_cliente?></p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+            <!-- NUEVA SECCIÓN SIAT -->
 
             <section class="product-area mt-4">
                 <table class="table table-hover productos" style="width: 100%;font-size: 10px !important;">
