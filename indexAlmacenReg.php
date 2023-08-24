@@ -85,7 +85,7 @@ require("datosUsuario.php");
 					<!-- Ventas -->
 					<li><a href="rptOpLibroVentas.php" target="contenedorPrincipal">Libro de Ventas</a></li>
 					<li><a href="rptOpArqueoDiario.php" target="contenedorPrincipal">Arqueo de Caja</a></li>
-					<li><a href="rptOpVentasCarreras.php" target="contenedorPrincipal">Ventas por Carreras</a></li>
+					<li><a href="rptOpVentasCarreras.php" target="contenedorPrincipal">Ventas por Carrera</a></li>
 					<!-- <li><a href="registrar_salidaventas_manuales.php" target="_blank">Factura Manual de Contigencia</a></li> -->
 				</ul>				
 			</li>

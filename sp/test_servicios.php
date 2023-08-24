@@ -8,19 +8,19 @@ $sIde = "MinkaSw123*";
 $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
 
 ///verificar conexion
-  $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
-            "accion"=>"verificarComunicacion", //Nuevo contacto de empresa
-            "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
-            "nitEmpresa"=>'315910027' //nit  de empresa
-          );  
+  // $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
+  //           "accion"=>"verificarComunicacion", //Nuevo contacto de empresa
+  //           "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
+  //           "nitEmpresa"=>'315910027' //nit  de empresa
+  //         );  
 
   //Lista de Tipos de Pago
 
-  // $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
-  //           "accion"=>"sincronizarParametricaTipoMetodoPago", //
-  //           "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
-  //           "nitEmpresa"=>'10916889016' //nit  de empresa
-  //         );
+  $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
+            "accion"=>"sincronizarParametricaTipoMetodoPago", //
+            "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
+            "nitEmpresa"=>'10916889016' //nit  de empresa
+          );
 
  //  //Lista de Tipos documento
 	// $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 

@@ -13,7 +13,7 @@ $variableAdmin=$_GET["variableAdmin"];
 if($variableAdmin!=1){
 	$variableAdmin=0;
 }
-echo "<h1>Reporte Ventas x Sucursal</h1><br>";
+echo "<h1>Reporte Ventas x Carrera</h1><br>";
 
 echo"<form method='post' action='rptVentasCarreras.php' target='_blank'>";
 

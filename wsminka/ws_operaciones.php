@@ -259,7 +259,7 @@ function sincronizarParametros($act,$enlaceCon){
                 
         break;
         case 'sincronizarParametricaTipoMetodoPago':
-             $sql="SELECT s.codigo,s.codigoClasificador,t.nombre_tipopago as descripcion from siat_sincronizarparametricatipometodopago s, siat_tipos_pago stp, tipos_pago t where t.cod_tipopago=stp.cod_tipopago and stp.codigoClasificador=s.codigoClasificador order by s.codigo;";
+             $sql="SELECT s.codigo,s.codigoClasificador,t.nombre_tipopago as descripcion from siat_sincronizarparametricatipometodopago s, siat_tipos_pago stp, tipos_pago t where t.cod_tipopago=stp.cod_tipopago and stp.codigoClasificador=s.codigoClasificador order by t.nombre_tipopago;";
         break;
         case 'sincronizarParametricaTipoMoneda':
              $sql="SELECT codigo,codigoClasificador,descripcion from siat_sincronizarparametricatipomoneda order by codigo;";
