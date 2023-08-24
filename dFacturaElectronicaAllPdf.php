@@ -369,7 +369,7 @@ footer p {
                 </div></td>
                     <td align="center"><div class="top-left">
                     <div class="position-relative">
-                        <div style="font-size: 15px;width:100%;background:#14AF91;color:#fff;padding: 5px;"><p>FACTURA <br><small><small>(Con Derecho a Crédito Fiscal)</small></small></p></div>                        
+                        <div style="font-size: 15px;width:100%;background:#14AF91;color:#fff;padding: 5px;"><p>FACTURA XXX <br><small><small>(Con Derecho a Crédito Fiscal)</small></small></p></div>                        
                         <p style="width:100%;!important;hyphens: auto;word-wrap: break-word;word-break: break-word;font-size: 12px;">Código Autorización: <span><?=$cuf?></span></p><p style='font-size: 16px;'>Factura No. <span><?=$nroDocVenta?></span></p><br>
                         <p style="width:100%;font-size: 12px;">Fecha de Factura: <span><?=$fechaFactura?></span></p>
                     </div>
