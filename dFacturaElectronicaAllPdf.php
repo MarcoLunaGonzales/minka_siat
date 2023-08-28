@@ -463,7 +463,7 @@ $sqlDetalle="SELECT s.cod_material, s.orden_detalle, s.observaciones, s.precio_u
         sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
         from salida_detalle_almacenes s 
         where s.cod_salida_almacen=$codigoVenta
-        group by s.orden_detalle, s.observaciones,s.precio_unitario
+        group by s.cod_material, s.orden_detalle, s.observaciones,s.precio_unitario
         order by s.orden_detalle;";
 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 
