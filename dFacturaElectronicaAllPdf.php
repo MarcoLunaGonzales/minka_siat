@@ -403,19 +403,33 @@ footer p {
                 <div class="row">
                     <table style="width: 100%;font-size: 12px;" border="0" width="100%">
                         <tr>
-                            <td width="43%">
+                            <td width="53%">
                                 <div class="col-9">
                                     <div class="txn mt-2"><b>Fecha de Factura: </b><?=$fechaFactura ?></div>
                                     <div class="txn mt-2"><b>Nombre/Razón Social: </b><?=$razonSocialCliente ?></div>
                                     <div class="txn mt-2"><b>Tipo de Pago: </b><?=$nombrePago;?></div>     
+                                    <?php
+                                    if($nombreEstudiante!=""){
+                                    ?>
+                                    <div class="txn mt-2"><b>Estudiante:</b> <?=$nombreEstudiante;?></div>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </td>
-                            <td width="33%">
+                            <td width="23%">
                             </td>
                             <td valign="top">
                                 <div class="col-3">                     
                                     <p class="address"><b>NIT/CI/CEX:</b> <?=$nitCliente." ".$siat_complemento?></p>
                                     <p class="address"><b>Cod. Cliente:</b> <?=$cod_cliente?></p>
+                                    <?php
+                                    if($nombreEstudiante!=""){
+                                    ?>
+                                    <p class="address"><b>Periodo Facturado:</b> <?=$periodoFacturado;?></p>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </td>
                         </tr>
