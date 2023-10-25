@@ -361,7 +361,6 @@ footer p {
 <body>
     <div class="my-5 page" size="A4">
         <div class="p-5">
-
             <!-- NUEVA SECCIÓN SIAT -->
             <section class="store-user">
                 <div class="col-12">
@@ -404,19 +403,33 @@ footer p {
                 <div class="row">
                     <table style="width: 100%;font-size: 12px;" border="0" width="100%">
                         <tr>
-                            <td width="43%">
+                            <td width="53%">
                                 <div class="col-9">
                                     <div class="txn mt-2"><b>Fecha de Factura: </b><?=$fechaFactura ?></div>
                                     <div class="txn mt-2"><b>Nombre/Razón Social: </b><?=$razonSocialCliente ?></div>
                                     <div class="txn mt-2"><b>Tipo de Pago: </b><?=$nombrePago;?></div>     
+                                    <?php
+                                    if($nombreEstudiante!=""){
+                                    ?>
+                                    <div class="txn mt-2"><b>Estudiante:</b> <?=$nombreEstudiante;?></div>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </td>
-                            <td width="33%">
+                            <td width="23%">
                             </td>
                             <td valign="top">
                                 <div class="col-3">                     
                                     <p class="address"><b>NIT/CI/CEX:</b> <?=$nitCliente." ".$siat_complemento?></p>
                                     <p class="address"><b>Cod. Cliente:</b> <?=$cod_cliente?></p>
+                                    <?php
+                                    if($nombreEstudiante!=""){
+                                    ?>
+                                    <p class="address"><b>Periodo Facturado:</b> <?=$periodoFacturado;?></p>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </td>
                         </tr>
@@ -450,7 +463,7 @@ $sqlDetalle="SELECT s.cod_material, s.orden_detalle, s.observaciones, s.precio_u
         sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
         from salida_detalle_almacenes s 
         where s.cod_salida_almacen=$codigoVenta
-        group by s.orden_detalle, s.observaciones,s.precio_unitario
+        group by s.cod_material, s.orden_detalle, s.observaciones,s.precio_unitario
         order by s.orden_detalle;";
 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 
