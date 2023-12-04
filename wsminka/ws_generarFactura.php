@@ -116,15 +116,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
 
         
                     /*ACTUALIZAMOS LOS RECIBOS DE LA UNILOYOLA*/    
-                    
+                    $tipoPago2=0;
+                    if($tipoPago==1){   $tipoPago2=0;   }
+                    if($tipoPago==2){   $tipoPago2=1;   }
+                    if($tipoPago==24){  $tipoPago2=24;  }
+                    if($tipoPago==7){   $tipoPago2=2;   }
+                    if($tipoPago==32){  $tipoPago2=3;   }
+
                     if ($tipoTabla==1){
-                        $sqlUpdReciboExterno="update Loyola.recibo set Numrecibo='$codigo_transaccion', Tarjeta='$banderaTarjeta' where idrecibo='$idRecibo'";
+                        $sqlUpdReciboExterno="update Loyola.recibo set Numrecibo='$codigo_transaccion', Tarjeta='$tipoPago2' where idrecibo='$idRecibo'";
                     }
                     if ($tipoTabla==2){
-                        $sqlUpdReciboExterno="update Loyola.auxrecibo set NumRecibo='$codigo_transaccion', Tarjeta='$banderaTarjeta' where idrecibo='$idRecibo'";
+                        $sqlUpdReciboExterno="update Loyola.auxrecibo set NumRecibo='$codigo_transaccion', Tarjeta='$tipoPago2' where idrecibo='$idRecibo'";
                     }
                     if ($tipoTabla==3){
-                        $sqlUpdReciboExterno="update Loyola.cobros set NumRecibo='$codigo_transaccion', Tarjeta='$banderaTarjeta' where idCobro='$idRecibo'";
+                        $sqlUpdReciboExterno="update Loyola.cobros set NumRecibo='$codigo_transaccion', Tarjeta='$tipoPago2' where idCobro='$idRecibo'";
                     }
                     $respUpdReciboExterno=mysqli_query($enlaceCon,$sqlUpdReciboExterno);                    
                     /*FIN ACTUALIZAR RECIBOS*/
