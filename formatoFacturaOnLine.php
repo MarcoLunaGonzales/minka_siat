@@ -541,7 +541,7 @@ border-bottom: 1px solid #000;
         <table  style="width: 100%;">
             <tr>
                 <td align="center" width="35%"><br><br>
-                    <img src="imagenes/logo_loyola2.jpg" width="200"><br>
+                    <!--img src="imagenes/logo_loyola2.jpg" width="200"--><br>
                     <?=$sucursalTxt;?><br>
                     Punto de Venta <?=$siat_codigopuntoventa;?><br>
                     <?=utf8_decode($direccionTxt);?><br>
@@ -616,7 +616,7 @@ border-bottom: 1px solid #000;
                 s.descuento_unitario as descuento_unitario, s.monto_unitario as monto_unitario
                 from salida_detalle_almacenes s 
                 where s.cod_salida_almacen=$codigoVenta
-                order by s.orden_detalle;";
+                order by s.orden_detalle";
                 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 
                 $yyy=65;
