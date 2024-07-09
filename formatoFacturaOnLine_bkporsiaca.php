@@ -9,11 +9,19 @@ require('funcion_nombres.php');
 require('NumeroALetras.php');
 include('phpqrcode/qrlib.php'); 
 
+if(isset($_GET["idRecibo"]) && isset($_GET["tipoTabla"])){
+    $idRecibo=$_GET["idRecibo"];
+    $tipoTabla=$_GET["tipoTabla"];
+    $sqlCodF="select s.cod_salida_almacenes from salida_almacenes s where s.idrecibo='$idRecibo' and s.idtabla='$tipoTabla'";
+    $respCodF=mysqli_query($enlaceCon,$sqlCodF);
+    $codigoVenta=mysqli_result($respCodF,0,0);
+}
 if(isset($_GET["codVenta"])){
     $codigoVenta=$_GET["codVenta"];
 }else{
     $codigoVenta=$codigoVenta;
 }
+
 
 // $cod_ciudad=$_COOKIE["global_agencia"];
 
@@ -86,12 +94,13 @@ $periodoFacturado=mysqli_result($respDatosFactura,0,7);
 
 $cod_funcionario=$_COOKIE["global_usuario"];
 //datos documento
-$sqlDatosVenta="select DATE_FORMAT(s.fecha, '%d/%m/%Y'), t.`nombre`, 'cliente', s.`nro_correlativo`, s.descuento, s.hora_salida,s.monto_total,s.monto_final,s.monto_efectivo,s.monto_cambio,s.cod_chofer,s.cod_tipopago,s.cod_tipo_doc,s.fecha,(SELECT cod_ciudad from almacenes where cod_almacen=s.cod_almacen)as cod_ciudad,s.cod_cliente,s.siat_cuf,s.siat_complemento,(SELECT nombre_tipopago from tipos_pago where cod_tipopago=s.cod_tipopago) as nombre_pago,s.siat_fechaemision,s.siat_codigotipoemision,s.siat_codigoPuntoVenta,(SELECT descripcionLeyenda from siat_sincronizarlistaleyendasfactura where codigo=s.siat_cod_leyenda) as leyenda,(SELECT siat_unidadProducto from ciudades where cod_ciudad in (select cod_ciudad from almacenes where cod_almacen=s.cod_almacen)) as unidad_medida
+$sqlDatosVenta="select DATE_FORMAT(s.fecha, '%d/%m/%Y'), t.`nombre`, 'cliente', s.`nro_correlativo`, s.descuento, s.hora_salida,s.monto_total,s.monto_final,s.monto_efectivo,s.monto_cambio,s.cod_chofer,s.cod_tipopago,s.cod_tipo_doc,s.fecha,(SELECT cod_ciudad from almacenes where cod_almacen=s.cod_almacen)as cod_ciudad,s.cod_cliente,s.siat_cuf,s.siat_complemento,(SELECT nombre_tipopago from tipos_pago where cod_tipopago=s.cod_tipopago) as nombre_pago,s.siat_fechaemision,s.siat_codigotipoemision,s.siat_codigoPuntoVenta,(SELECT descripcionLeyenda from siat_sincronizarlistaleyendasfactura where codigo=s.siat_cod_leyenda) as leyenda,(SELECT siat_unidadProducto from ciudades where cod_ciudad in (select cod_ciudad from almacenes where cod_almacen=s.cod_almacen)) as unidad_medida, UPPER(siat_usuario) as siat_usuario
         from `salida_almacenes` s, `tipos_docs` t, `clientes` c
         where s.`cod_salida_almacenes`='$codigoVenta' and s.cod_tipo_doc=t.codigo";
         // echo $sqlDatosVenta;
 $respDatosVenta=mysqli_query($enlaceCon,$sqlDatosVenta);
 $siat_complemento="";
+$usuarioCaja="";
 while($datDatosVenta=mysqli_fetch_array($respDatosVenta)){
     $cuf=$datDatosVenta['siat_cuf'];
     $fechaVenta=$datDatosVenta[0];
@@ -128,6 +137,8 @@ while($datDatosVenta=mysqli_fetch_array($respDatosVenta)){
     $siat_codigopuntoventa=$datDatosVenta['siat_codigoPuntoVenta'];
 
     $unidad_medida=$datDatosVenta['unidad_medida'];
+
+    $usuarioCaja=$datDatosVenta['siat_usuario'];
 
     $nombrePago=$datDatosVenta['nombre_pago'];
     $txt3=$datDatosVenta['leyenda'];
@@ -529,31 +540,34 @@ border-bottom: 1px solid #000;
 <div  style="height: 49.4%">
         <table  style="width: 100%;">
             <tr>
-                <td align="center" width="45%"><br><br>
-                    </small></small>
+                <td align="center" width="35%"><br><br>
+                    <!--img src="imagenes/logo_loyola2.jpg" width="200"><br>
+                    <?=$sucursalTxt;?><br>
+                    Punto de Venta <?=$siat_codigopuntoventa;?><br>
+                    <?=utf8_decode($direccionTxt);?><br>
+                    <?=utf8_decode($telefonoTxt);?><!-->
                 </td>
                 
-                <td >
-                    <div style="width:100%;text-align: left;font-size: 14px"><p><b>FACTURA</b><br><small><small>(Con Derecho a Crédito Fiscal)</small></small></p></div><br>
-                    <table style="width: 100%;border: black 1px solid;text-align: left;">
-                        
+                <td>
+                    <div style="width:100%;text-align: Center;font-size: 14px"><p><b>FACTURA</b><br><small><small>(Con Derecho a Crédito Fiscal)</small></small></p></div><br>
+                    <table style="width: 100%;border: hidden;text-align: left; font-size:11px">
                         <tr align="left">
-                          <td width="40%"><b>
-                              NIT : <br>
-                              FACTURA N° : <br>
-                              CÓD. AUTORIZACIÓN : </b>
-                          </td>
-                          <td class="text-left">
-                              <?=$nitTxt?><br>
-                              <?=$nroDocVenta?><br>
-                          </td>
+                          <td><b>NIT:</b></td>
+                          <td class="text-left"><?=$nitTxt?></td>
                         </tr>
-                        <tr><td colspan="2"><?=$cuf?></td></tr>
-                        <tr><td colspan="2">
-                            <b>FECHA FACTURA : </b> <?=$fechaFactura?><br>
-                        </td></tr>
+                        <tr>
+                            <td><b>FACTURA N°:</b></td>
+                            <td class="text-left"><?=$nroDocVenta?></td>
+                        </tr>
+                        <tr>
+                            <td><b><small>COD.AUTORIZACIÓN:</small></b></td>
+                            <td class="text-left"><small><?=$cuf?></small></td>
+                        </tr>                        
+                        <tr>
+                            <td><b>FECHA FACTURA:</b></td>
+                            <td class="text-left"><?=$fechaFactura;?></td>
+                        </tr>
                     </table>
-                    
                 </td>
             </tr>
         </table>
@@ -562,48 +576,47 @@ border-bottom: 1px solid #000;
             <tr >
                 <td class="td-border-none text-left" width="15%" ><b>Nombre/Razón Social : </b></td>
                 <td class="td-border-none" width="43%"><?=$razonSocialCliente?></td>
-                <td class="td-border-none text-right" width="15%"><b>NIT/CI/CEX:</b></td>
+                <td class="td-border-none text-left" width="15%"><b>NIT/CI/CEX:</b></td>
                 <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nitCliente." ".$siat_complemento?></td>
             </tr>
             <tr >
-              <td class="td-border-none text-left" width="25%" ><b>Nombre Estudiante : </b></td>
-              <td class="td-border-none" ><?=$nombreEstudiante?></td>
-              <td class="td-border-none text-right" ><b>Cod. Cliente :</b></td>
+              <td class="td-border-none text-left" width="25%" ><b>-</b></td>
+              <td class="td-border-none" >-</td>
+              <td class="td-border-none text-left" ><b>Cod. Cliente :</b></td>
               <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$cod_cliente?></td>
             </tr>
             <tr >
               <td class="td-border-none text-left" width="25%" ></td>
               <td class="td-border-none" ></td>
-              <td class="td-border-none text-right" ><b>Periodo Facturado :</b></td>
-              <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$periodoFacturado?></td>
+              <td class="td-border-none text-left" ><b>-</b></td>
+              <td class="td-border-none">&nbsp;&nbsp;&nbsp;-</td>
             </tr>
         </table>
-        <table class="table2">
+        <table class="table2" border="1">
             <tr>
-                <td width="8%" class="text-center">Codigo<br>Servicio</td>
-                <td width="40%" class="text-center">DESCRIPCIÓN</td>
-                <td width="8%" class="text-center">Unidad Medida</td>
-                <td width="8%" class="text-center">Cantidad</td>
-                <td class="text-center">Precio Unitario</td>
-                <td class="text-center">Descuento</td>
-                <td class="text-center">Subtotal</td>
+                <td width="8%" class="td-border-none text-center"><b>Cod<br>Producto</b></td>
+                <td width="40%" class="td-border-none text-center"><b>Descripción</b></td>
+                <td width="8%" class="td-border-none text-center"><b>Unidad Medida</b></td>
+                <td width="8%" class="td-border-none text-center"><b>Cantidad</b></td>
+                <td class="td-border-none text-center"><b>Precio Unitario</b></td>
+                <td class="td-border-none text-center"><b>Descuento</b></td>
+                <td class="td-border-none text-center"><b>Subtotal</b></td>
             </tr>
             <?php
             $suma_total=0;
             ?>
             
-            <tr><td></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td style="border-left: hidden;"></td><td></td></tr>
+            <tr ><td style="border: hidden;"></td><td style="border: hidden;"></td><td style="border: hidden;"></td><td style="border: hidden;"></td><td style="border: hidden;"></td><td style="border: hidden;"></td><td style="border: hidden;"></td></tr>
             <?php
 
                 $contador_items=0;                    
                 $cantidad_por_defecto=5;//cantidad de items por defect
 
-                $sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material,s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
-                sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
-                from salida_detalle_almacenes s, material_apoyo m 
-                where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoVenta
-                group by m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario
-                order by s.orden_detalle;";
+                $sqlDetalle="SELECT s.cod_material, s.orden_detalle, s.observaciones, s.observaciones, s.precio_unitario, s.cantidad_unitaria as cantidad_unitario,
+                s.descuento_unitario as descuento_unitario, s.monto_unitario as monto_unitario
+                from salida_detalle_almacenes s 
+                where s.cod_salida_almacen=$codigoVenta
+                order by s.orden_detalle";
                 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 
                 $yyy=65;
@@ -613,9 +626,9 @@ border-bottom: 1px solid #000;
                     if($datDetalle['observaciones']==null){
                         $observaciones="";
                     }
-                    $codInterno=$datDetalle['codigo_material'];
+                    $codInterno=$datDetalle['cod_material'];
                     $cantUnit=$datDetalle['cantidad_unitario'];
-                    $nombreMat=$datDetalle['descripcion_material']." ".$observaciones;;
+                    $nombreMat=$observaciones;;
                     $precioUnit=$datDetalle['precio_unitario'];
                     $descUnit=$datDetalle['descuento_unitario'];
                     //$montoUnit=$datDetalle[5];
@@ -645,33 +658,34 @@ border-bottom: 1px solid #000;
 
                     ?>
                     <tr>
-                        <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=$codInterno?></td>
-                        <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;">
+                        <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;"><?=$codInterno?></td>
+                        <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;">
                             <?=$nombreMat;?>
                         </td>
-                        <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><small><?=$unidad_medida?></small></td>
-                        <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=$cantUnit?></td>
-                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=number_format($precioUnitFactura,2)?></td>
-                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=number_format($descUnit,2)?></td>
-                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=number_format($montoUnitProdDesc,2)?></td>
+                        <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 9px;"><small><?=$unidad_medida?></small></td>
+                        <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;"><?=$cantUnit?></td>
+                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;"><?=number_format($precioUnitFactura,2)?></td>
+                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;"><?=number_format($descUnit,2)?></td>
+                        <td class="text-right" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 11px;"><?=number_format($montoUnitProdDesc,2)?></td>
                     </tr>
                     
                     <?php $contador_items++;
+                    $montoTotal=$montoTotal+$montoUnitProdDesc; 
                 }
                 
                 for($i=$contador_items;$i<$cantidad_por_defecto;$i++){ ?>
                     <tr>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-top: hidden;">&nbsp;</td>
+                        <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;">&nbsp;</td>
                         <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
                         <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
                         <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
                         <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
                         <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
-                        <td style="padding-top: 0px;padding-bottom: 0px; border-top: hidden;"></td>
+                        <td style="padding-top: 0px;padding-bottom: 0px; border: hidden;"></td>
                     </tr>
                 <?php 
                 }
-                $montoTotal=$montoTotal+$montoUnitProdDesc; 
+                
                 $yyy=$yyy+6;
 
             // echo $montoTotal;
@@ -723,13 +737,12 @@ border-bottom: 1px solid #000;
                     $txtGlosaDescuento=iconv('utf-8', 'windows-1252', $filaDesc[0]);        
             } ?>
             <tr>
-                <td rowspan="2" align="center" style="margin: 0px;">
-                    
+                <td rowspan="2" align="center" style="margin: 0px;border: hidden;">
                     <img src="<?=$fileName?>" style="margin: 0px;padding: 0;width: 120px;">
                 </td>
-                <td  colspan="6">
+                <td  colspan="6" style="border: hidden;">
                     <table class="table">
-                        <tr ><td style="padding: 0px;margin: 0px;border-right: hidden;border-bottom: hidden;border-top: hidden;border-left: hidden;" valign="top">
+                        <tr ><td style="padding: 0px;margin: 0px;border: hidden;" valign="top">
                             <?php
                         $entero=floor(round($importe,2));
                         $decimal=$importe-$entero;
@@ -739,11 +752,11 @@ border-bottom: 1px solid #000;
                         }?>
                         <span class="bold table-title" valign="bottom"><small>Son: <?="$txtMonto"." ".$montoDecimal."/100 Bolivianos"?></small></span>
                         </td>
-                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom">
-                                <table class="table" style="font-size: 9px;" >
+                            <td align="right" style="border: hidden;" valign="bottom">
+                                <table class="table" style="font-size: 10px;" >
                                     <tr>
-                                        <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom">SUBTOTAL Bs:</td>
-                                        <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><?=number_format($montoTotal,2)?></td>
+                                        <td align="right" style="border: hidden;" valign="bottom">SUBTOTAL Bs:</td>
+                                        <td align="right" style="border: hidden;" valign="bottom"><?=number_format($montoTotal,2)?></td>
                                     </tr>
 
                                     <tr>
@@ -752,16 +765,16 @@ border-bottom: 1px solid #000;
                                     </tr>
                                     <tfoot>
                                         <tr>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom">TOTAL Bs:</td>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
+                                            <td align="right" style="border: hidden;" valign="bottom">TOTAL Bs:</td>
+                                            <td align="right" style="border: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
                                         </tr>
                                         <tr>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><b>MONTO A PAGAR Bs:</b></td>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
+                                            <td align="right" style="border: hidden;" valign="bottom"><b>MONTO A PAGAR Bs:</b></td>
+                                            <td align="right" style="border: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
                                         </tr>
                                         <tr>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><b>IMPORTE BASE CRÉDITO FISCAL:</b></td>
-                                            <td align="right" style="border-left: hidden;border-bottom: hidden; border-top: hidden;border-right: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
+                                            <td align="right" style="border: hidden;" valign="bottom"><b>IMPORTE BASE CRÉDITO FISCAL:</b></td>
+                                            <td align="right" style="border: hidden;" valign="bottom"><?=number_format($montoFinal,2)?></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -772,7 +785,10 @@ border-bottom: 1px solid #000;
                 </td>
             </tr>
             
-            <tr><td colspan="6" style="border-top:hidden;" valign="bottom"><span style="padding: 0px;margin: 0px;"><small><small>Forma de Pago: <?=$nombrePago?></small></small></span></td></tr>
+            <tr>
+                <td colspan="3" style="border:hidden;" valign="bottom"><span style="padding: 0px;margin: 0px;"><small><small>Forma de Pago: <?=$nombrePago?></small></small></span></td>
+                <td colspan="3" style="border:hidden;" valign="bottom"><span style="padding: 0px;margin: 0px;"><small><small>Cajero: <?=$usuarioCaja;?></small></small></span></td>
+            </tr>
             
         </table>
         <table class="table3" >
