@@ -466,6 +466,33 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         //echo "entro Detalle 2";      
 
 
+
+        
+
+
+        /*ESTO ES SOLO PARA MAITKAVA DESPUES QUITAR*/
+        /********************************************/    
+        /********************************************/    
+        $leyendaAdicional="";
+        if($globalSucursal==15){
+            $leyendaAdicional="Por cumplimiento de vida útil(DOT)";
+        }
+        if($globalSucursal==17){
+            $leyendaAdicional="Por fuera de temporada";
+        }
+        if($globalSucursal==19){
+            $leyendaAdicional="Por cierre de operaciones comerciales";
+        }
+        /********************************************/    
+        /********************************************/    
+        /*FACTURACION CON GLOSA ESPECIAL SOLO MAITKAVA*/  
+        
+
+
+
+
+
+
         /*  Cuando la modalidad es computarizada en linea y 1 solo item en la factura CASO LOYOLA */
         if($modalidad==2){
             $montoTotalVentaDetalle=0;
@@ -500,7 +527,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 $precioUnitario=$valor['precioUnitario'];
                 $descuentoProducto=$valor['descuentoProducto'];
 
-                $conceptoProducto=$valor['detalle'];            
+                $conceptoProducto=$valor['detalle']." ".$leyendaAdicional;            
                 
                 //SE DEBE CALCULAR EL MONTO DEL MATERIAL POR CADA UNO PRECIO*CANTIDAD - EL DESCUENTO ES UN DATO ADICIONAL
                 $montoMaterial=$precioUnitario*$cantidadUnitaria;

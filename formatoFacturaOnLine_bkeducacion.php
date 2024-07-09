@@ -541,11 +541,7 @@ border-bottom: 1px solid #000;
         <table  style="width: 100%;">
             <tr>
                 <td align="center" width="35%"><br><br>
-                    <img src="imagenes/viacaucho.jpg" width="200"><br>
-                    <?=$sucursalTxt;?><br>
-                    Punto de Venta <?=$siat_codigopuntoventa;?><br>
-                    <?=utf8_decode($direccionTxt);?><br>
-                    <?=utf8_decode($telefonoTxt);?>
+                    <img src="imagenes/viacaucho.jpg" width="200">
                 </td>
                 
                 <td>
@@ -581,26 +577,26 @@ border-bottom: 1px solid #000;
             </tr>
             <tr >
               <td class="td-border-none text-left" width="25%" ><b>-</b></td>
-              <td class="td-border-none" >-</td>
+              <td class="td-border-none" ><?=$nombreEstudiante?></td>
               <td class="td-border-none text-left" ><b>Cod. Cliente :</b></td>
               <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$cod_cliente?></td>
             </tr>
             <tr >
               <td class="td-border-none text-left" width="25%" ></td>
               <td class="td-border-none" ></td>
-              <td class="td-border-none text-left" ><b>-</b></td>
-              <td class="td-border-none">&nbsp;&nbsp;&nbsp;-</td>
+              <td class="td-border-none text-left" ><b>Periodo Facturado :</b></td>
+              <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$periodoFacturado?></td>
             </tr>
         </table>
-        <table class="table2" border="1">
+        <table class="table2">
             <tr>
-                <td width="8%" class="td-border-none text-center"><b>Cod<br>Producto</b></td>
-                <td width="40%" class="td-border-none text-center"><b>Descripción</b></td>
-                <td width="8%" class="td-border-none text-center"><b>Unidad Medida</b></td>
-                <td width="8%" class="td-border-none text-center"><b>Cantidad</b></td>
-                <td class="td-border-none text-center"><b>Precio Unitario</b></td>
-                <td class="td-border-none text-center"><b>Descuento</b></td>
-                <td class="td-border-none text-center"><b>Subtotal</b></td>
+                <td width="8%" class="td-border-none text-center">Codigo<br>Servicio</td>
+                <td width="40%" class="td-border-none text-center">DESCRIPCIÓN</td>
+                <td width="8%" class="td-border-none text-center">Unidad Medida</td>
+                <td width="8%" class="td-border-none text-center">Cantidad</td>
+                <td class="td-border-none text-center">Precio Unitario</td>
+                <td class="td-border-none text-center">Descuento</td>
+                <td class="td-border-none text-center">Subtotal</td>
             </tr>
             <?php
             $suma_total=0;
@@ -612,11 +608,11 @@ border-bottom: 1px solid #000;
                 $contador_items=0;                    
                 $cantidad_por_defecto=5;//cantidad de items por defect
 
-                $sqlDetalle="SELECT s.cod_material, s.orden_detalle, s.observaciones, s.observaciones, s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
+                $sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material,s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
                 sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
-                from salida_detalle_almacenes s 
-                where s.cod_salida_almacen=$codigoVenta
-                group by s.orden_detalle, s.observaciones, s.precio_unitario
+                from salida_detalle_almacenes s, material_apoyo m 
+                where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoVenta
+                group by m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario
                 order by s.orden_detalle;";
                 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 
@@ -627,9 +623,9 @@ border-bottom: 1px solid #000;
                     if($datDetalle['observaciones']==null){
                         $observaciones="";
                     }
-                    $codInterno=$datDetalle['cod_material'];
+                    $codInterno=$datDetalle['codigo_material'];
                     $cantUnit=$datDetalle['cantidad_unitario'];
-                    $nombreMat=$observaciones;;
+                    $nombreMat=$datDetalle['descripcion_material']." ".$observaciones;;
                     $precioUnit=$datDetalle['precio_unitario'];
                     $descUnit=$datDetalle['descuento_unitario'];
                     //$montoUnit=$datDetalle[5];

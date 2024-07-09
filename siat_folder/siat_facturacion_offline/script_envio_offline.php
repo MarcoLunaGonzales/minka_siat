@@ -11,8 +11,15 @@ require("consultaEvento.php");
 // $DatosConexion=verificarConexion();
 // if($DatosConexion[0]==1){
 
-if(isset($_GET['cod_entidad'])){
-  $cod_entidad=$_GET['cod_entidad'];
+$sqlEntidad="SELECT s.cod_entidad from siat_credenciales s";
+$respEntidad=mysqli_query($enlaceCon, $sqlEntidad);
+$codEntidad=1;
+if($datEntidad=mysqli_fetch_array($respEntidad)){
+  $codEntidad = $datEntidad[0];
+}
+
+  $cod_entidad=$codEntidad;
+
   $_SESSION['globalEntidadSes']=$cod_entidad;
   $cod_tipoEmision=2;//tipo emision OFFLINE
   $sqladd=" and a.cod_ciudad in (select cod_ciudad from ciudades where cod_entidad='$cod_entidad')"; 
@@ -40,10 +47,6 @@ if(isset($_GET['cod_entidad'])){
   }else{
     enviarFacturasOffline($string_codigos,$enlaceCon);
   }
-}else{
-  echo "CODIGO ENTIDAD NO ENCONTRADO";
-
-}
 
   
 // }else{

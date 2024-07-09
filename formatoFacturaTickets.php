@@ -189,8 +189,10 @@ $pdf->SetXY(4,$y+10);		$pdf->Cell(68,0,utf8_decode($nombreTxt)." ",0,0,"C");
 $pdf->SetXY(4,$y+13);		$pdf->Cell(68,0,$sucursalTxt,0,0,"C");
 $pdf->SetXY(4,$y+16);		$pdf->Cell(68,0,"No. Punto de Venta ".$siat_codigopuntoventa,0,0,"C");
 $pdf->SetXY(4,$y+19);		$pdf->MultiCell(68,3,utf8_decode($direccionTxt), 0,"C");
-$pdf->SetXY(4,$y+27);		$pdf->Cell(68,0,"Telefono:  ".$telefonoTxt,0,0,"C");
-//$y=$y+6;
+$pdf->SetXY(4,$y+30);		$pdf->Cell(68,0,"Telefono:  ".$telefonoTxt,0,0,"C");
+
+$y=$y+3;
+
 $pdf->SetXY(4,$y+30);		$pdf->Cell(68,0,$ciudadTxt,0,0,"C");
 $pdf->SetXY(4,$y+32);		$pdf->Cell(68,0,"---------------------------------------------------------------------------", 0,0,"C");
 $pdf->SetXY(4,$y+35);		$pdf->Cell(68,0,"NIT: $nitTxt", 0,0,"C");
@@ -241,7 +243,8 @@ while($datDetalle=mysqli_fetch_array($respDetalle)){
 	$codInterno=$datDetalle[0];
 	$cantUnit=$datDetalle[1];
 	$nombreMat=$datDetalle[2];
-	$nombreMat=substr($nombreMat,0,34);
+	
+	//$nombreMat=substr($nombreMat,0,34);
 
 	$precioUnit=$datDetalle[3];
 	$descUnit=$datDetalle[4];	
@@ -260,9 +263,12 @@ while($datDetalle=mysqli_fetch_array($respDetalle)){
 	$montoUnitProdDesc=redondear2($montoUnitProdDesc);
 	$montoUnitProd=redondear2($montoUnitProd);
 	//////////////
-		
-	$pdf->SetXY(4,$y+$yyy);		$pdf->MultiCell(68,3,utf8_decode("($codInterno) $nombreMat"),"C");
-	$yyy=$yyy+3; 
+	
+	$pdf->SetFont('Arial','',6);	
+	$pdf->SetXY(4,$y+$yyy);		$pdf->MultiCell(68,3,utf8_decode("($codInterno) $nombreMat"),0,"L");
+	$pdf->SetFont('Arial','',8);	
+
+	$yyy=$yyy+5; 
 	$pdf->SetXY(4,$y+$yyy+2);		$pdf->Cell(15,0,"$cantUnit",0,0,"R");
 	$pdf->SetXY(19,$y+$yyy+2);		$pdf->Cell(15,0,"$precioUnitFactura",0,0,"R");
 	$pdf->SetXY(34,$y+$yyy+2);		$pdf->Cell(15,0,"$descUnit",0,0,"R");
