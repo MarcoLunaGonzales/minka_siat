@@ -541,7 +541,7 @@ border-bottom: 1px solid #000;
         <table  style="width: 100%;">
             <tr>
                 <td align="center" width="35%"><br><br>
-                    <img src="imagenes/logo_loyola.jpg" width="200"><br>
+                    <img src="imagenes/logo_loyola2.jpg" width="200"><br>
                     <?=$sucursalTxt;?><br>
                     Punto de Venta <?=$siat_codigopuntoventa;?><br>
                     <?=utf8_decode($direccionTxt);?><br>
