@@ -612,11 +612,10 @@ border-bottom: 1px solid #000;
                 $contador_items=0;                    
                 $cantidad_por_defecto=5;//cantidad de items por defect
 
-                $sqlDetalle="SELECT s.cod_material, s.orden_detalle, s.observaciones, s.observaciones, s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
-                sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
+                $sqlDetalle="SELECT s.cod_material, s.orden_detalle, s.observaciones, s.observaciones, s.precio_unitario, s.cantidad_unitaria as cantidad_unitario,
+                s.descuento_unitario as descuento_unitario, s.monto_unitario as monto_unitario
                 from salida_detalle_almacenes s 
                 where s.cod_salida_almacen=$codigoVenta
-                group by s.orden_detalle, s.observaciones, s.precio_unitario
                 order by s.orden_detalle;";
                 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 
