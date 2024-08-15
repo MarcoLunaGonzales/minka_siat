@@ -529,8 +529,10 @@ border-bottom: 1px solid #000;
 <div  style="height: 49.4%">
         <table  style="width: 100%;">
             <tr>
-                <td align="center" width="45%"><br><br>
-                    </small></small>
+                <td width="45%"><br><br>
+                    </small>
+                        <img src="assets/img/logo_ibro.png" style="margin: 0px;padding: 0;width: 200px;">
+                    </small>
                 </td>
                 
                 <td >
@@ -599,9 +601,19 @@ border-bottom: 1px solid #000;
                 $cantidad_por_defecto=5;//cantidad de items por defect
 
                 $sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material,s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
-                sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
-                from salida_detalle_almacenes s, material_apoyo m 
-                where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoVenta
+                sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario,
+                    s.cod_material,
+                    s.especialidad,
+                    s.especialidadDetalle,
+                    s.nroQuirofanoSalaOperaciones,
+                    s.especialidadMedico,
+                    s.nombreApellidoMedico,
+                    s.nitDocumentoMedico,
+                    s.nroMatriculaMedico,
+                    s.nroFacturaMedico
+                from salida_detalle_almacenes s 
+                LEFT JOIN material_apoyo m ON m.codigo_material=s.cod_material
+                where s.cod_salida_almacen=$codigoVenta
                 group by m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario
                 order by s.orden_detalle;";
                 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
@@ -613,7 +625,7 @@ border-bottom: 1px solid #000;
                     if($datDetalle['observaciones']==null){
                         $observaciones="";
                     }
-                    $codInterno=$datDetalle['codigo_material'];
+                    $codInterno=$datDetalle['cod_material'];
                     $cantUnit=$datDetalle['cantidad_unitario'];
                     $nombreMat=$datDetalle['descripcion_material']." ".$observaciones;;
                     $precioUnit=$datDetalle['precio_unitario'];
@@ -647,7 +659,14 @@ border-bottom: 1px solid #000;
                     <tr>
                         <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=$codInterno?></td>
                         <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;">
-                            <?=$nombreMat;?>
+                             <?=$datDetalle['observaciones']?> </br>
+                            <b>Especialidad:</b> <?=$datDetalle['especialidad']?> </br>
+                            <?=$datDetalle['especialidadDetalle']?> </br>
+                            <b>Quirofano:</b> <?=$datDetalle['nroQuirofanoSalaOperaciones']?> </br>
+                            <b>Medico:</b> <?=$datDetalle['nombreApellidoMedico']?> </br>
+                            <b>Especialidad:</b> <?=$datDetalle['especialidadMedico']?> </br>
+                            <b>Nit:</b> <?=$datDetalle['nitDocumentoMedico']?> </br>
+                            <b>Nro. Factura:</b> <?=$datDetalle['nroFacturaMedico']?>
                         </td>
                         <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><small><?=$unidad_medida?></small></td>
                         <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=$cantUnit?></td>
