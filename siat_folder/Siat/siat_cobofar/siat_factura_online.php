@@ -173,7 +173,7 @@ class FacturaOnline
 		$factura->cabecera->numeroDocumento		= $dataFact['nit'];
 		$factura->cabecera->codigoCliente		= $dataFact['cod_cliente'];
 		
-		$factura->cabecera->modalidadServicio   = $dataFact['modalidadServicio']; // Clínicas
+		$factura->cabecera->modalidadServicio   = ''; // Clínicas
 
 		$factura->cabecera->codigoMetodoPago	= $dataFact['codigoMetodoPago'];
 
