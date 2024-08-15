@@ -180,6 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     }else{
                         //$cod_entidad=2;///codigo interno de entidad
                         $cod_entidad=obtenerEntidadDesdeCiudad($sucursal);///codigo interno de entidad
+                        // echo "cod_entidad:".$cod_entidad
                     }
 
                     $NombreEstudiante="";
@@ -374,7 +375,6 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         // $codigo=mysqli_result($resp,0,0);
         $datCodSalida=mysqli_fetch_array($resp);
         $codigo=$datCodSalida[0];
-        
         $cuis=obtenerCuis_vigente_BD($globalSucursal,$cod_entidad);
 
         $sqlPV="SELECT codigoPuntoVenta FROM siat_puntoventa where cod_ciudad='$globalSucursal' and cod_entidad=$cod_entidad LIMIT 1";
@@ -496,17 +496,28 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
             foreach ($items as $valor) {
                 // echo $codDetalle;
                 $codDetalle=$valor['codDetalle'];
+                
+                // Hospitales
+                $especialidad                = $valor['especialidad'];
+                $especialidadDetalle         = $valor['especialidadDetalle'];
+                $nroQuirofanoSalaOperaciones = $valor['nroQuirofanoSalaOperaciones'];
+                $especialidadMedico          = $valor['especialidadMedico'];
+                $nombreApellidoMedico        = $valor['nombreApellidoMedico'];
+                $nitDocumentoMedico          = $valor['nitDocumentoMedico'];
+                $nroMatriculaMedico          = $valor['nroMatriculaMedico'];
+                $nroFacturaMedico            = $valor['nroFacturaMedico'];
+                
                 $cantidadUnitaria=$valor['cantidad'];
                 $precioUnitario=$valor['precioUnitario'];
                 $descuentoProducto=$valor['descuentoProducto'];
 
-                $conceptoProducto=$valor['detalle'];            
+                $conceptoProducto=$valor['detalle'];  
                 
                 //SE DEBE CALCULAR EL MONTO DEL MATERIAL POR CADA UNO PRECIO*CANTIDAD - EL DESCUENTO ES UN DATO ADICIONAL
                 $montoMaterial=$precioUnitario*$cantidadUnitaria;
                 // $montoMaterialConDescuento=($precioUnitario*$cantidadUnitaria)-$descuentoProducto;
                 //$montoTotalVentaDetalle=$montoTotalVentaDetalle+$montoMaterialConDescuento;
-                $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codDetalle,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$conceptoProducto);
+                $respuesta=insertar_detalleSalidaVenta($enlaceCon,$codigo, $almacenOrigen,$codDetalle,$cantidadUnitaria,$precioUnitario,$descuentoProducto,$montoMaterial,$banderaValidacionStock, $i,$conceptoProducto,$especialidad, $especialidadDetalle, $nroQuirofanoSalaOperaciones, $especialidadMedico, $nombreApellidoMedico, $nitDocumentoMedico, $nroMatriculaMedico, $nroFacturaMedico);
                 $i++;
             }
         }
@@ -519,7 +530,7 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
             //servicios siat
             //echo "entro siat 1";
 
-            $sqlRecep="select siat_codigoRecepcion from salida_almacenes where cod_salida_almacenes='$codigo'";
+            $sqlRecep="SELECT siat_codigoRecepcion from salida_almacenes where cod_salida_almacenes='$codigo'";
             $respRecep=mysqli_query($enlaceCon,$sqlRecep);
             // $recepcion=mysqli_result($respRecep,0,0);
             $datPV=mysqli_fetch_array($respRecep);

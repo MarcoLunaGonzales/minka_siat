@@ -10,7 +10,8 @@ class conexionSiatUrl
 	const wsdlCodigo='https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionCodigos?wsdl';
 	const wsdlFacturacionElectronica='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionElectronica?wsdl';
 	const wsdlOperaciones = 'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionOperaciones?wsdl';
-	const wsdlCompraVenta='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
+	// const wsdlCompraVenta='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
+	const wsdlCompraVenta='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada';
 	const wsdlFacturacionComputarizada='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
 
 
@@ -21,6 +22,7 @@ class conexionSiatUrl
 	// const wsdlCodigo='https://siatrest.impuestos.gob.bo/v2/FacturacionCodigos?wsdl';
 	// const wsdlFacturacionElectronica='https://siatrest.impuestos.gob.bo/v2/ServicioFacturacionElectronica?wsdl';
 	// const wsdlOperaciones = 'https://siatrest.impuestos.gob.bo/v2/FacturacionOperaciones?wsdl';
+	// // const wsdlCompraVenta='https://siatrest.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
 	// const wsdlCompraVenta='https://siatrest.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
 	// const wsdlFacturacionComputarizada='https://siatrest.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
 
