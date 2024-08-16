@@ -45,7 +45,7 @@ $Objeto_detalle2->nroFacturaMedico     = "0";
 $arrayDetalle= array($Objeto_detalle1,$Objeto_detalle2);
 
 
-$sucursal    = 2;
+$sucursal    = 1;
 $fecha       = "2024-08-15";
 $idPersona   = "16178";
 $monto_total = "670";
@@ -84,7 +84,7 @@ $parametros = array("sIdentificador"=>$sIde, "sKey"=>$sKey,
 );  
     
 
-for($i=1;$i<=50;$i++){
+for($i=1;$i<=75;$i++){
 
    // $url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
    $url="http://localhost/minka_siat/wsminka/ws_generarFactura.php";
