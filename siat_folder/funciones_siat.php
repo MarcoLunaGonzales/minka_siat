@@ -221,6 +221,16 @@ function anulacionFactura_siat($codigoPuntoVenta,$codigoSucursal,$cuis,$cufd,$cu
   $resFac=$FacturaOnline::anularFacturaEnviada($codigoPuntoVenta,$codigoSucursal,$cuis,$cufd,$cuf);
   return array($resFac[0],$resFac[1]);
 }
+/**
+ * Reversión de Factura Anulada
+ */
+function reversionFactura_siat($codigoPuntoVenta,$codigoSucursal,$cuis,$cufd,$cuf){
+  require_once "Siat/siat_cobofar/siat_factura_online.php"; 
+  // echo "***";
+  $FacturaOnline= new FacturaOnline();
+  $resFac=$FacturaOnline::reversionFacturaEnviada($codigoPuntoVenta,$codigoSucursal,$cuis,$cufd,$cuf);
+  return array($resFac[0],$resFac[1]);
+}
 
 function verificarNitClienteSiat($nit,$cod_ciduad=1){
   require_once "Siat/siat_cobofar/siat_factura_online.php";   

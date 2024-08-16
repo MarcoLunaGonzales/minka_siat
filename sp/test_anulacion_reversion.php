@@ -20,20 +20,20 @@ $cuf="20E0644AD405F2D0AAD7ED61A3B2260DEE2CEA06AB65B1C4C7C54FD74";
 
 $sql="SELECT s.cod_salida_almacenes, s.siat_cuis, sc.cufd, s.siat_cuf from salida_almacenes s, siat_cufd sc 
 where s.siat_codigocufd=sc.codigo and s.salida_anulada=0 ORDER BY s.cod_salida_almacenes DESC LIMIT 125";
-echo $sql;
+// echo $sql;
 $resp=mysqli_query($enlaceCon, $sql);
 while($dat=mysqli_fetch_array($resp)){
-  echo "entra";
+  // echo "entra";
   
   $codVenta=$dat[0];
   $cuis=$dat[1];
   $cufd=$dat[2];
   $cuf=$dat[3];
   
-  $respEvento=anulacionFactura_siat($codigoPuntoVenta,$codigoSucursal,$cuis,$cufd,$cuf);
+  $respEvento=reversionFactura_siat($codigoPuntoVenta,$codigoSucursal,$cuis,$cufd,$cuf);
   $mensaje=$respEvento[1];
   if($respEvento[0]==1){
-    echo "anulado ".$codVenta." ".$mensaje;
+    echo "Revertido ".$codVenta." ".$mensaje;
   }
 
 }
