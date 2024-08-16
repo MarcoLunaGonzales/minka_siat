@@ -90,7 +90,8 @@ function sincronizarCufdCuis(globalEntidad){
                       </thead>
                       <tbody>
                            <?php
-                        $sql="SELECT c.cod_ciudad,c.nombre_ciudad,c.direccion,c.cod_impuestos,(SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad)as codigoPuntoVenta,(SELECT cuis FROM siat_cuis where cod_gestion='$anioActual' and cod_ciudad=c.cod_ciudad and estado=1 order by codigo desc limit 1)cuis,(SELECT cufd FROM siat_cufd where fecha='$fechaActual' and cod_ciudad=c.cod_ciudad and estado=1 order by codigo desc limit 1)cufd  from ciudades c where c.cod_impuestos>=0 and c.cod_entidad=$globalEntidad having codigoPuntoVenta>0 order by c.cod_ciudad;";
+                        $sql="SELECT c.cod_ciudad,c.nombre_ciudad,c.direccion,c.cod_impuestos,
+                        (SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad)as codigoPuntoVenta,(SELECT cuis FROM siat_cuis where cod_gestion='$anioActual' and cod_ciudad=c.cod_ciudad and estado=1 order by codigo desc limit 1)cuis,(SELECT cufd FROM siat_cufd where fecha='$fechaActual' and cod_ciudad=c.cod_ciudad and estado=1 order by codigo desc limit 1)cufd  from ciudades c where c.cod_impuestos>=0 and c.cod_entidad=$globalEntidad having codigoPuntoVenta>=0 order by c.cod_ciudad;";
                         
                         //echo $sql;
                         
@@ -103,14 +104,6 @@ function sincronizarCufdCuis(globalEntidad){
                           $codigoPuntoVenta=$dat[4];
                           $cuis=$dat[5];
                           $cufd=$dat[6];
-
-                          // if($codigoPuntoVenta>0){
-                          //   $estadoList="<a href='#' class='btn btn-sm btn-success'>Sucursal Abierta!</a>";
-                          //   $botonPuntoVenta='<a href="#" onclick="cerrarPuntoVenta('.$codigo.');return false;" class=" btn btn-sm btn-default" title="OBTENER CUIS"><i class="material-icons">compare_arrows</i> CUIS</a>';
-                          // }else{
-                          //   $estadoList="<a href='#' class='btn btn-sm btn-danger'>Sucursal Cerrada!</a>";
-                          //   $botonPuntoVenta='<ahref="#" onclick="abrirPuntoVenta('.$codigo.');return false;" class=" btn btn-sm btn-rose" title="ABRIR PUNTO VENTA"><i class="material-icons">meeting_room</i> ABRIR</a>';
-                          // }
 
                           if($cuis==""){
                             $cuis="No registrado en la base local";
