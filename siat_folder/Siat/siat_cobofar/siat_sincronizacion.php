@@ -48,6 +48,8 @@ class SyncTest
 			$servCodigos->setConfig((array)$config);
 			$resCuis = $servCodigos->cuis();
 			// print_r($resCuis);
+			
+			
 			$sync = new ServicioFacturacionSincronizacion($resCuis->RespuestaCuis->codigo, null, $config->tokenDelegado);
 			$sync->setConfig((array)$config);
 			$res = call_user_func([$sync, $action]);
@@ -72,8 +74,11 @@ class SyncTest
 			$servCodigos = new ServicioFacturacionCodigos(null, null, $config->tokenDelegado);
 			$servCodigos->setConfig((array)$config);
 			$resCuis = $servCodigos->cuis();			
+			
+			var_dump($resCuis);
+			
 			$sync = new ServicioFacturacionSincronizacion($resCuis->RespuestaCuis->codigo, null, $config->tokenDelegado);
-			//$sync = new ServicioFacturacionSincronizacion('CB97C1F1', null, $config->tokenDelegado);
+			//$sync = new ServicioFacturacionSincronizacion('5FB29839', null, $config->tokenDelegado);
 			
 			$sync->setConfig((array)$config);
 			$res = call_user_func([$sync, $action]);			

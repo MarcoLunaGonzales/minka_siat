@@ -82,7 +82,9 @@ function abrirPuntoVenta(ciudad,globalEntidad){
                       </thead>
                       <tbody>
                            <?php
-                        $sql="SELECT c.cod_ciudad,c.nombre_ciudad,c.direccion,c.cod_impuestos,(SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad)as codigoPuntoVenta  from ciudades c where c.cod_impuestos>=0 and cod_entidad=$globalEntidad order by c.cod_ciudad;";
+                        $sql="SELECT c.cod_ciudad,c.nombre_ciudad,c.direccion,c.cod_impuestos,
+                        (SELECT codigoPuntoVenta from siat_puntoventa where cod_ciudad=c.cod_ciudad)as codigoPuntoVenta  
+                        from ciudades c where c.cod_impuestos>=0 and cod_entidad=$globalEntidad order by c.cod_ciudad;";
                         
                         //echo $sql;
                         
@@ -94,7 +96,7 @@ function abrirPuntoVenta(ciudad,globalEntidad){
                           $cod_impuestos=$dat[3];
                           $codigoPuntoVenta=$dat[4];
 
-                          if($codigoPuntoVenta>0){
+                          if($codigoPuntoVenta>=0){
                             $estadoList="<span class='badge badge-success'>Sucursal Abierta!</span>";
                             $botonPuntoVenta='<a href="#" onclick="cerrarPuntoVenta('.$codigo.','.$globalEntidad.');return false;" class=" btn btn-sm btn-default" title="CERRAR PUNTO VENTA"><i class="material-icons">door_back</i> CERRAR</a>';
                           }else{
