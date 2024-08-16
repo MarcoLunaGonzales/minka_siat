@@ -77,9 +77,9 @@ class FacturaOnline
         group by m.codigo_material, s.orden_detalle,m.descripcion_material,s.observaciones,s.precio_unitario
         order by s.orden_detalle;";*/
         $sqlDetalle="SELECT s.cod_material as codigo_material, s.orden_detalle, '' as descripcion_material, s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
-        sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
+        sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario, especialidad, especialidadDetalle, nroQuirofanoSalaOperaciones, especialidadMedico, nombreApellidoMedico, nitDocumentoMedico, nroMatriculaMedico, nroFacturaMedico
         from salida_detalle_almacenes s 
-        where s.cod_salida_almacen=$codigoSalida
+        where s.cod_salida_almacen='$codigoSalida'
         group by s.cod_material,s.orden_detalle,descripcion_material,s.observaciones,s.precio_unitario
         order by s.orden_detalle;";
 
@@ -116,19 +116,27 @@ class FacturaOnline
 		    $montoUnitProd=self::redondear2($montoUnitProd-$descUnit);
 
 		    //$detalle = new InvoiceDetail();
-		    if($modalidad==2){//computarizada en linea sector educacion
-			 // 	unset($detalle->numeroSerie);
-				// unset($detalle->numeroImei);
+		    if($modalidad==2){//computarizada en linea Sector Hospital
 				$detalle = new InvoiceDetailCompraVenta();
 			}else{
 				$detalle = new InvoiceDetail();
 			}
 		  
+			// Clínicas
+			$detalle->especialidad			= $datDetalle['especialidad'];
+			$detalle->especialidadDetalle	= $datDetalle['especialidadDetalle'];
+			$detalle->nroQuirofanoSalaOperaciones = $datDetalle['nroQuirofanoSalaOperaciones'];
+			$detalle->especialidadMedico	= $datDetalle['especialidadMedico'];
+			$detalle->nombreApellidoMedico	= $datDetalle['nombreApellidoMedico'];
+			$detalle->nitDocumentoMedico	= $datDetalle['nitDocumentoMedico'];
+			$detalle->nroMatriculaMedico	= $datDetalle['nroMatriculaMedico'];
+			$detalle->nroFacturaMedico		= $datDetalle['nroFacturaMedico'];
+
 		    // $detalle = new InvoiceDetail();
 			$detalle->cantidad				= $cantUnit;
-			$detalle->actividadEconomica	= $dataFact['siat_codigoActividad'];//	'477300';
+			$detalle->actividadEconomica	= $dataFact['siat_codigoActividad']; //	'477300';
 			$detalle->codigoProducto		= $codInterno;
-			$detalle->codigoProductoSin		= $dataFact['siat_codigoProducto'];//62273; //SERVICIOS DE COMERCIO AL POR MENOR DE HILADOS Y TELAS EN TIENDAS NO ESPECIALIZADAS
+			$detalle->codigoProductoSin		= $dataFact['siat_codigoProducto'];  //62273; //SERVICIOS DE COMERCIO AL POR MENOR DE HILADOS Y TELAS EN TIENDAS NO ESPECIALIZADAS
 			$detalle->unidadMedida			= $dataFact['siat_unidadMedida'];
 			$detalle->descripcion			= $nombreMat;
 			$detalle->precioUnitario		= $precioUnitFactura;
@@ -165,7 +173,7 @@ class FacturaOnline
 		$factura->cabecera->numeroDocumento		= $dataFact['nit'];
 		$factura->cabecera->codigoCliente		= $dataFact['cod_cliente'];
 		
-
+		$factura->cabecera->modalidadServicio   = ''; // Clínicas
 
 		$factura->cabecera->codigoMetodoPago	= $dataFact['codigoMetodoPago'];
 
@@ -186,15 +194,12 @@ class FacturaOnline
 		$factura->cabecera->tipoCambio			= 1;
 		$factura->cabecera->usuario				= $dataFact['usuario'];
 
-		if($modalidad==1){//electronica en linea
-			$factura->cabecera->codigoDocumentoSector= 1;//factura compra venta
-			unset($factura->cabecera->nombreEstudiante);
-			unset($factura->cabecera->periodoFacturado);
-		}else{//computarizada en linea
-			$factura->cabecera->codigoDocumentoSector= 11;//factura sectores educativo
-			$factura->cabecera->nombreEstudiante	= $dataFact['siat_nombreEstudiante'];
-		 	$factura->cabecera->periodoFacturado	= $dataFact['siat_periodoFacturado'];
-		}
+		$factura->cabecera->codigoDocumentoSector= 17;// Factura Hospitales Clínicas
+
+		// * SE QUITA CAMPOS
+		unset($factura->cabecera->nombreEstudiante);
+		unset($factura->cabecera->periodoFacturado);
+
 		// $solicitud->codigoDocumentoSector 	= DocumentTypes::FACTURA_COMPRA_VENTA; //instanciar
 		// print_r($factura);
 		return $factura;
@@ -230,8 +235,8 @@ class FacturaOnline
 			(select codigoClasificador from siat_tipos_pago where cod_tipopago=s.cod_tipopago)codigoMetodoPago,
 			s.monto_total as monto_referencial,
 			s.descuento,s.siat_usuario as usuario,s.siat_fechaemision,s.siat_complemento,s.siat_codigoRecepcion,s.siat_cuf,(select nro_tarjeta from tarjetas_salidas where cod_salida_almacen=s.cod_salida_almacenes limit 1)as nro_tarjeta,(select descripcionLeyenda from siat_sincronizarlistaleyendasfactura where codigo=s.siat_cod_leyenda) as leyenda,
-			(select siat_cafc from dosificaciones d where d.cod_dosificacion=s.cod_dosificacion and d.tipo_dosificacion=2 and d.tipo_descargo=2)as cafc,c.siat_codigoActividad,c.siat_codigoProducto,s.siat_nombreEstudiante,s.siat_periodoFacturado,c.siat_unidadMedida
-			 from salida_almacenes s join almacenes a on a.cod_almacen=s.cod_almacen
+			(select siat_cafc from dosificaciones d where d.cod_dosificacion=s.cod_dosificacion and d.tipo_dosificacion=2 and d.tipo_descargo=2)as cafc,c.siat_codigoActividad,c.siat_codigoProducto,s.siat_nombreEstudiante,s.siat_periodoFacturado,c.siat_unidadMedida, c.modalidadServicio
+			from salida_almacenes s join almacenes a on a.cod_almacen=s.cod_almacen
 			join ciudades c on c.cod_ciudad=a.cod_ciudad
 			where s.cod_salida_almacenes=$codSalidaFactura;";
 			
@@ -357,7 +362,7 @@ class FacturaOnline
 					$service->codigoControl = $dataFact['codigoControl_generado'];
 				}
 				$service->debug = true;
-
+				
 				if($dataFact['cod_tipo_doc']==4){
 					$fechaemision=$dataFact['siat_fechaemision'];
 					$factura = self::buildInvoice($codigoPuntoVenta, $codigoSucursal, $config->modalidad,$dataFact,$fechaemision);
@@ -366,11 +371,14 @@ class FacturaOnline
 					$factura = self::buildInvoice($codigoPuntoVenta, $codigoSucursal, $config->modalidad,$dataFact,$fechaemision);
 					// print_r($factura);
 				}
+				// echo "XML";
 				// print_r($factura);
+				// exit;
 
 				$factura->cabecera->codigoExcepcion=$dataFact['siat_excepcion'];
 				// $factura->cabecera->leyenda=$leyenda;
 				$factura->cabecera->leyenda=$dataFact['leyenda'];
+
 
 				// if($ex==true){
 				// 	$factura->cabecera->codigoExcepcion=1;	

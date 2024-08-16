@@ -9,8 +9,8 @@ class CompraVenta extends SiatInvoice
 	public function __construct()
 	{
 		parent::__construct();
-		$this->classAlias 				= 'facturaComputarizadaSectorEducativo';
-		$this->cabecera->codigoDocumentoSector 	= 11;
+		$this->classAlias 						= 'facturaComputarizadaHospitalClinica'; // HospitalClinica
+		$this->cabecera->codigoDocumentoSector 	= 17;
 		$this->endpoint=conexionSiatUrl::wsdlFacturacionComputarizada;
 	}
 	public function validate()
