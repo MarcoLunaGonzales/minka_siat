@@ -11,7 +11,7 @@ class conexionSiatUrl
 	const wsdlFacturacionElectronica='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionElectronica?wsdl';
 	const wsdlOperaciones = 'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionOperaciones?wsdl';
 	// const wsdlCompraVenta='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
-	const wsdlCompraVenta='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada';
+	const wsdlCompraVenta='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
 	const wsdlFacturacionComputarizada='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
 
 

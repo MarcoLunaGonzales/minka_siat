@@ -11,6 +11,7 @@ use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudSe
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudServicioRecepcionPaquete;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudServicioValidacionRecepcionPaquete;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudServicioAnulacionFactura;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudServicioReversionAnulacionFactura;
 
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\conexionSiatUrl;
 
@@ -374,9 +375,9 @@ class ServicioFacturacion extends ServicioSiat
 			 $solicitud->codigoSucursal			=$codigoSucursal;
 			// $solicitud->codigoDocumentoSector 	= 11; //
 			 if($this->modalidad==1){//electronica en linea
-			 	$solicitud->codigoDocumentoSector 	= 1; //compra venta
+			 	$solicitud->codigoDocumentoSector 	= 17; // Clínica
 			 }else{//sector educacion
-			 	$solicitud->codigoDocumentoSector 	= 11; // educacion
+			 	$solicitud->codigoDocumentoSector 	= 17; // Clínica
 			 }
 			
 			// $solicitud->codigoDocumentoSector 	= DocumentTypes::FACTURA_COMPRA_VENTA; //instanciar
@@ -397,6 +398,53 @@ class ServicioFacturacion extends ServicioSiat
 			// print_r($data);
 			$res = $this->callAction('anulacionFactura', $data);
 			// print_r($res);
+			return $res;
+		}
+		catch(SoapFault $e)
+		{
+			echo $e->getMessage();
+		}
+	}
+	public function reversionFacturaEnviada($cuf,$codigoPuntoVenta,$codigoSucursal)
+	{
+		try
+		{
+
+			// echo "aqui";
+			$solicitud = new SolicitudServicioReversionAnulacionFactura();
+			// $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
+			
+			if($this->modalidad==1){//electronica
+				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			}else{
+				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+			}
+			
+
+			$solicitud->codigoPuntoVenta 		= $codigoPuntoVenta;// PARA COMPLETAR CON LA
+			 $solicitud->codigoSucursal			=$codigoSucursal;
+			// $solicitud->codigoDocumentoSector 	= 11; //
+			 if($this->modalidad==1){
+				$solicitud->codigoDocumentoSector 	= 17; // Clínica
+			}else{
+				$solicitud->codigoDocumentoSector 	= 17; // Clínica
+			 }
+			
+			// $solicitud->codigoDocumentoSector 	= DocumentTypes::FACTURA_COMPRA_VENTA; //instanciar
+			$solicitud->cuf						= $cuf;
+			$solicitud->cufd 					= $this->cufd;
+			$solicitud->cuis					= $this->cuis;
+			$solicitud->codigoSistema			= $this->codigoSistema;
+			$solicitud->nit						= $this->nit;
+			$solicitud->codigoModalidad			= $this->modalidad;
+			$solicitud->codigoAmbiente 			= $this->ambiente;
+			$solicitud->tipoFacturaDocumento	= self::TIPO_FACTURA_CREDITO_FISCAL;
+			$solicitud->codigoEmision			= self::TIPO_EMISION_ONLINE;
+			$data = [
+				$solicitud->toArray()
+			];
+			$res = $this->callAction('reversionAnulacionFactura', $data);
+			print_r($res);
 			return $res;
 		}
 		catch(SoapFault $e)

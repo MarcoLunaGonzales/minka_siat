@@ -45,7 +45,6 @@ $Objeto_detalle2->nroFacturaMedico     = "0";
 $arrayDetalle= array($Objeto_detalle1,$Objeto_detalle2);
 
 
-$sucursal    = 2;
 $fecha       = "2024-08-15";
 $idPersona   = "16178";
 $monto_total = "670";
@@ -60,11 +59,12 @@ $tipoPago      = "1";
 $nroTarjeta    = 0;
 $tipoDocumento = "5";
 $complementoDocumento = "";
+$sucursal    = "2"; // 1: Punto 0, 2: Punto 1
 $parametros = array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
    "accion"          =>"generarFacturaElectronica", //
-   "cod_entidad"     =>1, //ID de empresa, otorgado por minkasoftware
-   "sucursal"        =>$sucursal,   
-   "idRecibo"        =>0,
+   "idEmpresa"       => 1, //ID de empresa, otorgado por minkasoftware
+   "sucursal"        => $sucursal,   
+   "idRecibo"        => 0,
    "fecha"           =>$fecha,
    "idPersona"       =>$idPersona,//cod cliente
    "monto_total"     =>$monto_total,
@@ -84,7 +84,7 @@ $parametros = array("sIdentificador"=>$sIde, "sKey"=>$sKey,
 );  
     
 
-for($i=1;$i<=5;$i++){
+for($i=1;$i<=50;$i++){
 
    // $url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
    $url="http://localhost/minka_siat/wsminka/ws_generarFactura.php";

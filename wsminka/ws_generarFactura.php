@@ -352,10 +352,6 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         $respConf=mysqli_query($enlaceCon,$sqlConf);
         $datConf=mysqli_fetch_array($respConf);
         $cod_leyenda=$datConf[0];
-        $sqlConf="SELECT codigo FROM siat_sincronizarlistaleyendasfactura where codigoActividad in (SELECT siat_codigoActividad from ciudades where cod_ciudad='$globalSucursal') and estado=1 ORDER BY rand() LIMIT 1;";
-        $respConf=mysqli_query($enlaceCon,$sqlConf);
-        $datConf=mysqli_fetch_array($respConf);
-        $cod_leyenda=$datConf[0];
         $siat_codigotipodocumentoidentidad=$tipoDocumento;
     }
     /*VALIDACION MANUAL CASOS ESPECIALES*/

@@ -463,6 +463,49 @@ class FacturaOnline
 
 	}
 
+	public static function reversionFacturaEnviada($codigoPuntoVenta,$codigoSucursal,$cuis,$cufd,$cuf,$modalidad=1)
+	{				
+		  // echo "aqui cuf".$cuf;
+		$config = self::buildConfig();
+		$config->validate();	
+		// echo $cuis."->>>>".$cufd;
+		
+		if($modalidad==1){//electronica en linea
+			$service = new ServicioFacturacionElectronica($cuis, $cufd, $config->tokenDelegado);
+		}else{//computarizada en linea
+			$service = new ServicioFacturacionComputarizada($cuis, $cufd, $config->tokenDelegado);
+		}
+		// print_r($config);
+		$service->setConfig((array)$config);
+		// $service->codigoControl = $codigoControl;
+		//// $service->setPrivateCertificateFile($privCert);
+		//$service->setPublicCertificateFile($pubCert);
+		$service->debug = true;
+		// print_r($service);
+
+		 $res2 = $service->reversionFacturaEnviada($cuf,$codigoPuntoVenta,$codigoSucursal);
+		 print_r($res2);
+		 if(isset($res2->RespuestaServicioFacturacion->codigoEstado)){
+		 	if($res2->RespuestaServicioFacturacion->codigoEstado==905) {
+		 		$codigo=1;
+			 	$detalle=$res2->RespuestaServicioFacturacion->codigoDescripcion;
+			 	return array($codigo,$detalle);	
+		 	}else{
+		 		$codigo=-1;
+			 	$detalle=$res2->RespuestaServicioFacturacion->mensajesList->descripcion;
+			 	return array($codigo,$detalle);	
+		 	}
+			
+		 }else{
+		 	$codigo=-1;
+		 	$detalle=$res2->RespuestaServicioFacturacion->mensajesList->descripcion;
+		 	return array($codigo,$detalle);
+		 }
+		//echo "<br>***Anul:<br>";
+		 // print_r($res2);
+
+	}
+
 	public static function verificarNitCliente($nitCliente,$cod_ciduad){
 		try
 		{
