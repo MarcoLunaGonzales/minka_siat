@@ -242,7 +242,7 @@ class ServicioFacturacion extends ServicioSiat
 			if($this->modalidad==1){//electronica en linea
 			 	$solicitud->codigoDocumentoSector 	= 1; //compra venta
 			 }else{//sector educacion
-			 	$solicitud->codigoDocumentoSector 	= 11; // educacion
+			 	$solicitud->codigoDocumentoSector 	= 17; // Clínica
 			 }
 
 			$solicitud->tipoFacturaDocumento	= $tipoFactura;
@@ -280,7 +280,7 @@ class ServicioFacturacion extends ServicioSiat
 			if($this->modalidad==1){//electronica en linea
 			 	$solicitud->codigoDocumentoSector 	= 1; //compra venta
 			 }else{//sector educacion
-			 	$solicitud->codigoDocumentoSector 	= 11; // educacion
+			 	$solicitud->codigoDocumentoSector 	= 17; // Clínica
 			 }
 
 			$solicitud->codigoEmision			= $tipoEmision;
@@ -326,7 +326,7 @@ class ServicioFacturacion extends ServicioSiat
 			if($this->modalidad==1){//electronica en linea
 			 	$solicitud->codigoDocumentoSector 	= 1; //compra venta
 			 }else{//sector educacion
-			 	$solicitud->codigoDocumentoSector 	= 11; // educacion
+			 	$solicitud->codigoDocumentoSector 	= 17; // Clínica
 			 }
 			
 			$solicitud->codigoRecepcion		= $codigoRecepcion;
@@ -469,7 +469,7 @@ class ServicioFacturacion extends ServicioSiat
 		if($this->modalidad==1){//electronica en linea
 		 	$codigoDocumentoSector=1; //compra venta
 		 }else{//sector educacion
-		 	$codigoDocumentoSector=11; // educacion
+		 	$codigoDocumentoSector=17; // Clínica
 		 }
 		$data = [
 			[
