@@ -84,7 +84,7 @@ $parametros = array("sIdentificador"=>$sIde, "sKey"=>$sKey,
 );  
     
 
-for($i=1;$i<=125;$i++){
+for($i=1;$i<=50;$i++){
 
    // $url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
    $url="http://localhost/minka_siat/wsminka/ws_generarFactura.php";
