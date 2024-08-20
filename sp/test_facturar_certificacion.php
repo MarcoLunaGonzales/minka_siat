@@ -45,13 +45,13 @@ $Objeto_detalle2->nroFacturaMedico     = "0";
 $arrayDetalle= array($Objeto_detalle1,$Objeto_detalle2);
 
 
-$fecha       = "2024-08-15";
+$fecha       = "2024-08-19";
 $idPersona   = "16178";
 $monto_total = "670";
 $descuento   = 0;
 $monto_final = "670";
 $id_usuario  = 11;
-$usuario     = "GUILLERMO SUAREZ";
+$usuario     = "PEDRO PELOTAS";
 $nitCliente  = "4868422016";
 $nombreFactura = "MARCO ANTONIO LUNA";
 
@@ -87,7 +87,7 @@ $parametros = array("sIdentificador"=>$sIde, "sKey"=>$sKey,
 for($i=1;$i<=50;$i++){
 
    // $url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
-   $url="http://localhost/minka_siat/wsminka/ws_generarFactura.php";
+   $url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
    $jsons=callService($parametros, $url);
    //print_r($jsons);
   
