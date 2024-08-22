@@ -562,22 +562,14 @@ border-bottom: 1px solid #000;
 
         <table class="table">
             <tr >
-                <td class="td-border-none text-left" width="15%" ><b>Nombre/Razón Social : </b></td>
+                <td class="td-border-none text-left" width="18%" ><b>Nombre/Razón Social : </b></td>
                 <td class="td-border-none" width="43%"><?=$razonSocialCliente?></td>
                 <td class="td-border-none text-right" width="15%"><b>NIT/CI/CEX:</b></td>
                 <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nitCliente." ".$siat_complemento?></td>
             </tr>
             <tr >
-              <td class="td-border-none text-left" width="25%" ><b>Nombre Estudiante : </b></td>
-              <td class="td-border-none" ><?=$nombreEstudiante?></td>
-              <td class="td-border-none text-right" ><b>Cod. Cliente :</b></td>
+              <td class="td-border-none text-left" width="18%" ><b>Cod. Cliente :</b></td>
               <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$cod_cliente?></td>
-            </tr>
-            <tr >
-              <td class="td-border-none text-left" width="25%" ></td>
-              <td class="td-border-none" ></td>
-              <td class="td-border-none text-right" ><b>Periodo Facturado :</b></td>
-              <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$periodoFacturado?></td>
             </tr>
         </table>
         <table class="table2">
