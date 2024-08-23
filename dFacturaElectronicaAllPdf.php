@@ -460,7 +460,15 @@ footer p {
 //         order by s.orden_detalle";
 
 $sqlDetalle="SELECT s.cod_material, s.orden_detalle, s.observaciones, s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
-        sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
+        sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario,
+                    s.especialidad,
+                    s.especialidadDetalle,
+                    s.nroQuirofanoSalaOperaciones,
+                    s.especialidadMedico,
+                    s.nombreApellidoMedico,
+                    s.nitDocumentoMedico,
+                    s.nroMatriculaMedico,
+                    s.nroFacturaMedico
         from salida_detalle_almacenes s 
         where s.cod_salida_almacen=$codigoVenta
         group by s.cod_material, s.orden_detalle, s.observaciones,s.precio_unitario
@@ -519,7 +527,16 @@ while($datDetalle=mysqli_fetch_array($respDetalle)){
             <div class="media">
                 <!-- <img class="mr-3 img-fluid" src="<?=__DIR__?>/<?=$dir_imagen_producto?>" alt="Pd"> -->
                 <div class="media-body">
-                    <p class="mt-0 title" style="font-size: 10px !important;"><small><?=$nombreMat?></small></p>                                        
+                    <p class="mt-0 title" style="font-size: 10px !important;"><small>
+                        <?=$datDetalle['observaciones']?> </br>
+                        <b>Especialidad:</b> <?=$datDetalle['especialidad']?> </br>
+                        <?=$datDetalle['especialidadDetalle']?> </br>
+                        <b>Quirofano:</b> <?=$datDetalle['nroQuirofanoSalaOperaciones']?> </br>
+                        <b>Medico:</b> <?=$datDetalle['nombreApellidoMedico']?> </br>
+                        <b>Especialidad:</b> <?=$datDetalle['especialidadMedico']?> </br>
+                        <b>Nit:</b> <?=$datDetalle['nitDocumentoMedico']?> </br>
+                        <b>Nro. Factura:</b> <?=$datDetalle['nroFacturaMedico']?>
+                    </small></p>                                        
                 </div>
             </div>
         </td>
