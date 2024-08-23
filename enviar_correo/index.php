@@ -22,7 +22,7 @@ $idProveedor=0;
 
 $consulta = "SELECT i.cod_salida_almacenes, i.fecha, i.hora_salida, i.razon_social, i.nro_correlativo, i.salida_anulada,(select p.nombre_cliente from clientes p where p.cod_cliente=i.cod_cliente) as cliente,i.cod_cliente,i.cod_chofer,i.siat_fechaemision,i.siat_cuf,i.monto_final FROM salida_almacenes i WHERE i.salida_anulada!=1 and i.cod_salida_almacenes in ($datos) ";             
 $consulta = $consulta."";
-            echo $consulta;
+            // echo $consulta;
 $resp = mysqli_query($enlaceCon,$consulta);
 while ($dat = mysqli_fetch_array($resp)) {
   $cod_salida_almacenes = $dat['cod_salida_almacenes'];
