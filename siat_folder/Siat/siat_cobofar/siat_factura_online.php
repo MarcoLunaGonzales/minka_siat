@@ -388,7 +388,7 @@ class FacturaOnline
 				// echo "<br>FACTURA1:<br>";
 				 //print_r($factura);
 				
-				//print_r($factura);
+				print_r($factura);
 
 				if($online_siat==2){
 					$res = $service->recepcionFactura($factura,$online_siat);	
