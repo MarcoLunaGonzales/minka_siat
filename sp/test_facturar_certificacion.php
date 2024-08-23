@@ -45,7 +45,7 @@ $Objeto_detalle2->nroFacturaMedico     = "0";
 $arrayDetalle= array($Objeto_detalle1,$Objeto_detalle2);
 
 
-$fecha       = "2024-08-19";
+$fecha       = "2024-08-20";
 $idPersona   = "16178";
 $monto_total = "670";
 $descuento   = 0;
