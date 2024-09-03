@@ -654,7 +654,7 @@ border-bottom: 1px solid #000;
                              <?=$datDetalle['observaciones']?> </br>
                             <b>Especialidad:</b> <?=$datDetalle['especialidad']?> </br>
                             <?=$datDetalle['especialidadDetalle']?> </br>
-                            <b>Quirofano:</b> <?=$datDetalle['nroQuirofanoSalaOperaciones']?> </br>
+                            <b>Quirofano/Gabinete:</b> <?=$datDetalle['nroQuirofanoSalaOperaciones']?> </br>
                             <b>Medico:</b> <?=$datDetalle['nombreApellidoMedico']?> </br>
                             <b>Especialidad:</b> <?=$datDetalle['especialidadMedico']?> </br>
                             <b>Nit:</b> <?=$datDetalle['nitDocumentoMedico']?> </br>

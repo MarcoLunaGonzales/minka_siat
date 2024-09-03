@@ -96,7 +96,7 @@ function abrirPuntoVenta(ciudad,globalEntidad){
                           $cod_impuestos=$dat[3];
                           $codigoPuntoVenta=$dat[4];
 
-                          if($codigoPuntoVenta>=0){
+                          if($codigoPuntoVenta>0){
                             $estadoList="<span class='badge badge-success'>Sucursal Abierta!</span>";
                             $botonPuntoVenta='<a href="#" onclick="cerrarPuntoVenta('.$codigo.','.$globalEntidad.');return false;" class=" btn btn-sm btn-default" title="CERRAR PUNTO VENTA"><i class="material-icons">door_back</i> CERRAR</a>';
                           }else{

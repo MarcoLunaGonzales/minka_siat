@@ -4,15 +4,15 @@ class conexionSiatUrl
 {
 
 
-	const endpoint 	= 'https://pilotosiatservicios.impuestos.gob.bo/v22/ServicioFacturacionComputarizada';
-	const wsdl 		= 'https://pilotosiatservicios.impuestos.gob.bo/v22/ServicioFacturacionComputarizada?wsdl';
-	const wsdlSincronizacion = 'https://pilotosiatservicios.impuestos.gob.bo/v22/FacturacionSincronizacion?wsdl';
-	const wsdlCodigo='https://pilotosiatservicios.impuestos.gob.bo/v22/FacturacionCodigos?wsdl';
-	const wsdlFacturacionElectronica='https://pilotosiatservicios.impuestos.gob.bo/v22/ServicioFacturacionElectronica?wsdl';
-	const wsdlOperaciones = 'https://pilotosiatservicios.impuestos.gob.bo/v22/FacturacionOperaciones?wsdl';
-	// const wsdlCompraVenta='https://pilotosiatservicios.impuestos.gob.bo/v22/ServicioFacturacionCompraVenta?wsdl';
-	const wsdlCompraVenta='https://pilotosiatservicios.impuestos.gob.bo/v22/ServicioFacturacionComputarizada?wsdl';
-	const wsdlFacturacionComputarizada='https://pilotosiatservicios.impuestos.gob.bo/v22/ServicioFacturacionComputarizada?wsdl';
+	const endpoint 	= 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada';
+	const wsdl 		= 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
+	const wsdlSincronizacion = 'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionSincronizacion?wsdl';
+	const wsdlCodigo='https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionCodigos?wsdl';
+	const wsdlFacturacionElectronica='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionElectronica?wsdl';
+	const wsdlOperaciones = 'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionOperaciones?wsdl';
+	// const wsdlCompraVenta='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
+	const wsdlCompraVenta='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
+	const wsdlFacturacionComputarizada='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
 
 
 	//Oficial
