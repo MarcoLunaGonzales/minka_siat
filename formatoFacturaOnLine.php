@@ -531,7 +531,7 @@ border-bottom: 1px solid #000;
             <tr>
                 <td width="45%"><br><br>
                     </small>
-                        <img src="assets/img/logo_ibro.png" style="margin: 0px;padding: 0;width: 200px;">
+                        <img src="imagenes/logo_climedsur.jpg" style="margin: 0px;padding: 0;width: 200px;">
                     </small>
                 </td>
                 
