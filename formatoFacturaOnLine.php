@@ -65,7 +65,7 @@ $respConf=mysqli_query($enlaceCon,$sqlConf);
 $nitTxt=mysqli_result($respConf,0,1);
 
 
-$sqlDatosFactura="select '' as nro_autorizacion, '', '' as codigo_control, f.nit, f.razon_social, DATE_FORMAT(f.siat_fechaemision, '%d/%m/%Y'),f.siat_nombreEstudiante,f.siat_periodoFacturado 
+$sqlDatosFactura="select '' as nro_autorizacion, '', '' as codigo_control, f.nit, f.razon_social, DATE_FORMAT(f.siat_fechaemision, '%d/%m/%Y'),f.siat_nombreEstudiante,f.siat_periodoFacturado, f.paciente
 from salida_almacenes f
     where f.cod_salida_almacenes=$codigoVenta";
     
@@ -81,7 +81,7 @@ $fechaFactura=mysqli_result($respDatosFactura,0,5);
 
 $nombreEstudiante=mysqli_result($respDatosFactura,0,6);
 $periodoFacturado=mysqli_result($respDatosFactura,0,7);
-
+$paciente=mysqli_result($respDatosFactura,0,8);
 
 
 $cod_funcionario=$_COOKIE["global_usuario"];
@@ -568,9 +568,12 @@ border-bottom: 1px solid #000;
                 <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nitCliente." ".$siat_complemento?></td>
             </tr>
             <tr >
-              <td class="td-border-none text-left" width="18%" ><b>Cod. Cliente :</b></td>
-              <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$cod_cliente?></td>
+              <td class="td-border-none text-left" width="18%" ><b>Paciente :</b></td>
+              <td class="td-border-none"><?=strtoupper($paciente)?></td>
+                <td class="td-border-none text-right" width="15%"><b>Forma de Pago :</b></td>
+                <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nombrePago?></td>
             </tr>
+
         </table>
         <table class="table2">
             <tr>
@@ -650,7 +653,7 @@ border-bottom: 1px solid #000;
                     ?>
                     <tr>
                         <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=$codInterno?></td>
-                        <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;">
+                        <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 10px;">
                              <?=$datDetalle['observaciones']?> </br>
                             <b>Especialidad:</b> <?=$datDetalle['especialidad']?> </br>
                             <?=$datDetalle['especialidadDetalle']?> </br>
@@ -734,9 +737,9 @@ border-bottom: 1px solid #000;
                     $txtGlosaDescuento=iconv('utf-8', 'windows-1252', $filaDesc[0]);        
             } ?>
             <tr>
-                <td rowspan="2" align="center" style="margin: 0px;">
+                <td rowspan="1" align="center" style="margin: 0px;">
                     
-                    <img src="<?=$fileName?>" style="margin: 0px;padding: 0;width: 120px;">
+                    <img src="<?=$fileName?>" style="margin: 0px;padding: 0;width: 90px;">
                 </td>
                 <td  colspan="6">
                     <table class="table">
@@ -783,7 +786,6 @@ border-bottom: 1px solid #000;
                 </td>
             </tr>
             
-            <tr><td colspan="6" style="border-top:hidden;" valign="bottom"><span style="padding: 0px;margin: 0px;"><small><small>Forma de Pago: <?=$nombrePago?></small></small></span></td></tr>
             
         </table>
         <table class="table3" >
