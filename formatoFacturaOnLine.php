@@ -668,6 +668,7 @@ border-bottom: 1px solid #000;
                     </tr>
                     
                     <?php $contador_items++;
+                    $montoTotal=$montoTotal+$montoUnitProdDesc;
                 }
                 
                 for($i=$contador_items;$i<$cantidad_por_defecto;$i++){ ?>
@@ -682,7 +683,7 @@ border-bottom: 1px solid #000;
                     </tr>
                 <?php 
                 }
-                $montoTotal=$montoTotal+$montoUnitProdDesc; 
+                //$montoTotal=$montoTotal+$montoUnitProdDesc; 
                 $yyy=$yyy+6;
 
             // echo $montoTotal;
