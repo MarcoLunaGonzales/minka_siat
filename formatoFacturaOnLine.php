@@ -657,10 +657,9 @@ border-bottom: 1px solid #000;
                             <b>Especialidad:</b> <?=$datDetalle['especialidad']?> </br>
                             <?=$datDetalle['especialidadDetalle']?> </br>
                             <b>Quirofano/Gabinete:</b> <?=$datDetalle['nroQuirofanoSalaOperaciones']?> </br>
-                            <b>Medico:</b> <?=$datDetalle['nombreApellidoMedico']?> </br>
+                            <b>Medico:</b> <?=$datDetalle['nombreApellidoMedico']?> <b>Nro. Factura:</b> <?=$datDetalle['nroFacturaMedico']?></br>
                             <b>Especialidad:</b> <?=$datDetalle['especialidadMedico']?> </br>
-                            <b>Nit:</b> <?=$datDetalle['nitDocumentoMedico']?> </br>
-                            <b>Nro. Factura:</b> <?=$datDetalle['nroFacturaMedico']?>
+                            <b>Nit:</b> <?=$datDetalle['nitDocumentoMedico']?>
                         </td>
                         <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; font-size: 8px;"><small><?=$unidad_medida?></small></td>
                         <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; font-size: 8px;"><?=$cantUnit?></td>
