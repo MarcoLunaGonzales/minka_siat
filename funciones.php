@@ -596,6 +596,8 @@ function obtenerEstadoSalida($codSalida){
       
       $dompdf->load_html($html);    
       $dompdf->render();
+
+
       $estado=obtenerEstadoSalida($codFactura);
       if($estado==2){ //facturas anuladas MARCA DE AGUA ANULADO
          //marca de agua
@@ -628,7 +630,7 @@ function obtenerEstadoSalida($codSalida){
     $mydompdf->load_html($html);
     $mydompdf->set_paper("letter", "portrait");
     $mydompdf->render();
-
+    
     $estado=obtenerEstadoSalida($codFactura);
 
     if($estado!=0){ //facturas anuladas MARCA DE AGUA ANULADO
@@ -648,7 +650,8 @@ function obtenerEstadoSalida($codSalida){
     }
 
     $canvas = $mydompdf->get_canvas();
-    $canvas->page_text(500, 25, "", Font_Metrics::get_font("sans-serif"), 10, array(0,0,0));   
+    
+    $canvas->page_text(520, 760, "Página {PAGE_NUM} de {PAGE_COUNT}", Font_Metrics::get_font("sans-serif"), 10, array(0,0,0));   
     $mydompdf->set_base_path('assets/libraries/plantillaPDFFactura.css');
     $mydompdf->stream($nom.".pdf", array("Attachment" => false));
   }
