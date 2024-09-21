@@ -653,13 +653,11 @@ border-bottom: 1px solid #000;
                     <tr>
                         <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; font-size: 8px;"><?=$codInterno?></td>
                         <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; font-size: 10px;">
-                             <?=$datDetalle['observaciones']?> </br>
-                            <b>Especialidad:</b> <?=$datDetalle['especialidad']?> </br>
                             <?=$datDetalle['especialidadDetalle']?> </br>
+                            <b>Especialidad:</b> <?=$datDetalle['especialidad']?> </br>
                             <b>Quirofano/Gabinete:</b> <?=$datDetalle['nroQuirofanoSalaOperaciones']?> </br>
                             <b>Medico:</b> <?=$datDetalle['nombreApellidoMedico']?> <b>Nro. Factura:</b> <?=$datDetalle['nroFacturaMedico']?></br>
-                            <b>Especialidad:</b> <?=$datDetalle['especialidadMedico']?> </br>
-                            <b>Nit:</b> <?=$datDetalle['nitDocumentoMedico']?>
+                            <b>Especialidad:</b> <?=$datDetalle['especialidadMedico']?> <b>Nit:</b> <?=$datDetalle['nitDocumentoMedico']?>
                         </td>
                         <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; font-size: 8px;"><small><?=$unidad_medida?></small></td>
                         <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; font-size: 8px;"><?=$cantUnit?></td>
