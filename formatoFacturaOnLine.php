@@ -791,7 +791,8 @@ border-bottom: 1px solid #000;
             <tr align="center"><td>&quot;<?=$txt2?>&quot;<br>&quot;<?=$txt3?>&quot;<br>&quot;<?=$txtLeyendaFin?>&quot;</td></tr>
         </table>
     </div>    
-
+    <footer>
+    </footer>
 </body>
 </html>
 
