@@ -183,6 +183,7 @@ function generarCuis($ciudad,$codigoSucursal,$codigoPuntoVenta,$cod_entidad){
    $test= new CuisTest();
    $test::testCuis($ciudad,$codigoSucursal,$codigoPuntoVenta,$cod_entidad);
 }
+
 function generarCufd($ciudad,$codigoSucursal,$codigoPuntoVenta,$cod_entidad){
    require_once "Siat/siat_cobofar/siat_cufd.php";  
    $test= new CufdTest();

@@ -619,8 +619,6 @@ function obtenerEstadoSalida($codSalida){
       file_put_contents($rutaGuardado, $pdf);
   }
 
-
-
   function descargarPDFFacturasCopiaCliente($nom,$html,$codFactura,$rutaGuardado){
   	ini_set("memory_limit", "128M");
     // Cargamos DOMPDF
@@ -651,13 +649,53 @@ function obtenerEstadoSalida($codSalida){
 
     $canvas = $mydompdf->get_canvas();
     
-    $canvas->page_text(520, 760, "Página {PAGE_NUM} de {PAGE_COUNT}", Font_Metrics::get_font("sans-serif"), 10, array(0,0,0));   
+    $canvas->page_text(520, 770, "Página {PAGE_NUM} de {PAGE_COUNT}", Font_Metrics::get_font("sans-serif"), 10, array(0,0,0));   
     $mydompdf->set_base_path('assets/libraries/plantillaPDFFactura.css');
     $mydompdf->stream($nom.".pdf", array("Attachment" => false));
   }
 
-  function solicitarAnulacionServicio($enlaceCon,$idTabla,$idRecibo){
+function descargarPDFFacturasCopiaClienteX($nom, $html, $codFactura, $rutaGuardado) {
+    ini_set("memory_limit", "128M");
+    // Cargamos DOMPDF
+    require_once 'assets/libraries/dompdf/dompdf_config.inc.php';
+    $mydompdf = new DOMPDF();
+    ob_clean();
+    $mydompdf->load_html($html);
+    $mydompdf->set_paper("letter", "portrait");
+    $mydompdf->render();
+    
+    $estado = obtenerEstadoSalida($codFactura);
 
+    if($estado != 0) { // Si la factura está anulada, aplicamos la marca de agua en todas las páginas
+        // Obtiene el lienzo
+        $canvas = $mydompdf->get_canvas(); 
+        $w = $canvas->get_width(); 
+        $h = $canvas->get_height(); 
+        $font = Font_Metrics::get_font("times"); 
+        $text = "ANULADO"; 
+        $txtHeight = -100; 
+        $textWidth = 250;
+        
+        // Establecemos la opacidad para la marca de agua
+        $canvas->set_opacity(0.5); 
+
+        // Recorre cada página y agrega la marca de agua
+        $pageCount = $canvas->get_page_count();
+        for ($i = 1; $i <= $pageCount; $i++) {
+            $canvas->page_text(($w - $textWidth) / 2, ($h - $txtHeight) / 2, $text, $font, 100, array(100, 0, 0), 0, 0, -45, $i);
+        }
+    }
+
+    // Añadimos el número de página a todas las páginas
+    $canvas = $mydompdf->get_canvas();
+    $canvas->page_text(520, 770, "Página {PAGE_NUM} de {PAGE_COUNT}", Font_Metrics::get_font("sans-serif"), 10, array(0, 0, 0));
+    
+    $mydompdf->set_base_path('assets/libraries/plantillaPDFFactura.css');
+    $mydompdf->stream($nom . ".pdf", array("Attachment" => false));
+}
+
+
+  function solicitarAnulacionServicio($enlaceCon,$idTabla,$idRecibo){
     $url_anulacion=obtenerValorConfiguracion($enlaceCon,48);
 	// $url_anulacion="http://localhost:8080/minka_siat/sp/";
 	// $url_anulacion.="test_servicio_anulacion.php?m=anulaf&t=".$idTabla."&i=".$idRecibo;

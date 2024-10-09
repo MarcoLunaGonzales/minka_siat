@@ -812,7 +812,7 @@ unlink($nombreFile);
 // echo $html;
 // guardarPDFArqueoCajaVerticalFactura($cuf,$html,$nombreFile,$codigoVenta);
 
-descargarPDFFacturasCopiaCliente($cuf,$html,$codigoVenta,$nombreFile);
+descargarPDFFacturasCopiaClienteX($cuf,$html,$codigoVenta,$nombreFile);
 
 
     // ?><script type="text/javascript">
