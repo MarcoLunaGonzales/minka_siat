@@ -19,7 +19,7 @@ $cuf="20E0644AD405F2D0AAD7ED61A3B2260DEE2CEA06AB65B1C4C7C54FD74";
 */
 
 $sql="SELECT s.cod_salida_almacenes, s.siat_cuis, sc.cufd, s.siat_cuf from salida_almacenes s, siat_cufd sc 
-where s.siat_codigocufd=sc.codigo and s.salida_anulada=0 and s.cod_salida_almacenes = 1014";
+where s.siat_codigocufd=sc.codigo and s.salida_anulada=1 and s.cod_salida_almacenes = 1014";
 echo $sql;
 $resp=mysqli_query($enlaceCon, $sql);
 while($dat=mysqli_fetch_array($resp)){
