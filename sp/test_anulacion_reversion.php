@@ -30,6 +30,7 @@ while($dat=mysqli_fetch_array($resp)){
   $cufd=$dat[2];
   $cuf=$dat[3];
   
+  $cuis = "4DC5C8DE";
   $respEvento=reversionFactura_siat($codigoPuntoVenta,$codigoSucursal,$cuis,$cufd,$cuf);
   $mensaje=$respEvento[1];
   if($respEvento[0]==1){
