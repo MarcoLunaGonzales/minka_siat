@@ -75,15 +75,20 @@ if ($anulado == 0) {
             // }
 
             // Servicio de anulación de recibo
-            $anularServicio = solicitarAnulacionServicio($enlaceCon, $idTabla, $idRecibo);
-            if (isset($anularServicio->anula->estado) && $anularServicio->anula->estado == 1) {
-                // $data['anulacion_servicio'] = 'Servicio de anulación de Recibo OK';
-                $data = [
-                    'message' => 'Factura anulada exitosamente.',
-					'status'  => true,
-                    'type' 	  => 'success'
-                ];
-            }
+            // $anularServicio = solicitarAnulacionServicio($enlaceCon, $idTabla, $idRecibo);
+            // if (isset($anularServicio->anula->estado) && $anularServicio->anula->estado == 1) {
+            //     // $data['anulacion_servicio'] = 'Servicio de anulación de Recibo OK';
+            //     $data = [
+            //         'message' => 'Factura anulada exitosamente.',
+			// 		'status'  => true,
+            //         'type' 	  => 'success'
+            //     ];
+            // }
+            $data = [
+                'message' => 'Factura anulada exitosamente.',
+                'status'  => true,
+                'type' 	  => 'success'
+            ];
 			
 			ob_clean();
             echo json_encode($data);
