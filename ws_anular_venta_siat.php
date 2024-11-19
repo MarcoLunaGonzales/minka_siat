@@ -65,12 +65,11 @@ while ($dat_verif = mysqli_fetch_assoc($resp_verif)) {
 //     'status'  => false,
 //     'type' 	  => 'success'
 // ]);
-
 // exit;
 
 if ($anulado == 0) {
     if ($cufd != "0" && $cuis != "0") {
-        $respEvento = anulacionFactura_siat($codigoPuntoVenta, $cod_ciudad, $cuis, $cufd, $cuf);
+        $respEvento = anulacionFactura_siat($codigoPuntoVenta, $cod_impuestos, $cuis, $cufd, $cuf);
         $mensaje = $respEvento[1];
         
         if ($respEvento[0] == 1) {
@@ -120,8 +119,8 @@ if ($anulado == 0) {
         } else {
             ob_end_clean();
             echo json_encode([
-                'message' => $mensaje 
-                    ?? 'Hubo un error al intentar anular la factura en el sistema SIAT. Por favor, intente nuevamente o contacte al administrador.',
+                'message' => ($mensaje 
+                    ?? 'Hubo un error al intentar anular la factura en el sistema SIAT. Por favor, intente nuevamente o contacte al administrador.')."($codigoPuntoVenta, $cod_impuestos, $cuis, $cufd, $cuf)",
                 'status'  => false,
                 'type' 	  => 'error'
             ]);
