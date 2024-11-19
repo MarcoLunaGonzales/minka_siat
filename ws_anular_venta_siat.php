@@ -65,6 +65,7 @@ while ($dat_verif = mysqli_fetch_assoc($resp_verif)) {
 //     'status'  => false,
 //     'type' 	  => 'success'
 // ]);
+
 // exit;
 
 if ($anulado == 0) {
