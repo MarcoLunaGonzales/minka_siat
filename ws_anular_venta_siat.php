@@ -43,8 +43,8 @@ while ($dat_verif = mysqli_fetch_assoc($resp_verif)) {
     $cod_impuestos       = intval($dat_verif['cod_impuestos']);
     $cod_ciudad          = $dat_verif['cod_ciudad'];
     $codigoPuntoVenta    = obtenerPuntoVenta_BD($cod_ciudad);
-    $cuis                = obtenerCuis_vigente_BD($cod_ciudad, $cod_impuestos);
-    $cufd                = obtenerCufd_vigente_BD($cod_ciudad, $fecha_X, $cuis);
+    $cuis=obtenerCuis_siat($codigoPuntoVenta,$cod_impuestos);
+    $cufd=obtenerCufd_Vigente_BD($cod_ciudad,$fecha_X,$cuis);
 
     $nitCliente          = ($dat_verif['siat_codigotipodocumentoidentidad'] == 5) 
                             ? $dat_verif['nit'] 
@@ -68,7 +68,7 @@ while ($dat_verif = mysqli_fetch_assoc($resp_verif)) {
 // exit;
 
 if ($anulado == 0) {
-    if ($cufd != "0" && $cuis != "0") {
+	if($cufd<>"0" and $cuis<>"0"){
         // $cod_impuestos = 2;
         $respEvento = anulacionFactura_siat($codigoPuntoVenta, $cod_impuestos, $cuis, $cufd, $cuf);
         $mensaje = $respEvento[1];
