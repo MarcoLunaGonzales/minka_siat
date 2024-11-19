@@ -69,7 +69,8 @@ while ($dat_verif = mysqli_fetch_assoc($resp_verif)) {
 
 if ($anulado == 0) {
     if ($cufd != "0" && $cuis != "0") {
-        $respEvento = anulacionFactura_siat($codigoPuntoVenta, 1, $cuis, $cufd, $cuf);
+        $cod_impuestos = 2;
+        $respEvento = anulacionFactura_siat($codigoPuntoVenta, $cod_impuestos, $cuis, $cufd, $cuf);
         $mensaje = $respEvento[1];
         
         if ($respEvento[0] == 1) {
