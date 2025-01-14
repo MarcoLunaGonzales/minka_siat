@@ -543,7 +543,7 @@ function obtenerEstadoSalida($codSalida){
   	return $estado;
 	}
 
-  function guardarPDFArqueoCajaVerticalFactura($nom,$html,$rutaGuardado,$codSalida,$sw=false){
+function guardarPDFArqueoCajaVerticalFactura($nom,$html,$rutaGuardado,$codSalida,$sw=false){
     //aumentamos la memoria  
     ini_set("memory_limit", "128M");
     // Cargamos DOMPDF
