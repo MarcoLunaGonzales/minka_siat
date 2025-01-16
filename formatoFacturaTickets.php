@@ -17,7 +17,13 @@ mysqli_query($enlaceCon,"SET NAMES utf8");
 
 
 $codigoVenta=$_GET["codVenta"];
-$cod_ciudad=$_COOKIE["global_agencia"];
+$cod_ciudad=0;
+
+$sqlCiudad="SELECT a.cod_ciudad from salida_almacenes s, almacenes a where s.cod_almacen=a.cod_almacen and  s.cod_salida_almacenes='$codigoVenta'";
+$respCiudad=mysqli_query($enlaceCon, $sqlCiudad);
+if($datCiudad=mysqli_fetch_array($respCiudad)){
+	$cod_ciudad=$datCiudad[0];
+}
 
 //consulta cuantos items tiene el detalle
 $sqlNro="select count(*) from `salida_detalle_almacenes` s where s.`cod_salida_almacen`=$codigoVenta";
@@ -99,7 +105,8 @@ $nitCliente=$datDatosFactura[3];//$nitCliente=mysql_result($respDatosFactura,0,3
 $razonSocialCliente=$datDatosFactura[4];//$razonSocialCliente=mysql_result($respDatosFactura,0,4);
 $razonSocialCliente=strtoupper($razonSocialCliente);
 $fechaFactura=$datDatosFactura[5];
-$cod_funcionario=$_COOKIE["global_usuario"];
+
+//$cod_funcionario=$_COOKIE["global_usuario"];
 
 
 //datos documento
@@ -108,7 +115,7 @@ $sqlDatosVenta="select DATE_FORMAT(s.fecha, '%d/%m/%Y'), t.`nombre`, c.`nombre_c
 s.descuento, s.hora_salida,s.monto_total,s.monto_final,s.monto_cancelado_bs,s.monto_cambio,s.cod_chofer,s.cod_tipopago,s.cod_tipo_doc,s.fecha,
 (SELECT cod_ciudad from almacenes where cod_almacen=s.cod_almacen)as cod_ciudad,s.cod_cliente,
 (SELECT cufd from siat_cufd where codigo=s.siat_codigocufd) as cufd,siat_cuf,siat_complemento,s.siat_codigoPuntoVenta,
-s.siat_codigotipoemision,(SELECT descripcionLeyenda from siat_sincronizarlistaleyendasfactura where codigo=s.siat_cod_leyenda) as leyenda
+s.siat_codigotipoemision,(SELECT descripcionLeyenda from siat_sincronizarlistaleyendasfactura where codigo=s.siat_cod_leyenda) as leyenda, s.siat_usuario
 		from `salida_almacenes` s, `tipos_docs` t, `clientes` c
 		where s.`cod_salida_almacenes`='$codigoVenta' and s.`cod_cliente`=c.`cod_cliente` and
 		s.`cod_tipo_doc`=t.`codigo`";
@@ -139,7 +146,7 @@ while($datDatosVenta=mysqli_fetch_array($respDatosVenta)){
 	$montoCambio2=redondear2($montoCambio2);
 
 	$descuentoCabecera=$datDatosVenta['descuento'];
-	$cod_funcionario=$datDatosVenta['cod_chofer'];
+	$cod_funcionario=$datDatosVenta['siat_usuario'];
 	$tipoPago=$datDatosVenta['cod_tipopago'];
 	$tipoDoc=$datDatosVenta['nombre'];
 	$codTipoDoc=$datDatosVenta['cod_tipo_doc'];
@@ -158,13 +165,8 @@ while($datDatosVenta=mysqli_fetch_array($respDatosVenta)){
 
 	//echo "entro detalle";
 }
-$sqlResponsable="select CONCAT(SUBSTRING_INDEX(nombres,' ', 1),' ',SUBSTR(paterno, 1,1),'.') from funcionarios where codigo_funcionario='".$cod_funcionario."'";
 
-//echo "entro respo".$sqlResponsable;
-
-$respResponsable=mysqli_query($enlaceCon,$sqlResponsable);
-$datResponsable=mysqli_fetch_array($respResponsable);
-$nombreFuncionario=$datResponsable[0];
+$nombreFuncionario=$cod_funcionario;
 
 
 if($siat_codigotipoemision==2){
@@ -187,8 +189,10 @@ $pdf->SetXY(4,$y+10);		$pdf->Cell(68,0,utf8_decode($nombreTxt)." ",0,0,"C");
 $pdf->SetXY(4,$y+13);		$pdf->Cell(68,0,$sucursalTxt,0,0,"C");
 $pdf->SetXY(4,$y+16);		$pdf->Cell(68,0,"No. Punto de Venta ".$siat_codigopuntoventa,0,0,"C");
 $pdf->SetXY(4,$y+19);		$pdf->MultiCell(68,3,utf8_decode($direccionTxt), 0,"C");
-$pdf->SetXY(4,$y+27);		$pdf->Cell(68,0,"Telefono:  ".$telefonoTxt,0,0,"C");
-//$y=$y+6;
+$pdf->SetXY(4,$y+30);		$pdf->Cell(68,0,"Telefono:  ".$telefonoTxt,0,0,"C");
+
+$y=$y+3;
+
 $pdf->SetXY(4,$y+30);		$pdf->Cell(68,0,$ciudadTxt,0,0,"C");
 $pdf->SetXY(4,$y+32);		$pdf->Cell(68,0,"---------------------------------------------------------------------------", 0,0,"C");
 $pdf->SetXY(4,$y+35);		$pdf->Cell(68,0,"NIT: $nitTxt", 0,0,"C");
@@ -197,9 +201,9 @@ $pdf->SetXY(4,$y+38);		$pdf->Cell(68,0,"$nombreTipoDoc Nro. $nroDocVenta", 0,0,"
 $pdf->SetFont('Arial','',8);
 $pdf->SetXY(4,$y+41);		$pdf->MultiCell(68,3,utf8_decode("COD. DE AUTORIZACIÓN: ").$cuf, 0,"C");
 $pdf->SetXY(4,$y+51);		$pdf->Cell(68,0,"---------------------------------------------------------------------------", 0,0,"C");
-$pdf->SetXY(4,$y+52);		$pdf->MultiCell(68,3,utf8_decode($txt1),0,"C");
 
-$y=$y-5;
+//$pdf->SetXY(4,$y+52);		$pdf->MultiCell(68,3,utf8_decode($txt1),0,"C");
+$y=$y-7;
 
 $pdf->SetXY(4,$y+59);		$pdf->Cell(68,0,"---------------------------------------------------------------------------", 0,0,"C");
 
@@ -216,12 +220,17 @@ $pdf->SetXY(49,$y+81);		$pdf->Cell(23,0,"IMPORTE",0,0,"R");
 $pdf->SetXY(4,$y+83);		$pdf->Cell(68,0,"---------------------------------------------------------------------------",0,0,"C");
 
 
-$sqlDetalle="select m.codigo_material, sum(s.`cantidad_unitaria`), m.`descripcion_material`, s.`precio_unitario`, 
+/*$sqlDetalle="select m.codigo_material, sum(s.`cantidad_unitaria`), m.`descripcion_material`, s.`precio_unitario`, 
 		sum(s.`descuento_unitario`), sum(s.`monto_unitario`) from `salida_detalle_almacenes` s, `material_apoyo` m where 
 		m.`codigo_material`=s.`cod_material` and s.`cod_salida_almacen`=$codigoVenta 
 		group by s.cod_material
+		order by s.orden_detalle";*/
+$sqlDetalle="SELECT s.cod_material, sum(s.`cantidad_unitaria`), s.`observaciones`, s.`precio_unitario`, 
+		sum(s.`descuento_unitario`), sum(s.`monto_unitario`) 
+		FROM `salida_detalle_almacenes` s 
+		WHERE s.`cod_salida_almacen`=$codigoVenta 
+		group by s.cod_material
 		order by s.orden_detalle";
-
 //echo "detail".$sqlDetalle;
 
 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
@@ -234,7 +243,8 @@ while($datDetalle=mysqli_fetch_array($respDetalle)){
 	$codInterno=$datDetalle[0];
 	$cantUnit=$datDetalle[1];
 	$nombreMat=$datDetalle[2];
-	$nombreMat=substr($nombreMat,0,34);
+	
+	//$nombreMat=substr($nombreMat,0,34);
 
 	$precioUnit=$datDetalle[3];
 	$descUnit=$datDetalle[4];	
@@ -253,9 +263,12 @@ while($datDetalle=mysqli_fetch_array($respDetalle)){
 	$montoUnitProdDesc=redondear2($montoUnitProdDesc);
 	$montoUnitProd=redondear2($montoUnitProd);
 	//////////////
-		
-	$pdf->SetXY(4,$y+$yyy);		$pdf->MultiCell(68,3,utf8_decode("($codInterno) $nombreMat"),"C");
-	$yyy=$yyy+3; 
+	
+	$pdf->SetFont('Arial','',6);	
+	$pdf->SetXY(4,$y+$yyy);		$pdf->MultiCell(68,3,utf8_decode("($codInterno) $nombreMat"),0,"L");
+	$pdf->SetFont('Arial','',8);	
+
+	$yyy=$yyy+5; 
 	$pdf->SetXY(4,$y+$yyy+2);		$pdf->Cell(15,0,"$cantUnit",0,0,"R");
 	$pdf->SetXY(19,$y+$yyy+2);		$pdf->Cell(15,0,"$precioUnitFactura",0,0,"R");
 	$pdf->SetXY(34,$y+$yyy+2);		$pdf->Cell(15,0,"$descUnit",0,0,"R");

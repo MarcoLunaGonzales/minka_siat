@@ -1,18 +1,5 @@
 <?php
 
-// if(isset($_COOKIE['globalIdEntidad'])){
-// 	$globalEntidad=$_COOKIE['globalIdEntidad'];
-// 	switch ($globalEntidad) {
-// 		case 2://Entidad prueba
-				
-			// $siat_nombreSistema='uniloyola v1';
-			// $siat_codigoSistema='721CFFC51FA7DC9C67E0DA6';
-			// $siat_tipo='PROPIO';
-			// $siat_nit=315910027;
-			// $siat_razonSocial='UNIVERSIDAD LOYOLA DE BOLIVIA SOCIEDAD ANONIMA';
-			// $siat_tokenDelegado='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb3lvbGFTQTIwMTYiLCJjb2RpZ29TaXN0ZW1hIjoiNzIxQ0ZGQzUxRkE3REM5QzY3RTBEQTYiLCJuaXQiOiJINHNJQUFBQUFBQUFBRE0yTkxVME5EQXdNZ2NBc3hvd2ZBa0FBQUE9IiwiaWQiOjY2ODE1NSwiZXhwIjoxNjkyODM1MjAwLCJpYXQiOjE2NjEzOTUyMzgsIm5pdERlbGVnYWRvIjozMTU5MTAwMjcsInN1YnNpc3RlbWEiOiJTRkUifQ.qwvgqc-zTu_tOzos9_VG2-3s2mg1GwQYr1fX1Wokypuus5N4o_age-Sdpvtl2FPun-hbygZD7sfC5PqvxPLIlQ';
-// 	error_reporting(E_ALL);
-// ini_set('display_errors', '1');
 	if(isset($_SESSION['globalEntidadSes'])){//conexion desde servicio
 		$globalEntidad=$_SESSION['globalEntidadSes'];
 		//echo "ntro:".$globalEntidad;
@@ -36,18 +23,3 @@
 	$siat_razonSocial=$dataFact['razon_social'];
 	$siat_tokenDelegado=$dataFact['token_delegado'];
 	$siat_modalidad=(int)$dataFact['modalidad'];
-			
-// 		break;
-// 		default:
-// 			$siat_nombreSistema='';
-// 			$siat_codigoSistema='';
-// 			$siat_tipo='';
-// 			$siat_nit=0;
-// 			$siat_razonSocial='';
-// 			$siat_tokenDelegado='';
-// 		break;
-
-// 	}
-// }
-
-

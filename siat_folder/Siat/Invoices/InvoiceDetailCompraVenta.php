@@ -19,10 +19,14 @@ class InvoiceDetailCompraVenta extends Message
 	
 	// public	$numeroSerie;//se quito esto para educacion
 	// public	$numeroImei;//se quito esto para educacion
+	//update isp
+	public	$numeroSerie;
+	public	$numeroImei;
 
 	public function __construct()
 	{
-		$this->unidadMedida	= 57;
+		// $this->unidadMedida	= 57;
+		$this->unidadMedida	= 58;//update isp
 	}
 	public function validate()
 	{

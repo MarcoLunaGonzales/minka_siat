@@ -7,42 +7,42 @@ require_once("../funciones.php");
 $sIde = "MinkaSw123*";
 $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
 
-//verificar conexion
+// verificar conexion
   // $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
   //           "accion"=>"verificarComunicacion", //Nuevo contacto de empresa
-  //           "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
+  //           "idEmpresa"=>1, //ID de empresa, otorgado por minkasoftware
   //           "nitEmpresa"=>'10916889016' //nit  de empresa
   //         );
 
   //Lista de Tipos documento
-	$parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
-           "accion"=>"sincronizarParametricaTipoDocumentoIdentidad", //
-           "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
-           "nitEmpresa"=>'10916889016' //nit  de empresa
-       );  
+	// $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
+  //          "accion"=>"sincronizarParametricaTipoDocumentoIdentidad", //
+  //          "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
+  //          "nitEmpresa"=>'10916889016' //nit  de empresa
+  //      );  
 
 
-//VERIFICACION CUFD
-//  $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
-//        "accion"=>"verificarCUFDEmpresa", //
-//       "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
-//      "nitEmpresa"=>'10916889016', //nit  de empresa
-//      "codSucursal"=>'1' //COD SUCURSAL
-//    );  
+// // VERIFICACION CUFD
+ // $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
+ //       "accion"=>"verificarCUFDEmpresa", //
+ //      "idEmpresa"=>1, //ID de empresa, otorgado por minkasoftware
+ //     "nitEmpresa"=>'10916889016', //nit  de empresa
+ //     "codSucursal"=>'1' //COD SUCURSAL
+ //   );  
 
-//Obtener Cufd
-// $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
-//             "accion"=>"obtenerCufdMinka", //Nuevo contacto de empresa
-//             "idEmpresa"=>2, //ID de empresa, otorgado por minkasoftware
-//             "nitEmpresa"=>'315910027', //nit  de empresa
-//             "codSucursal"=>'1' //codigo de agencia
-//           );
+// //Obtener Cufd
+$parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
+            "accion"=>"obtenerCufdMinka", //Nuevo contacto de empresa
+            "idEmpresa"=>1, //ID de empresa, otorgado por minkasoftware
+            "nitEmpresa"=>'10916889016', //nit  de empresa
+            "codSucursal"=>'2' //codigo de agencia
+          );
     
-// 	$url="http://localhost:8080/minka_siat/wsminka/ws_operaciones.php";
-// 	$jsons=callService($parametros, $url);
-//   $obj=json_decode($jsons);//decodificando json
-//   header('Content-type: application/json');  
-//   print_r($jsons); 
+	$url="http://localhost:8080/minka_siat/wsminka/ws_operaciones.php";
+	$jsons=callService($parametros, $url);
+  $obj=json_decode($jsons);//decodificando json
+  header('Content-type: application/json');  
+  print_r($jsons);
   
 
 

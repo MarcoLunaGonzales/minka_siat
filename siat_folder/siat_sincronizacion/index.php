@@ -2,6 +2,11 @@
 require "../../conexionmysqli.inc";
 require "../funciones_siat.php";
 $globalEntidad=$_COOKIE['globalIdEntidad'];
+
+if($globalEntidad=="" || $globalEntidad==0){
+  $globalEntidad=1;
+}
+
 $fechaHoraActual=date('Y-m-d\TH:i:s.v', time());
 $fechaHoraActualSiat=obtenerFechaHoraSiat();
 ?>

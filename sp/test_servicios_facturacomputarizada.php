@@ -7,78 +7,6 @@ require_once("../funciones.php");
 $sIde = "MinkaSw123*";
 $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
 
-
-// $sucursal="0";
-// $tipoTabla="3";
-// $idRecibo="28626";
-// $fecha="2022-08-26";
-// $idPersona="-28626";
-// // $monto="550";
-// $gestion="2022";
-// $usuario="Alison Ala";
-// $nitCliente="123456";
-// $nombreFactura="Lopes ";
-// $NombreEstudiante="juan calle";
-// $Concepto="inscripcion taller motos taller motos";
-// $tipoPago="1";
-// $nroTarjeta=0;
-// $tipoDocumento="1";
-// $complementoDocumento="";
-// $monto_total=550;
-// $descuento=0;
-// $monto_final=$monto_total-$descuento;
-// $id_usuario=1000;
-// $periodoFacturado="JUNIO - 2022";
-
-
-// $sucursal="1";
-// $tipoTabla="1";
-// $idRecibo="300520";
-// $fecha="2022-09-13";
-// $idPersona="15069";
-// $idPlan="36";
-// $cuota="9";
-// $monto_total="850";
-// $descuento=540;
-// $monto_final="310";
-// $gestion="2022";
-// $id_usuario="1000";
-// $usuario="Elizabeth Vergara";
-// $nitCliente="4790203";
-// $nombreFactura="MARANON";
-// $NombreEstudiante="CARDENAS MARA\u00d1ON DONNA JOE (14275-4)";
-// $Concepto="Pago cuota:8 Gestion:2022 Plan:36";
-// $tipoPago="1";
-// $nroTarjeta=0;
-// $tipoDocumento="1";
-// $complementoDocumento="";
-// $periodoFacturado="JULIO-2022";
-
-
-/*$sucursal="0";
-$tipoTabla="3";
-$idRecibo="28644";
-$fecha="2022-09-28";
-$idPersona="-28644";
-$idPlan="36";
-$cuota="9";
-$monto_total="300";
-$descuento=100;
-$monto_final="200";
-$gestion="2022";
-$id_usuario="1000";
-$usuario="ester guardia";
-$nitCliente="4868422";
-$nombreFactura="CRISTIANO RONALDO";
-$NombreEstudiante="CRISTIANO RONALDO";
-$Concepto="PAGO DE CANCHA,DEL 1 AL 3 DEL MES";
-$tipoPago="1";
-$nroTarjeta=0;
-$tipoDocumento="1";
-$complementoDocumento="";
-$periodoFacturado="JULIO-2022";*/
-
-
 $sucursal=1;
 $tipoTabla="2";
 $idRecibo="-1";
@@ -130,7 +58,7 @@ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey,
            "nroTarjeta"=>$nroTarjeta,
            "tipoDocumento"=>$tipoDocumento,
            "complementoDocumento"=>$complementoDocumento,
-           "periodoFacturado"=>$periodoFacturado//***
+           "periodoFacturado"=>$periodoFacturado
        );  
     
 	$url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";

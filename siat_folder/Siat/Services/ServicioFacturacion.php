@@ -80,13 +80,16 @@ class ServicioFacturacion extends ServicioSiat
 				//$this->debug($solicitud->toArray(), 0);
 				// $this->wsdl = $factura->getEndpoint($this->modalidad, $this->ambiente);
 				
-				if($this->modalidad==1){//electronica
-					$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-				}else{
-					$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
-				}
+				//update - isp
+				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+				// if($this->modalidad==1){//electronica
+				// 	$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+				// }else{
+				// 	$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+				// }
 				// echo "<br><br>";
-				//var_dump($solicitud);
+				// var_dump($this->wsdl);
+				// var_dump($solicitud);
 				$res = $this->callAction('recepcionFactura', $data);			
 				// print_r($res);
 				return array($res,$factura->cabecera->fechaEmision,$factura->cabecera->cuf,$facturaXml,$solicitud);
@@ -147,14 +150,14 @@ class ServicioFacturacion extends ServicioSiat
 			}
 
 			echo "CONTADORES:".$conta."<br>";
-
-			// $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
 			
-			if($this->modalidad==1){//electronica
-				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-			}else{
-				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
-			}
+			//update - isp
+			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			// if($this->modalidad==1){//electronica
+			// 	$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			// }else{
+			// 	$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+			// }
 
 			$solicitud->codigoPuntoVenta 		= $factura->cabecera->codigoPuntoVenta;// PARA COMPLETAR CON LA 
 			$solicitud->codigoDocumentoSector 	= $factura->cabecera->codigoDocumentoSector; //
@@ -210,11 +213,13 @@ class ServicioFacturacion extends ServicioSiat
 				$xmlInvoices[$cont] = $this->buildInvoiceXml($factura);
 				$cont++;
 			}
-			if($this->modalidad==1){//electronica en linea
-				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-			}else{
-				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;	
-			}
+			//update - isp
+			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			// if($this->modalidad==1){//electronica en linea
+			// 	$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			// }else{
+			// 	$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;	
+			// }
 			
 			 // print_r($xmlInvoices);
 			
@@ -238,11 +243,14 @@ class ServicioFacturacion extends ServicioSiat
 			$solicitud->codigoAmbiente 			= $this->ambiente;
 			//$solicitud->codigoDocumentoSector 	= 11; //ERROR: no acepta 1
 
-			if($this->modalidad==1){//electronica en linea
-			 	$solicitud->codigoDocumentoSector 	= 1; //compra venta
-			 }else{//sector educacion
-			 	$solicitud->codigoDocumentoSector 	= 11; // educacion
-			 }
+			//update - isp
+			$solicitud->codigoDocumentoSector 	= 1; //compra venta
+
+			// if($this->modalidad==1){//electronica en linea
+			//  	$solicitud->codigoDocumentoSector 	= 1; //compra venta
+			//  }else{//sector educacion
+			//  	$solicitud->codigoDocumentoSector 	= 11; // educacion
+			//  }
 
 			$solicitud->tipoFacturaDocumento	= $tipoFactura;
 			// $solicitud->fechaEnvio				= date("Y-m-d\TH:i:s.m0");
@@ -276,11 +284,14 @@ class ServicioFacturacion extends ServicioSiat
 			
 			$solicitud->codigoAmbiente			= $this->ambiente;
 			// $solicitud->codigoDocumentoSector	= 11; //ERROR: no acepta 1
-			if($this->modalidad==1){//electronica en linea
-			 	$solicitud->codigoDocumentoSector 	= 1; //compra venta
-			 }else{//sector educacion
-			 	$solicitud->codigoDocumentoSector 	= 11; // educacion
-			 }
+			
+			//update - isp
+			$solicitud->codigoDocumentoSector 	= 1; //compra venta
+			// if($this->modalidad==1){//electronica en linea
+			//  	$solicitud->codigoDocumentoSector 	= 1; //compra venta
+			//  }else{//sector educacion
+			//  	$solicitud->codigoDocumentoSector 	= 11; // educacion
+			//  }
 
 			$solicitud->codigoEmision			= $tipoEmision;
 			$solicitud->codigoModalidad 		= $this->modalidad;
@@ -313,20 +324,25 @@ class ServicioFacturacion extends ServicioSiat
 		{
 			
 			$solicitud = new SolicitudServicioValidacionRecepcionMasiva();
-			// $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
-			if($this->modalidad==1){//electronica
-				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-			}else{
-				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
-			}
+			
+			//update - isp
+			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			// if($this->modalidad==1){//electronica
+			// 	$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			// }else{
+			// 	$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+			// }
 			$solicitud->codigoPuntoVenta 		= 1;// PARA COMPLETAR CON LA 
 
 			// $solicitud->codigoDocumentoSector 	= 11; //
-			if($this->modalidad==1){//electronica en linea
-			 	$solicitud->codigoDocumentoSector 	= 1; //compra venta
-			 }else{//sector educacion
-			 	$solicitud->codigoDocumentoSector 	= 11; // educacion
-			 }
+			
+			//update - isp
+			$solicitud->codigoDocumentoSector 	= 1; //compra venta
+			// if($this->modalidad==1){//electronica en linea
+			//  	$solicitud->codigoDocumentoSector 	= 1; //compra venta
+			//  }else{//sector educacion
+			//  	$solicitud->codigoDocumentoSector 	= 11; // educacion
+			//  }
 			
 			$solicitud->codigoRecepcion		= $codigoRecepcion;
 			$solicitud->cufd 					= $this->cufd;
@@ -361,23 +377,27 @@ class ServicioFacturacion extends ServicioSiat
 
 			// echo "aqui";
 			$solicitud = new SolicitudServicioAnulacionFactura();
-			// $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
 			
-			if($this->modalidad==1){//electronica
-				$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-			}else{
-				$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
-			}
+			//update - isp
+			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			// if($this->modalidad==1){//electronica
+			// 	$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+			// }else{
+			// 	$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+			// }
 			
 
 			$solicitud->codigoPuntoVenta 		= $codigoPuntoVenta;// PARA COMPLETAR CON LA
 			 $solicitud->codigoSucursal			=$codigoSucursal;
 			// $solicitud->codigoDocumentoSector 	= 11; //
-			 if($this->modalidad==1){//electronica en linea
-			 	$solicitud->codigoDocumentoSector 	= 1; //compra venta
-			 }else{//sector educacion
-			 	$solicitud->codigoDocumentoSector 	= 11; // educacion
-			 }
+			 
+			 //update - isp
+			$solicitud->codigoDocumentoSector 	= 1; //compra venta
+			 // if($this->modalidad==1){//electronica en linea
+			 // 	$solicitud->codigoDocumentoSector 	= 1; //compra venta
+			 // }else{//sector educacion
+			 // 	$solicitud->codigoDocumentoSector 	= 11; // educacion
+			 // }
 			
 			// $solicitud->codigoDocumentoSector 	= DocumentTypes::FACTURA_COMPRA_VENTA; //instanciar
 			$solicitud->cuf						= $cuf;
@@ -408,19 +428,26 @@ class ServicioFacturacion extends ServicioSiat
 
 	public function verificacionEstadoFactura($codigoSucursal = 0,$codigoPuntoVenta = 0,$cufd,$cuf)
 	{
-		 // $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
+		// $this->wsdl = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
+		//echo "cualquier cosa";		
+		//echo "modalidad".$this->modalidad;
 		
-		if($this->modalidad==1){//electronica
-			$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
-		}else{
-			$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
-		}
+		//update - isp
+		$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+		// if($this->modalidad==1){//electronica
+		// 	$this->wsdl = conexionSiatUrl::wsdlCompraVenta;
+		// }else{
+		// 	$this->wsdl = conexionSiatUrl::wsdlFacturacionComputarizada;
+		// }
 		list(,$action) = explode('::', __METHOD__);
-		if($this->modalidad==1){//electronica en linea
-		 	$codigoDocumentoSector=1; //compra venta
-		 }else{//sector educacion
-		 	$codigoDocumentoSector=11; // educacion
-		 }
+		
+		//update - isp
+		$codigoDocumentoSector 	= 1; //compra venta
+		// if($this->modalidad==1){//electronica en linea
+		//  	$codigoDocumentoSector=1; //compra venta
+		//  }else{//sector educacion
+		//  	$codigoDocumentoSector=11; // educacion
+		//  }
 		$data = [
 			[
 				'SolicitudServicioVerificacionEstadoFactura'  => [

@@ -464,9 +464,8 @@ if(isset($_GET['cod_ciudad_externo'])){
 if(isset($_GET['admin'])){
     $admin=$_GET['admin'];
 }else{
-    $admin=$_COOKIE['global_admin_cargo'];
+    $admin=0;
 }
-
 if($admin==1){
     $sql_add=" ";
 }else{

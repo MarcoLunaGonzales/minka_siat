@@ -61,26 +61,9 @@ function envio_facturaanulada($idproveedor,$proveedor,$nro_correlativo,$cuf,$nit
 }
 
 function envio_factura($codigoFac,$correosProveedor,$enlaceCon){
-  
-
-  // $name = trim($_POST['name']);
-  // $email = trim($_POST['email']);
-  // $contact_message = trim($_POST['message']);
-  // $titulo_pedido_email=trim($_POST['titulo_pedido_email']);
-  // $titulo_pedido_email="FACTURA: Nro:".$nro_correlativo;
-  // $idproveedor=$_POST['idproveedor'];
-  // $codPedidos=$_POST['cod_pedido_string'];
-  // $rutaArchivo=trim($_POST['adjuntos_texto'],",");
-  // $rutaArchivoCSV=trim($_POST['adjuntos_texto_csv'],",");
   $rutaArchivo="";
   $rutaArchivoCSV="";
   $fechaActual=date("Y-m-d H:m:s");
-
-  //SACAMOS EL NOMBRE DE LA TIENDA DESDE LAS CONFIGURACIONES Y DATOS USUARIO
-  // $mail_username=$nombreTiendaRopa;//Correo electronico emisor
-  // if($mail_username==""){
-  //   $mail_username="Envio de Correo Compra SIAT";
-  // }
 
   $mail_userpassword="";// contraseña correo emisor
   $sqlDir="select valor_configuracion from configuraciones where id_configuracion=46";
@@ -89,13 +72,6 @@ function envio_factura($codigoFac,$correosProveedor,$enlaceCon){
   $datValidar=mysqli_fetch_array($respDir);   
   $urlDir=$datValidar[0];
 
-
-    
-    // if($email!=""){
-    //   $mail_addAddress.=",".$correosProveedor;  
-    // }
-    //$mail_addAddress="dhuarina@farmaciasbolivia.com.bo,asd";//correo electronico destino
-  // $template="PHPMailer/email_template.html";//Ruta de la plantilla HTML para enviar nuestro mensaje
   $template="../enviar_correo/php/PHPMailer/email_template.html";//Ruta de la plantilla HTML para enviar nuestro mensaje
   /*Inicio captura de datos enviados por $_POST para enviar el correo */
 

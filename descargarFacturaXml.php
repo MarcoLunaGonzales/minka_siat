@@ -7,6 +7,10 @@ if(isset($_GET['codVenta'])){
 
 require "conexionmysqli2.php";
 require_once "siat_folder/funciones_siat.php";  
+
+  // error_reporting(E_ALL);
+  //    ini_set('display_errors', '1');
+
 $facturaImpuestos=generarXMLFacturaVentaImpuestos($codSalida);
 
 $sqlDatosVenta="select s.siat_cuf
