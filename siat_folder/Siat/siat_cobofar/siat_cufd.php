@@ -54,8 +54,8 @@ class CufdTest
 
 			$resCuis = $servCodigos->cuis($codigoPuntoVenta, $codigoSucursal);
 			$cuis = $resCuis->RespuestaCuis->codigo;	
-			print_r("CUIS : ");
-			print_r($resCuis);
+			// print_r("CUIS : ");
+			// print_r($resCuis);
 
 			$fechaActual=date("Y-m-d");
 			//estado=1 para que solo busque los activos caso: eventos significativos

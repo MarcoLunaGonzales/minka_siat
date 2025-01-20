@@ -25,10 +25,10 @@ $Objeto_detalle2->detalle = "COMPRA DE NORMA 9002";
 $arrayDetalle= array($Objeto_detalle1,$Objeto_detalle2);
 
 
-$sucursal=0;
+$sucursal=1;
 //$tipoTabla="1";
 //$idRecibo="311129";
-$fecha="2023-06-29";
+$fecha="2025-01-15";
 $idPersona="16178";
 //$idPlan="36";
 //$cuota="12";
@@ -50,7 +50,7 @@ $tipoDocumento="5";
 $complementoDocumento="";
 $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey, 
    "accion"=>"generarFacturaElectronica", //
-   "cod_entidad"=>2, //ID de empresa, otorgado por minkasoftware
+   "cod_entidad"=>1, //ID de empresa, otorgado por minkasoftware
    "sucursal"=>$sucursal,   
    "idRecibo"=>0,
    "fecha"=>$fecha,

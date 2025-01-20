@@ -56,16 +56,13 @@ class FacturaOnline
 	public static function buildInvoice($codigoPuntoVenta = 0, $codigoSucursal = 0, $modalidad = 0,$dataFact,$fechaemision)
 	{
 		$subTotal = 0;
-		// $factura = $modalidad == ServicioSiat::MOD_COMPUTARIZADA_ENLINEA ? new ElectronicaCompraVenta() : new CompraVenta();
 		if($modalidad==1){//electronica en linea
 			$factura = new ElectronicaCompraVenta();
 		}else{//computarizada en linea
 			$factura = new CompraVenta();//luego instanciar solo a educacion
 		}
-
 		
 		//print_r($factura);
-		
 		$codigoSalida=$dataFact['cod_salida_almacenes'];
 		$descuentoVenta=$dataFact['descuento'];
 		require dirname(__DIR__). SB_DS ."../../conexionmysqli2.php";
@@ -165,10 +162,7 @@ class FacturaOnline
 		$factura->cabecera->numeroDocumento		= $dataFact['nit'];
 		$factura->cabecera->codigoCliente		= $dataFact['cod_cliente'];
 		
-
-
 		$factura->cabecera->codigoMetodoPago	= $dataFact['codigoMetodoPago'];
-
 
 		$factura->cabecera->montoTotal			= $montoFinal; //$montoFinal
 		$factura->cabecera->montoTotalMoneda	= $factura->cabecera->montoTotal;
@@ -186,15 +180,18 @@ class FacturaOnline
 		$factura->cabecera->tipoCambio			= 1;
 		$factura->cabecera->usuario				= $dataFact['usuario'];
 
-		if($modalidad==1){//electronica en linea
-			$factura->cabecera->codigoDocumentoSector= 1;//factura compra venta
-			unset($factura->cabecera->nombreEstudiante);
-			unset($factura->cabecera->periodoFacturado);
-		}else{//computarizada en linea
-			$factura->cabecera->codigoDocumentoSector= 11;//factura sectores educativo
-			$factura->cabecera->nombreEstudiante	= $dataFact['siat_nombreEstudiante'];
-		 	$factura->cabecera->periodoFacturado	= $dataFact['siat_periodoFacturado'];
-		}
+		//update - isp
+		$factura->cabecera->codigoDocumentoSector= 1;//factura compra venta
+
+		// if($modalidad==1){//electronica en linea
+		// 	$factura->cabecera->codigoDocumentoSector= 1;//factura compra venta
+		// 	unset($factura->cabecera->nombreEstudiante);
+		// 	unset($factura->cabecera->periodoFacturado);
+		// }else{//computarizada en linea
+		// 	$factura->cabecera->codigoDocumentoSector= 11;//factura sectores educativo
+		// 	$factura->cabecera->nombreEstudiante	= $dataFact['siat_nombreEstudiante'];
+		//  	$factura->cabecera->periodoFacturado	= $dataFact['siat_periodoFacturado'];
+		// }
 		// $solicitud->codigoDocumentoSector 	= DocumentTypes::FACTURA_COMPRA_VENTA; //instanciar
 		// print_r($factura);
 		return $factura;
@@ -287,6 +284,7 @@ class FacturaOnline
 
 				//die($factura->cuf);
 				$factura->validate();
+
 				return $factura;
 			}elseif($tipoEmision==-1){
 				

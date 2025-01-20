@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
             if($accion=="generarFacturaMinka"){//para facturacion computarizada rubro educacion caso loyola, solo se considera un item
                 require_once '../siat_folder/funciones_servicios.php';
                 if(isset($datos['sucursal']) && isset($datos['tipoTabla']) && isset($datos['idRecibo']) && isset($datos['fecha']) && isset($datos['idPersona']) && isset($datos['monto_total']) && isset($datos['descuento']) && isset($datos['monto_final']) && isset($datos['id_usuario']) && isset($datos['nitCliente']) && isset($datos['nombreFactura']) && isset($datos['NombreEstudiante']) && isset($datos['Concepto']) && isset($datos['tipoPago']) && isset($datos['nroTarjeta']) && isset($datos['tipoDocumento']) && isset($datos['complementoDocumento']) && isset($datos['periodoFacturado'])){
-                    $sucursal=$datos['sucursal'];
+                    $cod_ciudad_externo=$datos['sucursal'];
                     $tipoTabla=$datos['tipoTabla'];
                     $idRecibo=$datos['idRecibo'];
                     $fecha=$datos['fecha'];
@@ -72,11 +72,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     if($tipoPago>2){
                         $banderaTarjeta=2;
                     }
-                    $modalidad=2;//modalidad computarizada en linea
+                    //update - isp
+                    $bandera_modalidad=2;//modalidad loyola - caso especial una factura
                     if (isset($datos['cod_entidad'])) {
                         $cod_entidad=$datos['cod_entidad'];
                     }else{
-                        $cod_entidad=obtenerEntidadDesdeCiudad($sucursal);///codigo interno de entidad LOYOLA VER BD
+                        $cod_entidad=obtenerEntidadDesdeCiudad($cod_ciudad_externo);///codigo interno de entidad LOYOLA VER BD
                     }
 
                     //echo "entidad>> ".$cod_entidad;
@@ -89,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     $Objeto_detalle1->detalle = $Concepto;  
                     $items= array($Objeto_detalle1);
 
-                    $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$modalidad,$cod_entidad,$items,$idCarrera);
+                    $datosFactura=generarFacturaSiat($cod_ciudad_externo,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$bandera_modalidad,$cod_entidad,$items,$idCarrera);
 
                     $estado=$datosFactura[0];//estado
                     $mensaje=$datosFactura[1];//mensaje
@@ -153,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                 require_once '../siat_folder/funciones_servicios.php';
                 if(isset($datos['sucursal']) && isset($datos['fecha']) && isset($datos['idPersona']) && isset($datos['monto_total']) && isset($datos['descuento']) && isset($datos['monto_final']) && isset($datos['id_usuario']) && isset($datos['nitCliente']) && isset($datos['nombreFactura']) && isset($datos['tipoPago']) && isset($datos['nroTarjeta']) && isset($datos['tipoDocumento']) && isset($datos['complementoDocumento']) ){
                     
-                    $sucursal=$datos['sucursal'];
+                    $cod_ciudad_externo=$datos['sucursal'];
                     $tipoTabla=0;
                     $idRecibo=0;
                     $fecha=$datos['fecha'];
@@ -179,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                         $cod_entidad=$datos['cod_entidad'];
                     }else{
                         //$cod_entidad=2;///codigo interno de entidad
-                        $cod_entidad=obtenerEntidadDesdeCiudad($sucursal);///codigo interno de entidad
+                        $cod_entidad=obtenerEntidadDesdeCiudad($cod_ciudad_externo);///codigo interno de entidad
                     }
 
                     $NombreEstudiante="";
@@ -189,10 +190,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     }else{
                         $correo_destino="";
                     }
-                    $modalidad=1;//modalidad electronica en linea
-
+                    //update - isp
+                    $bandera_modalidad=1;//modalidad facturacion nomral con n productos
                     $idCarrera=0;//homologamos esta variable desde la otra modalidad
-                    $datosFactura=generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$modalidad,$cod_entidad,$items,$idCarrera);
+                    $datosFactura=generarFacturaSiat($cod_ciudad_externo,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$bandera_modalidad,$cod_entidad,$items,$idCarrera);
 
                     $estado=$datosFactura[0];//estado
                     $mensaje=$datosFactura[1];//mensaje
@@ -253,7 +254,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
 
 
 
-function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$siat_usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$modalidad,$cod_entidad,$items,$idCarrera){
+function generarFacturaSiat($cod_ciudad_externo,$tipoTabla,$idRecibo,$fecha,$idPersona,$monto_total,$descuento,$monto_final,$id_usuario,$siat_usuario,$nitCliente,$nombreFactura,$NombreEstudiante,$Concepto,$tipoPago,$nroTarjeta,$tipoDocumento,$complementoDocumento,$periodoFacturado,$correo_destino,$bandera_modalidad,$cod_entidad,$items,$idCarrera){
 
     //iniciamos sesion, ya que la libreria para el siat la usa.
     $start_time_factura = microtime(true);
@@ -268,15 +269,12 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
     require_once "../siat_folder/funciones_siat.php";
 
     $usuarioVendedor=$id_usuario;//codigo usuario
-        
-    $datosCiudad=obtenerAlmacen($sucursal,$enlaceCon,$cod_entidad);
+
+    $datosCiudad=obtenerAlmacen($cod_ciudad_externo,$enlaceCon,$cod_entidad);
     $globalSucursal=$datosCiudad[0];
     $almacenOrigen=$datosCiudad[1];
     $cod_impuestos=$datosCiudad[2];
     
-    //var_dump($datosCiudad);
-
-    // $cod_entidad=$datosCiudad[3];
     $errorProducto="";
     $totalFacturaMonto=0;
     $tipoSalida=1001;
@@ -432,10 +430,10 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
 
         $sql_insert="INSERT INTO salida_almacenes(cod_salida_almacenes, cod_almacen, cod_tiposalida, 
             cod_tipo_doc, fecha, hora_salida, territorio_destino, almacen_destino, observaciones, estado_salida, nro_correlativo, salida_anulada, cod_cliente, monto_total, descuento, monto_final, razon_social, nit, cod_chofer, cod_vehiculo, monto_cancelado, cod_dosificacion, monto_efectivo, monto_cambio,cod_tipopago,created_by,created_at,cod_tipopreciogeneral,cod_tipoventa2,monto_cancelado_bs,monto_cancelado_usd,tipo_cambio,cod_delivery,
-            siat_cuis,siat_cuf,siat_codigotipodocumentoidentidad,siat_complemento,siat_codigoPuntoVenta,siat_excepcion,siat_codigocufd,siat_cod_leyenda,siat_nombreEstudiante,siat_periodoFacturado,siat_usuario,idtabla,idrecibo,id_carrera)
+            siat_cuis,siat_cuf,siat_codigotipodocumentoidentidad,siat_complemento,siat_codigoPuntoVenta,siat_excepcion,siat_codigocufd,siat_cod_leyenda,siat_nombreEstudiante,siat_periodoFacturado,siat_usuario,idtabla,idrecibo,id_carrera,cod_ciudad_externo)
             values ('$codigo', '$almacenOrigen', '$tipoSalida', '$tipoDoc', '$fecha', '$hora', '0', '$almacenDestino', 
             '$observaciones', '1', '$nro_correlativo', 0, '$codCliente', '$totalVenta', '$descuentoVenta', '$totalFinal', '$razonSocial', 
-            '$nitCliente', '$usuarioVendedor', '$vehiculo',0,'$cod_dosificacion','$totalEfectivo','$totalCambio','$tipoVenta','$created_by','$created_at','$cod_tipopreciogeneral','$cod_tipoVenta2','$monto_bs','$monto_usd','$tipo_cambio','$cod_tipodelivery','$cuis','$cuf','$siat_codigotipodocumentoidentidad','$complemento','$codigoPuntoVenta',$excepcion,'$codigoCufd','$cod_leyenda','$NombreEstudiante','$periodoFacturado','$siat_usuario','$tipoTabla','$idRecibo','$idCarrera')";         
+            '$nitCliente', '$usuarioVendedor', '$vehiculo',0,'$cod_dosificacion','$totalEfectivo','$totalCambio','$tipoVenta','$created_by','$created_at','$cod_tipopreciogeneral','$cod_tipoVenta2','$monto_bs','$monto_usd','$tipo_cambio','$cod_tipodelivery','$cuis','$cuf','$siat_codigotipodocumentoidentidad','$complemento','$codigoPuntoVenta',$excepcion,'$codigoCufd','$cod_leyenda','$NombreEstudiante','$periodoFacturado','$siat_usuario','$tipoTabla','$idRecibo','$idCarrera','$cod_ciudad_externo')";         
             // echo $sql_insert."<br>";
         $sql_inserta=mysqli_query($enlaceCon,$sql_insert);
 
@@ -466,8 +464,8 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         //echo "entro Detalle 2";      
 
 
-        /*  Cuando la modalidad es computarizada en linea y 1 solo item en la factura CASO LOYOLA */
-        if($modalidad==2){
+        /*  Cuando la modalidad es caso especial, solo item en la factura CASO LOYOLA */
+        if($bandera_modalidad==2){
             $montoTotalVentaDetalle=0;
             $cantidad_material=1;
             for($i=1;$i<=$cantidad_material;$i++){       
@@ -488,10 +486,8 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
         }                
         /* Fin Items Facturacion Computarizada en Linea  */
 
-
-        // print_r($items);
-        /* Cuando la modalidad es Electronica con Firma */
-        if($modalidad==1){
+        /* Cuando la modalidad es normal, tiene n productos*/
+        if($bandera_modalidad==1){
             $i=1;
             foreach ($items as $valor) {
                 // echo $codDetalle;
@@ -609,7 +605,21 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
 
 
 function obtenerAlmacen($cod_ciudad_externo,$enlaceCon,$cod_entidad){
-    //require("conexionmysqli2.php");
+    //update - isp
+    //Se adiciona configuración para bandera unificada
+    $sqlCredenciales="SELECT sc.bandera_unificada,sc.cod_ciudad_unificada FROM siat_credenciales sc WHERE sc.cod_entidad=$cod_entidad";
+    $respCredenciales=mysqli_query($enlaceCon,$sqlCredenciales);
+    $bandera_unificada=0;
+    $cod_ciudad_unificada=0;
+    while ($datCredenciales = mysqli_fetch_array($respCredenciales)) {
+        $bandera_unificada=$datCredenciales['bandera_unificada'];
+        $cod_ciudad_unificada=$datCredenciales['cod_ciudad_unificada'];
+    }
+
+    if($bandera_unificada==1){//cuando está activado esta opcion, facturará todo en esta sucursal
+        $cod_ciudad_externo=$cod_ciudad_unificada;
+    }
+
     $sql="SELECT c.cod_ciudad,a.cod_almacen,c.cod_impuestos,c.cod_entidad
         from ciudades c join almacenes a on c.cod_ciudad=a.cod_ciudad
         where c.cod_externo=$cod_ciudad_externo and c.cod_entidad=$cod_entidad";

@@ -57,9 +57,10 @@ class ServicioFacturacionElectronica extends ServicioFacturacion
 	{
 		$invoiceXml = $invoice->toXml(null, true);
 
+		//update - isp
 		//para modalida compra venta no es necesario, solo para sector educacion
-		unset($invoiceXml->cabecera->nombreEstudiante);
-		unset($invoiceXml->cabecera->periodoFacturado);
+		// unset($invoiceXml->cabecera->nombreEstudiante);
+		// unset($invoiceXml->cabecera->periodoFacturado);
 
 		$invoiceXml2 = $invoiceXml->asXML();
 		

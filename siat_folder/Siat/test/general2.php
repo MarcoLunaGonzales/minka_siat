@@ -27,46 +27,7 @@ class GeneralTest
 	public static function buildConfig()
 	{
 		return new SiatConfig([
-			/*
-			'nombreSistema'	=> '',
-			'codigoSistema'	=> '',
-			'tipo' 			=> 'PROVEEDOR',
-			'nit'			=> 966,
-			'razonSocial'	=> '',
-			'modalidad' 	=> ServicioSiat::MOD_COMPUTARIZADA_ENLINEA,
-			'ambiente' 		=> ServicioSiat::AMBIENTE_PRUEBAS,
-			'tokenDelegado'	=> '',
-			'cuis'			=> null,
-			'cufd'			=> null,
-			*/
-			/*
-			'nombreSistema'	=> 'Acrópolis SGF',
-			'codigoSistema'	=> '6D307F64485BE20AEB91C0F',
-			'tipo' 			=> 'PROVEEDOR',
-			'nit'			=> 9665224017,
-			'razonSocial'	=> 'MELGAR PEREZ MARIA SUSANA',
-			'modalidad' 	=> ServicioSiat::MOD_COMPUTARIZADA_ENLINEA,
-			'ambiente' 		=> ServicioSiat::AMBIENTE_PRUEBAS,
-			'tokenDelegado'	=> 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NjY1MjI0MDE3U2MiLCJjb2RpZ29TaXN0ZW1hIjoiNkQzMDdGNjQ0ODVCRTIwQUVCOTFDMEYiLCJuaXQiOiJINHNJQUFBQUFBQUFBTE0wTXpNMU1qSXhNRFFIQUVqTkx5UUtBQUFBIiwiaWQiOjExNDE4MDksImV4cCI6MTY3MDAyNTYwMCwiaWF0IjoxNjM4NTYwOTYzLCJuaXREZWxlZ2FkbyI6OTY2NTIyNDAxNywic3Vic2lzdGVtYSI6IlNGRSJ9.gAtmPtHd5k-WTht22VIUoRd1EfFp9njHHELXBKHBvsJUVi5q6hSuwxyzc0DoBNBnmeIPC44i3_iOazBjP1bzRw',
-			'cuis'			=> null,
-			'cufd'			=> null,
-			//*/
-			
-			/*
-			
-			//##
-			'nombreSistema'	=> "SAGE",
-			//'codigoSistema'	=> "6D305F5B61D8546601743DF",
-			'codigoSistema'	=> '6D32E2B9FBF0FE7B3BAC3DF',
-			'nit'			=> 243212020,
-			'razonSocial'	=> "DESARROLLANDO TECNOLOGIA EFICIENTE D.T.E. S.R.L.",
-			'modalidad'		=> ServicioSiat::MOD_COMPUTARIZADA_ENLINEA,
-			'ambiente'		=> ServicioSiat::AMBIENTE_PRUEBAS,
-			//'tokenDelegado'	=> "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJHQVJDSUFNRURJTkEiLCJjb2RpZ29TaXN0ZW1hIjoiNkQzMDVGNUI2MUQ4NTQ2NjAxNzQzREYiLCJuaXQiOiJINHNJQUFBQUFBQUFBRE15TVRZeU5ESXdNZ0FBUlpqUkhna0FBQUE9IiwiaWQiOjI0NjEyNiwiZXhwIjoxNjQ2MjY1NjAwLCJpYXQiOjE2Mzg1MzM4NzAsIm5pdERlbGVnYWRvIjoyNDMyMTIwMjAsInN1YnNpc3RlbWEiOiJTRkUifQ.9wK4IyHSOBxfyY9_n8ZVJ4nfA5mk-bAXwav9jEFDuAsn82BEOOABysLUEJk5VR7bb7reu1Ymu7hCTC6NuXRIOQ",
-			'tokenDelegado'	=> 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJHQVJDSUFNRURJTkEiLCJjb2RpZ29TaXN0ZW1hIjoiNkQzMkUyQjlGQkYwRkU3QjNCQUMzREYiLCJuaXQiOiJINHNJQUFBQUFBQUFBRE15TVRZeU5ESXdNZ0FBUlpqUkhna0FBQUE9IiwiaWQiOjI0NjEyNiwiZXhwIjoxNjQ3ODIwODAwLCJpYXQiOjE2NDAxNzMzMDAsIm5pdERlbGVnYWRvIjoyNDMyMTIwMjAsInN1YnNpc3RlbWEiOiJTRkUifQ.-BZ8--ZnInYtZAWweuF7dRvPyL5Mo_STGsbdM2WVBgu-RhEzLhmR4JrJ-N4TzyduHOdeR7MQ-txwkpgAQSqi6Q',
-			'cuis'			=> null,
-			'cufd'			=> null,
-			*/
+
 			
 			'nombreSistema' => "COBOFAR COMERCIAL",
 			'codigoSistema' => '71E4E06A36F8587F3BE98A6',
