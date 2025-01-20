@@ -1,8 +1,9 @@
 <?php
 //header('Content-Type: text/html; charset=ISO-8859-1');
 
-require('fpdf.php');
+require('fpdf186/fpdf.php');
 require('conexionmysqlipdf.inc');
+
 require('funciones.php');
 require('funcion_nombres.php');
 require('NumeroALetras.php');
@@ -11,9 +12,9 @@ include('phpqrcode/qrlib.php');
 mysqli_query($enlaceCon,"SET NAMES utf8");
 
 
-/* error_reporting(E_ALL);
+ error_reporting(E_ALL);
  ini_set('display_errors', '1');
-*/
+
 
 
 $codigoVenta=$_GET["codVenta"];
@@ -124,6 +125,40 @@ s.siat_codigotipoemision,(SELECT descripcionLeyenda from siat_sincronizarlistale
 
 $respDatosVenta=mysqli_query($enlaceCon,$sqlDatosVenta);
 $tipoPago=1;
+
+/*INICIALIMZAMOS VARIABLES*/
+$cod_funcionario=0;
+$montoTotal2=0;
+$montoFinal2=0;
+$montoEfectivo2=0;
+$montoCambio2=0;
+$descuentoCabecera=0;
+$cod_funcionario=0;
+$tipoPago=0;
+$tipoDoc=0;
+$codTipoDoc=0;
+
+$fecha_salida="";
+$hora_salida="";
+$cod_ciudad_salida=0;
+$cod_cliente=0;
+
+$nroCufd=0;
+$cuf=0;
+$siat_complemento=0;
+$siat_codigopuntoventa=0;
+$siat_codigotipoemision=0;
+$txt3="";
+$fechaVenta="";
+$nombreTipoDoc="";
+$nombreCliente="";
+$nroDocVenta=0;
+$descuentoVenta=0;
+$horaFactura="";
+
+//fin inicializar
+
+
 while($datDatosVenta=mysqli_fetch_array($respDatosVenta)){
 	$fechaVenta=$datDatosVenta[0];
 	$nombreTipoDoc=$datDatosVenta[1];
