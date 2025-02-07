@@ -645,7 +645,7 @@ while ($dat = mysqli_fetch_array($resp)) {
     echo "<td  bgcolor='$color_fondo' align='center'><a href='$urlDetalle?codigo_salida=$codigo&admin=$admin' target='_BLANK' title='DOCUMENTO FACTURA'  class='text-dark'><i class='material-icons'>description</i></a>";
         echo "</td>";
     
-    echo "<td  bgcolor='$color_fondo' align='center'><a href='formatoFacturaOnLine.php?codVenta=$codigo' target='_BLANK' title='Imprimir' class='text-dark'><i class='material-icons'>print</i></a>";
+    echo "<td  bgcolor='$color_fondo' align='center'><a href='formatoFacturaTickets.php?codVenta=$codigo' target='_BLANK' title='Imprimir' class='text-dark'><i class='material-icons'>print</i></a>";
         echo "</td>";
     // }
 

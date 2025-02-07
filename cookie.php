@@ -10,7 +10,9 @@ $sql = "
     SELECT f.cod_cargo, f.cod_ciudad,f.cod_tipofuncionario,f.cod_empresa
     FROM funcionarios f, usuarios_sistema u
     WHERE u.codigo_funcionario=f.codigo_funcionario AND u.codigo_funcionario='$usuario' AND u.contrasena='$contrasena' ";
-//echo $sql;
+
+echo $sql;
+
 $resp = mysqli_query($enlaceCon,$sql);
 $num_filas = mysqli_num_rows ($resp);
 //$num_filas = i($resp);
