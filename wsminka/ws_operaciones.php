@@ -80,9 +80,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
             }elseif($accion=="verificarCUFDEmpresa"){
                 require_once '../conexionmysqli2.php';
                 if(isset($datos['codSucursal']) ){                    
-                    // $idEmpresa=$datos['idEmpresa'];//
-                    // $nitEmpresa=$datos['nitEmpresa'];//
                     $codSucursal=$datos['codSucursal'];//
+
+                    /*PARA LAS SUCURSALES UNIFICADAS*/
+                    $sqlEntidad="SELECT cod_empresa from datos_empresa";
+                    $respEntidad=mysqli_query($enlaceCon,$sqlEntidad);
+                    $cod_entidad=1;
+                    if ($datEntidad = mysqli_fetch_array($respEntidad)) {
+                        $cod_entidad=$datEntidad['cod_empresa'];
+                    }
+
+                    $sqlCredenciales="SELECT sc.bandera_unificada,sc.cod_ciudad_unificada FROM siat_credenciales sc WHERE sc.cod_entidad=$cod_entidad";
+                    $respCredenciales=mysqli_query($enlaceCon,$sqlCredenciales);
+                    $bandera_unificada=0;
+                    $cod_ciudad_unificada=0;
+                    while ($datCredenciales = mysqli_fetch_array($respCredenciales)) {
+                        $bandera_unificada=$datCredenciales['bandera_unificada'];
+                        $cod_ciudad_unificada=$datCredenciales['cod_ciudad_unificada'];
+                    }
+                    /*FIN SUCURSALES UNIFICADAS*/
+
+                    if($bandera_unificada==1){//cuando está activado esta opcion, facturará todo en esta sucursal
+                        $codSucursal=$cod_ciudad_unificada;
+                    }
+
                     $banderaCUFD=verificarCUFDEmpresa($codSucursal,$enlaceCon);
                     if($banderaCUFD > 0){
                         $resultado=array("estado"=>1,
@@ -125,6 +146,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {//verificamos  metodo conexion
                     $idEmpresa   = $datos['idEmpresa'];
                     $nitEmpresa  = $datos['nitEmpresa'];
                     $codSucursal = $datos['codSucursal'];
+
+
+                    /*PARA LAS SUCURSALES UNIFICADAS*/
+                    $sqlEntidad="SELECT cod_empresa from datos_empresa";
+                    $respEntidad=mysqli_query($enlaceCon,$sqlEntidad);
+                    $cod_entidad=1;
+                    if ($datEntidad = mysqli_fetch_array($respEntidad)) {
+                        $cod_entidad=$datEntidad['cod_empresa'];
+                    }
+                    
+                    $sqlCredenciales="SELECT sc.bandera_unificada,sc.cod_ciudad_unificada FROM siat_credenciales sc WHERE sc.cod_entidad=$cod_entidad";
+                    $respCredenciales=mysqli_query($enlaceCon,$sqlCredenciales);
+                    $bandera_unificada=0;
+                    $cod_ciudad_unificada=0;
+                    while ($datCredenciales = mysqli_fetch_array($respCredenciales)) {
+                        $bandera_unificada=$datCredenciales['bandera_unificada'];
+                        $cod_ciudad_unificada=$datCredenciales['cod_ciudad_unificada'];
+                    }
+                    /*FIN SUCURSALES UNIFICADAS*/
+
+                    if($bandera_unificada==1){//cuando está activado esta opcion, facturará todo en esta sucursal
+                        $codSucursal=$cod_ciudad_unificada;
+                    }
+
                     // Generamos CUFD
                     $codigoSucursal   = 0;
                     $sqlPV="SELECT codigoPuntoVenta FROM siat_puntoventa where cod_ciudad='$codSucursal' and cod_entidad='$idEmpresa' LIMIT 1";

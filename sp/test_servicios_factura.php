@@ -7,41 +7,30 @@ require_once("../funciones.php");
 $sIde = "MinkaSw123*";
 $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
 
-//detalle de factura
-$Objeto_detalle1 = new stdClass();
-$Objeto_detalle1->codDetalle = 1;
-$Objeto_detalle1->cantidad = 1;
-$Objeto_detalle1->precioUnitario = "300";
-$Objeto_detalle1->descuentoProducto = 0;
-$Objeto_detalle1->detalle = "COMPRA DE NORMA 9001";  
-// $arrayDetalle= array($Objeto_detalle1);
-
 $Objeto_detalle2 = new stdClass();
 $Objeto_detalle2->codDetalle = 2;
 $Objeto_detalle2->cantidad = 1;
-$Objeto_detalle2->precioUnitario = "400";
+$Objeto_detalle2->precioUnitario = "20";
 $Objeto_detalle2->descuentoProducto = 0;
-$Objeto_detalle2->detalle = "COMPRA DE NORMA 9002";  
-$arrayDetalle= array($Objeto_detalle1,$Objeto_detalle2);
+$Objeto_detalle2->detalle = "NOVADOL X 200";  
+$arrayDetalle= array($Objeto_detalle2);
 
 
 $sucursal=1;
 //$tipoTabla="1";
 //$idRecibo="311129";
-$fecha="2025-01-15";
+$fecha="2025-03-26";
 $idPersona="16178";
 //$idPlan="36";
 //$cuota="12";
-$monto_total="670";
+$monto_total="20";
 $descuento=0;
-$monto_final="670";
+$monto_final="20";
 //$gestion="2022";
 $id_usuario=11;
-$usuario="GUILLERMO SUAREZ";
+$usuario="JUAN PEREZ";
 $nitCliente="4868422016";
-$nombreFactura="MARCO ANTONIO LUNA";
-//$NombreEstudiante="LUNA";
-//$Concepto="Cuota 1";
+$nombreFactura="LUNA";
 
 
 $tipoPago="1";
@@ -72,12 +61,27 @@ $parametros=array("sIdentificador"=>$sIde, "sKey"=>$sKey,
    // "periodoFacturado"=>$periodoFacturado
 );  
     
-	$url="http://localhost:8080/minka_siat/wsminka/ws_generarFactura.php";
-	$jsons=callService($parametros, $url);
-	//print_r($jsons);
+// 	$url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
+// 	$jsons=callService($parametros, $url);
+// 	//print_r($jsons);
   
-$obj=json_decode($jsons);//decodificando json
-header('Content-type: application/json');  
-print_r($jsons); 
+// $obj=json_decode($jsons);//decodificando json
+// header('Content-type: application/json');  
+// print_r($jsons); 
+
+
+for($i=1;$i<=20;$i++){
+
+   $url="http://localhost:8090/minka_siat/wsminka/ws_generarFactura.php";
+   $jsons=callService($parametros, $url);
+   //print_r($jsons);
+  
+   $obj=json_decode($jsons);//decodificando json
+   //header('Content-type: application/json');  
+   print_r($jsons); 
+   
+}
+
 
 ?>
+

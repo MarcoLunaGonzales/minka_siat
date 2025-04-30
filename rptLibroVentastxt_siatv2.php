@@ -69,6 +69,7 @@ echo "<br><table align='center' class='table table-condensed' width='70%'>
 <th class='bg-primary text-white'><small><small>CODIGO DE CONTROL</small></small></th>
 <th class='bg-primary text-white'><small><small>TIPOVENTA</small></small></th>
 <th class='bg-primary text-white'><small><small>USUARIO</small></small></th>
+<th class='bg-primary text-white'><small><small>SUCURSAL</small></small></th>
 </tr></thead><tbody>";
 
 $indice=1;
@@ -134,6 +135,7 @@ while($datos=mysqli_fetch_array($resp)){
 	<td>$codigoControl</td>
 	<td>0</td>
 	<td>$usuarioCaja</td>
+	<td>$nombreCiudad</td>
 	</tr>";
 	$indice++;
 }

@@ -10,20 +10,13 @@ $sIde = "MinkaSw123*";
 $sKey = "rrf656nb2396k6g6x44434h56jzx5g6";
 
 //detalle de factura
-$Objeto_detalle1 = new stdClass();
-$Objeto_detalle1->codDetalle = 1;
-$Objeto_detalle1->cantidad = 1;
-$Objeto_detalle1->precioUnitario = "300";
-$Objeto_detalle1->descuentoProducto = 0;
-$Objeto_detalle1->detalle = "Llanta 1";  
-
 $Objeto_detalle2 = new stdClass();
 $Objeto_detalle2->codDetalle = 2;
 $Objeto_detalle2->cantidad = 1;
-$Objeto_detalle2->precioUnitario = "400";
+$Objeto_detalle2->precioUnitario = "15";
 $Objeto_detalle2->descuentoProducto = 0;
-$Objeto_detalle2->detalle = "Llanta Nro. 2";  
-$arrayDetalle= array($Objeto_detalle1,$Objeto_detalle2);
+$Objeto_detalle2->detalle = "ABCDOL";  
+$arrayDetalle= array($Objeto_detalle2);
 
 
 $sucursal=1;

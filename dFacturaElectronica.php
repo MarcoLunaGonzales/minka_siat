@@ -189,28 +189,23 @@ $estadoFacturacion=$datConf[0];
          </a>
         </div>
 
-        <?php
-        if($admin==0){
-        ?>
-        <div class="col-lg-3 col-md-8 mb-5 mb-lg-0 mx-auto">
+        <!--div class="col-lg-3 col-md-8 mb-5 mb-lg-0 mx-auto">
          <a href='#' class="after-loop-item card border-0 card-tercero shadow-lg" style="background:#12C1A9;color:#fff;" onclick="window.open('<?=$formatoImpresionFactura?>?codVenta=<?=$codSalida?>','detalle_factura'); return false;">
             <div class="card-body d-flex align-items-center flex-column">
                <h4><i class="material-icons">print</i> <b>IMPRIMIR FACTURA</b></h4>
                <p>FACTURA COMPUTARIZADA</p>
             </div>
          </a>
-        </div>
-        <?php
-        }
-        ?>
-        <!--div class="col-lg-3 col-md-8 mb-5 mb-lg-0 mx-auto">
+        </div-->
+
+        <div class="col-lg-3 col-md-8 mb-5 mb-lg-0 mx-auto">
          <a href="#" onclick="window.open('descargarFacturaPDF.php?codigo_salida=<?=$codSalida?>&ds=1','detalle_factura'); return false;" class="after-loop-item card border-0 card-tercero shadow-lg" style="background: #EE0808;color:#fff;" onclick="return false;">
             <div class="card-body d-flex align-items-center flex-column">
                <h4><i class="material-icons">description</i> <b>DESCARGAR PDF</b></h4>
                <p>FACTURA COMPUTARIZADA</p>
             </div>
          </a>
-        </div-->
+        </div>
         
         <div class="col-lg-4 col-md-8 mb-5 mb-lg-0 mx-auto">
          <a href='#' class="after-loop-item card border-0 card-tercero shadow-lg" style="background:#4D0778;color:#fff;" onclick="window.open('enviar_correo/index.php?datos=<?=$codSalida?>','detalle_factura'); return false;">
