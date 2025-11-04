@@ -658,8 +658,8 @@ border-bottom: 1px solid #000;
 
                     ?>
                     <tr>
-                        <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=$codMaterial?></td>
-                        <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;">
+                        <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; font-size: 8px;"><?=$codMaterial?></td>
+                        <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; font-size: 8px;">
                             <?=$nombreMat;?>
                         </td>
                         <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; font-size: 8px;"><small><?=$unidad_medida?></small></td>

@@ -73,8 +73,8 @@ function insertar_detalleSalidaVenta($enlaceCon,$cod_salida, $cod_almacen, $cod_
 	$banderaError=1;
 
 	$sqlInsert="INSERT INTO salida_detalle_almacenes (cod_salida_almacen, cod_material, cantidad_unitaria, lote, fecha_vencimiento, precio_unitario,
-	descuento_unitario, monto_unitario, orden_detalle,observaciones, especialidad, especialidadDetalle, nroQuirofanoSalaOperaciones, especialidadMedico, nombreApellidoMedico, nitDocumentoMedico, nroMatriculaMedico, nroFacturaMedico) VALUES ('$cod_salida', '$cod_material', '$cantidad', '0', '2022-01-01',
-	'$precio','$descuento','$montoparcial','$orden','$concepto', '$especialidad', '$especialidadDetalle', '$nroQuirofanoSalaOperaciones', '$especialidadMedico', '$nombreApellidoMedico', '$nitDocumentoMedico', '$nroMatriculaMedico', '$nroFacturaMedico')";
+	descuento_unitario, monto_unitario, orden_detalle,observaciones) VALUES ('$cod_salida', '$cod_material', '$cantidad', '0', '2022-01-01',
+	'$precio','$descuento','$montoparcial','$orden','$concepto')";
 	
 	$respInsert=mysqli_query($enlaceCon,$sqlInsert);
 	if($respInsert!=1){
