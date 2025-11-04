@@ -529,17 +529,10 @@ border-bottom: 1px solid #000;
 <div  style="height: 49.4%">
         <table  style="width: 100%;">
             <tr>
-<<<<<<< HEAD
-                <td width="45%"><br><br>
-                    </small>
-                        <img src="imagenes/logo_climedsur.jpg" style="margin: 0px;padding: 0;width: 200px;">
-                    </small>
-=======
                 <td align="" width="45%">
                     <img src="imagenes/fundacion.jpg" 
                         alt="Logo Fundación" 
                         style="width:120px; height:120px; object-fit:cover; border-radius:8px; border:1px solid #ccc;">
->>>>>>> 74aa7aa45143986df2c0660c4d17cd18ab77cedc
                 </td>
 
                 <td >
@@ -575,12 +568,6 @@ border-bottom: 1px solid #000;
                 <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nitCliente." ".$siat_complemento?></td>
             </tr>
             <tr >
-<<<<<<< HEAD
-              <td class="td-border-none text-left" width="18%" ><b>Paciente :</b></td>
-              <td class="td-border-none"><?=strtoupper($paciente)?></td>
-                <td class="td-border-none text-right" width="15%"><b>Forma de Pago :</b></td>
-                <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nombrePago?></td>
-=======
               <td class="td-border-none"></td>
               <td class="td-border-none" ><?=$nombreEstudiante?></td>
               <td class="td-border-none text-right" ><b>Cod. Cliente :</b></td>
@@ -589,7 +576,6 @@ border-bottom: 1px solid #000;
             <tr >
               <td class="td-border-none text-left" width="25%" ></td>
               <td class="td-border-none" ></td>
->>>>>>> 74aa7aa45143986df2c0660c4d17cd18ab77cedc
             </tr>
 
         </table>
