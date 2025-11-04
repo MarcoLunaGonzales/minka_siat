@@ -123,14 +123,14 @@ class FacturaOnline
 			}
 		  
 			// Clínicas
-			$detalle->especialidad			= $datDetalle['especialidad'] ?? '';
-			$detalle->especialidadDetalle	= $datDetalle['especialidadDetalle'] ?? '';
-			$detalle->nroQuirofanoSalaOperaciones = $datDetalle['nroQuirofanoSalaOperaciones'] ?? '';
-			$detalle->especialidadMedico	= $datDetalle['especialidadMedico'] ?? '';
-			$detalle->nombreApellidoMedico	= $datDetalle['nombreApellidoMedico'] ?? '';
-			$detalle->nitDocumentoMedico	= $datDetalle['nitDocumentoMedico'] ?? '';
-			$detalle->nroMatriculaMedico	= $datDetalle['nroMatriculaMedico'] ?? '';
-			$detalle->nroFacturaMedico		= $datDetalle['nroFacturaMedico'] ?? '';
+			// $detalle->especialidad			= $datDetalle['especialidad'] ?? '';
+			// $detalle->especialidadDetalle	= $datDetalle['especialidadDetalle'] ?? '';
+			// $detalle->nroQuirofanoSalaOperaciones = $datDetalle['nroQuirofanoSalaOperaciones'] ?? '';
+			// $detalle->especialidadMedico	= $datDetalle['especialidadMedico'] ?? '';
+			// $detalle->nombreApellidoMedico	= $datDetalle['nombreApellidoMedico'] ?? '';
+			// $detalle->nitDocumentoMedico	= $datDetalle['nitDocumentoMedico'] ?? '';
+			// $detalle->nroMatriculaMedico	= $datDetalle['nroMatriculaMedico'] ?? '';
+			// $detalle->nroFacturaMedico		= $datDetalle['nroFacturaMedico'] ?? '';
 
 		    // $detalle = new InvoiceDetail();
 			$detalle->cantidad				= $cantUnit;
