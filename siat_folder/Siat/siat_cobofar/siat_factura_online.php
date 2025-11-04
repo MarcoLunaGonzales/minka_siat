@@ -77,7 +77,7 @@ class FacturaOnline
         group by m.codigo_material, s.orden_detalle,m.descripcion_material,s.observaciones,s.precio_unitario
         order by s.orden_detalle;";*/
         $sqlDetalle="SELECT s.cod_material as codigo_material, s.orden_detalle, '' as descripcion_material, s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
-        sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario, especialidad, especialidadDetalle, nroQuirofanoSalaOperaciones, especialidadMedico, nombreApellidoMedico, nitDocumentoMedico, nroMatriculaMedico, nroFacturaMedico
+        sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
         from salida_detalle_almacenes s 
         where s.cod_salida_almacen='$codigoSalida'
         group by s.cod_material,s.orden_detalle,descripcion_material,s.observaciones,s.precio_unitario
@@ -123,14 +123,14 @@ class FacturaOnline
 			}
 		  
 			// Clínicas
-			$detalle->especialidad			= $datDetalle['especialidad'];
-			$detalle->especialidadDetalle	= $datDetalle['especialidadDetalle'];
-			$detalle->nroQuirofanoSalaOperaciones = $datDetalle['nroQuirofanoSalaOperaciones'];
-			$detalle->especialidadMedico	= $datDetalle['especialidadMedico'];
-			$detalle->nombreApellidoMedico	= $datDetalle['nombreApellidoMedico'];
-			$detalle->nitDocumentoMedico	= $datDetalle['nitDocumentoMedico'];
-			$detalle->nroMatriculaMedico	= $datDetalle['nroMatriculaMedico'];
-			$detalle->nroFacturaMedico		= $datDetalle['nroFacturaMedico'];
+			$detalle->especialidad			= $datDetalle['especialidad'] ?? '';
+			$detalle->especialidadDetalle	= $datDetalle['especialidadDetalle'] ?? '';
+			$detalle->nroQuirofanoSalaOperaciones = $datDetalle['nroQuirofanoSalaOperaciones'] ?? '';
+			$detalle->especialidadMedico	= $datDetalle['especialidadMedico'] ?? '';
+			$detalle->nombreApellidoMedico	= $datDetalle['nombreApellidoMedico'] ?? '';
+			$detalle->nitDocumentoMedico	= $datDetalle['nitDocumentoMedico'] ?? '';
+			$detalle->nroMatriculaMedico	= $datDetalle['nroMatriculaMedico'] ?? '';
+			$detalle->nroFacturaMedico		= $datDetalle['nroFacturaMedico'] ?? '';
 
 		    // $detalle = new InvoiceDetail();
 			$detalle->cantidad				= $cantUnit;
