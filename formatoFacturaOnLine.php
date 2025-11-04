@@ -568,7 +568,7 @@ border-bottom: 1px solid #000;
                 <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nitCliente." ".$siat_complemento?></td>
             </tr>
             <tr >
-              <td class="td-border-none text-left" width="25%" ><b>Nombre Estudiante : </b></td>
+              <td class="td-border-none"></td>
               <td class="td-border-none" ><?=$nombreEstudiante?></td>
               <td class="td-border-none text-right" ><b>Cod. Cliente :</b></td>
               <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$cod_cliente?></td>
@@ -576,8 +576,6 @@ border-bottom: 1px solid #000;
             <tr >
               <td class="td-border-none text-left" width="25%" ></td>
               <td class="td-border-none" ></td>
-              <td class="td-border-none text-right" ><b>Periodo Facturado :</b></td>
-              <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$periodoFacturado?></td>
             </tr>
         </table>
         <table class="table2">
