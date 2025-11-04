@@ -24,7 +24,7 @@ class InvoiceHeader extends Message
 	public	$codigoCliente;
 	// public  $nombreEstudiante;//se adicionó esto para educacion
 	// public  $periodoFacturado;//se adicionó esto para educacion
-	public	$modalidadServicio; // Se Adicionó para Clinicas
+	// public	$modalidadServicio; // Se Adicionó para Clinicas
 	public	$codigoMetodoPago;
 	public	$numeroTarjeta;
 	public	$montoTotal;
