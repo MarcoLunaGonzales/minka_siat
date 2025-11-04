@@ -66,7 +66,7 @@ function descontar_inventarios($enlaceCon,$cod_salida, $cod_almacen, $cod_materi
 	return($banderaError);
 }
 
-function insertar_detalleSalidaVenta($enlaceCon,$cod_salida, $cod_almacen, $cod_material, $cantidad, $precio, $descuento, $montoparcial, $banderaStock, $orden,$concepto,$especialidad, $especialidadDetalle, $nroQuirofanoSalaOperaciones, $especialidadMedico, $nombreApellidoMedico, $nitDocumentoMedico, $nroMatriculaMedico, $nroFacturaMedico){
+function insertar_detalleSalidaVenta($enlaceCon,$cod_salida, $cod_almacen, $cod_material, $cantidad, $precio, $descuento, $montoparcial, $banderaStock, $orden,$concepto,$especialidad='', $especialidadDetalle='', $nroQuirofanoSalaOperaciones='', $especialidadMedico='', $nombreApellidoMedico='', $nitDocumentoMedico='', $nroMatriculaMedico='', $nroFacturaMedico=''){
 	//la $banderaStock es 1 cuando se validan stocks y 0 cuando no se validan los stocks
 	//echo $cod_salida." ".$cod_almacen." ".$cod_material." ".$cantidad;
 	$cantidadPivote=$cantidad;
