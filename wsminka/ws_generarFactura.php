@@ -497,14 +497,14 @@ function generarFacturaSiat($sucursal,$tipoTabla,$idRecibo,$fecha,$idPersona,$mo
                 $codDetalle=$valor['codDetalle'];
                 
                 // Hospitales
-                $especialidad                = $valor['especialidad'];
-                $especialidadDetalle         = $valor['especialidadDetalle'];
-                $nroQuirofanoSalaOperaciones = $valor['nroQuirofanoSalaOperaciones'];
-                $especialidadMedico          = $valor['especialidadMedico'];
-                $nombreApellidoMedico        = $valor['nombreApellidoMedico'];
-                $nitDocumentoMedico          = $valor['nitDocumentoMedico'];
-                $nroMatriculaMedico          = $valor['nroMatriculaMedico'];
-                $nroFacturaMedico            = $valor['nroFacturaMedico'];
+                $especialidad                = $valor['especialidad'] ?? '';
+                $especialidadDetalle         = $valor['especialidadDetalle'] ?? '';
+                $nroQuirofanoSalaOperaciones = $valor['nroQuirofanoSalaOperaciones'] ?? '';
+                $especialidadMedico          = $valor['especialidadMedico'] ?? '';
+                $nombreApellidoMedico        = $valor['nombreApellidoMedico'] ?? '';
+                $nitDocumentoMedico          = $valor['nitDocumentoMedico'] ?? '';
+                $nroMatriculaMedico          = $valor['nroMatriculaMedico'] ?? '';
+                $nroFacturaMedico            = $valor['nroFacturaMedico'] ?? '';
                 
                 $cantidadUnitaria=$valor['cantidad'];
                 $precioUnitario=$valor['precioUnitario'];
