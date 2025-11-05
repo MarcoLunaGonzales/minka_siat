@@ -627,7 +627,7 @@ border-bottom: 1px solid #000;
                     }
                     $codInterno=$datDetalle['codigo_material'];
                     $cantUnit=$datDetalle['cantidad_unitario'];
-                    $nombreMat=$datDetalle['descripcion_material']." ".$observaciones;;
+                    $nombreMat=$observaciones;
                     $precioUnit=$datDetalle['precio_unitario'];
                     $descUnit=$datDetalle['descuento_unitario'];
                     //$montoUnit=$datDetalle[5];
