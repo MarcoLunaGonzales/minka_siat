@@ -529,8 +529,8 @@ border-bottom: 1px solid #000;
 <div  style="height: 49.4%">
         <table  style="width: 100%;">
             <tr>
-                <td align="center" width="45%"><br><br>
-                    </small></small>
+                <td width="45%">
+                    <img src="imagenes/logo_ibro2.jpg" alt="Logo IBRO" style="width: 180px; height: 80px; object-fit: cover; border-radius: 8px;">    
                 </td>
                 
                 <td >
@@ -566,16 +566,13 @@ border-bottom: 1px solid #000;
                 <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nitCliente." ".$siat_complemento?></td>
             </tr>
             <tr >
-              <td class="td-border-none text-left" width="25%" ><b>Nombre Estudiante : </b></td>
-              <td class="td-border-none" ><?=$nombreEstudiante?></td>
+              <td colspan="2" class="td-border-none"></td>
               <td class="td-border-none text-right" ><b>Cod. Cliente :</b></td>
               <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$cod_cliente?></td>
             </tr>
             <tr >
               <td class="td-border-none text-left" width="25%" ></td>
               <td class="td-border-none" ></td>
-              <td class="td-border-none text-right" ><b>Periodo Facturado :</b></td>
-              <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$periodoFacturado?></td>
             </tr>
         </table>
         <table class="table2">
@@ -598,12 +595,26 @@ border-bottom: 1px solid #000;
                 $contador_items=0;                    
                 $cantidad_por_defecto=5;//cantidad de items por defect
 
-                $sqlDetalle="SELECT m.codigo_material, s.orden_detalle,m.descripcion_material,s.observaciones,s.precio_unitario,sum(s.cantidad_unitaria) as cantidad_unitario,
-                sum(s.descuento_unitario) as descuento_unitario, sum(s.monto_unitario) as monto_unitario
-                from salida_detalle_almacenes s, material_apoyo m 
-                where m.codigo_material=s.cod_material and s.cod_salida_almacen=$codigoVenta
-                group by m.codigo_material, s.orden_detalle,m.descripcion_material, s.observaciones,s.precio_unitario
-                order by s.orden_detalle;";
+                $sqlDetalle="SELECT
+                          s.cod_material as codigo_material,
+                          s.orden_detalle,
+                          s.observaciones as descripcion_material,
+                          s.observaciones,
+                          s.precio_unitario,
+                          sum( s.cantidad_unitaria ) AS cantidad_unitario,
+                          sum( s.descuento_unitario ) AS descuento_unitario,
+                          sum( s.monto_unitario ) AS monto_unitario 
+                        FROM
+                          salida_detalle_almacenes s
+                        WHERE s.cod_salida_almacen = '$codigoVenta'
+                        GROUP BY
+                          s.cod_material,
+                          s.orden_detalle,
+                          s.observaciones,
+                          s.observaciones,
+                          s.precio_unitario 
+                        ORDER BY
+                          s.orden_detalle";
                 $respDetalle=mysqli_query($enlaceCon,$sqlDetalle);
 
                 $yyy=65;
