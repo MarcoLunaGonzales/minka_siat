@@ -65,7 +65,7 @@ $respConf=mysqli_query($enlaceCon,$sqlConf);
 $nitTxt=mysqli_result($respConf,0,1);
 
 
-$sqlDatosFactura="select '' as nro_autorizacion, '', '' as codigo_control, f.nit, f.razon_social, DATE_FORMAT(f.siat_fechaemision, '%d/%m/%Y'),f.siat_nombreEstudiante,f.siat_periodoFacturado 
+$sqlDatosFactura="select '' as nro_autorizacion, '', '' as codigo_control, f.nit, f.razon_social, DATE_FORMAT(f.siat_fechaemision, '%d/%m/%Y'),f.siat_nombreEstudiante,f.siat_periodoFacturado, f.paciente
 from salida_almacenes f
     where f.cod_salida_almacenes=$codigoVenta";
     
@@ -81,6 +81,7 @@ $fechaFactura=mysqli_result($respDatosFactura,0,5);
 
 $nombreEstudiante=mysqli_result($respDatosFactura,0,6);
 $periodoFacturado=mysqli_result($respDatosFactura,0,7);
+$nombrePaciente=mysqli_result($respDatosFactura,0,8);
 
 
 
@@ -658,7 +659,7 @@ border-bottom: 1px solid #000;
                     <tr>
                         <td class="text-center" valign="top" style="padding-top: 0px;padding-bottom: 0px; border-bottom: hidden;border-top: hidden; font-size: 8px;"><?=$codInterno?></td>
                         <td class="text-left" valign="top" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;">
-                            <?=$nombreMat;?>
+                            <?=$nombreMat;?> - <?=$nombrePaciente?>
                         </td>
                         <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><small><?=$unidad_medida?></small></td>
                         <td class="text-center" style="padding-top: 0px;padding-bottom: 0px; border: hidden; font-size: 8px;"><?=$cantUnit?></td>
