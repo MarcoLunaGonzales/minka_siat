@@ -567,9 +567,10 @@ border-bottom: 1px solid #000;
                 <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nitCliente." ".$siat_complemento?></td>
             </tr>
             <tr >
-              <td colspan="2" class="td-border-none"></td>
-              <td class="td-border-none text-right" ><b>Cod. Cliente :</b></td>
-              <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$cod_cliente?></td>
+              <td class="td-border-none" ><b>Cod. Cliente :</b></td>
+              <td class="td-border-none"><?=$cod_cliente?></td>
+              <td class="td-border-none text-right" ><b>Forma de Pago:</b></td>
+              <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nombrePago?></td>
             </tr>
             <tr >
               <td class="td-border-none text-left" width="25%" ></td>
@@ -735,9 +736,9 @@ border-bottom: 1px solid #000;
                     $txtGlosaDescuento=iconv('utf-8', 'windows-1252', $filaDesc[0]);        
             } ?>
             <tr>
-                <td rowspan="2" align="center" style="margin: 0px;">
+                <td align="center" style="margin: 0px;">
                     
-                    <img src="<?=$fileName?>" style="margin: 0px;padding: 0;width: 120px;">
+                    <img src="<?=$fileName?>" style="margin: 0px;padding: 0;width: 100px;">
                 </td>
                 <td  colspan="6">
                     <table class="table">
@@ -783,8 +784,6 @@ border-bottom: 1px solid #000;
                     </table >
                 </td>
             </tr>
-            
-            <tr><td colspan="6" style="border-top:hidden;" valign="bottom"><span style="padding: 0px;margin: 0px;"><small><small>Forma de Pago: <?=$nombrePago?></small></small></span></td></tr>
             
         </table>
         <table class="table3" >
