@@ -559,24 +559,31 @@ border-bottom: 1px solid #000;
             </tr>
         </table>
 
-        <table class="table">
-            <tr >
-                <td class="td-border-none text-left" width="15%" ><b>Nombre/Razón Social : </b></td>
-                <td class="td-border-none" width="43%"><?=$razonSocialCliente?></td>
-                <td class="td-border-none text-right" width="15%"><b>NIT/CI/CEX:</b></td>
-                <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nitCliente." ".$siat_complemento?></td>
+        <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+          <thead>
+            <tr>
+              <th style="width:16%; padding:2px; text-align:left; border:none;">Nombre/Razón Social:</th>
+              <td style="width:45%; padding:2px; border:none;"><?=$razonSocialCliente?></td>
+
+              <th style="width:15%; padding:2px; text-align:right; border:none;">NIT/CI/CEX:</th>
+              <td style="width:25%; padding:2px; border:none;"><?=$nitCliente?> <?=$siat_complemento?></td>
             </tr>
-            <tr >
-              <td class="td-border-none" ><b>Cod. Cliente :</b></td>
-              <td class="td-border-none"><?=$cod_cliente?></td>
-              <td class="td-border-none text-right" ><b>Forma de Pago:</b></td>
-              <td class="td-border-none">&nbsp;&nbsp;&nbsp;<?=$nombrePago?></td>
+
+            <tr>
+              <th style="padding:2px; text-align:left; border:none;">Cod. Cliente:</th>
+              <td style="padding:2px; border:none;"><?=$cod_cliente?></td>
+
+              <th style="padding:2px; text-align:right; border:none;">Forma de Pago:</th>
+              <td style="padding:2px; border:none;"><?=$nombrePago?></td>
             </tr>
-            <tr >
-              <td class="td-border-none text-left" width="25%" ></td>
-              <td class="td-border-none" ></td>
+
+            <!-- Fila vacía de separación visual -->
+            <tr>
+              <td colspan="4" style="padding:6px; border:none;"></td>
             </tr>
+          </thead>
         </table>
+
         <table class="table2">
             <tr>
                 <td width="8%" class="text-center">Codigo<br>Servicio</td>
